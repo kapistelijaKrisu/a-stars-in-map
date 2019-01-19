@@ -1,7 +1,5 @@
 # searching-in-map
 search algorithm comparison with a labyrinth generator  
-[Tuntikirjanpito]  
-[v1] Viikko 1 raportti 
+[Tuntikirjanpito ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/hour-diary)
+[Viikko 1 raportti ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week1y)
 
-[v1]: <https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week1y>
-[Tuntikirjanpito]: <https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/hour-diary>
