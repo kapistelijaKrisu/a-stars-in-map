@@ -1,5 +1,5 @@
 # searching-in-map
-search algorhytm comparison with a labyrinth generator
+search algorhytm comparison with a labyrinth generator  
 [Tuntikirjanpito]  
 [v1] Viikko 1 raportti 
 
