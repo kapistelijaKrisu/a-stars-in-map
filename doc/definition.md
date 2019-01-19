@@ -33,7 +33,7 @@ Näistä luodaan omat tulos dokumentit. Jossa on mainittu seuraavat:
 * taulukko jota käytettiin vertaamiseen
 * tietokoneen tiedot siis käyttöjärjestelmä, tietokoneen osat.
 
-Sivupainona on generaattori joka asettaa painot ja esteet kartalle
+Sivupainona on generaattori joka asettaa painot ja esteet kartalle. Jos algoritmit loppuu kesken sovelletaan matopeliin tai työstetään generaattorille kartta tyylejä.
 
 ##### Lähteet
 https://www.cs.helsinki.fi/u/saska/tira.pdf
