@@ -12,7 +12,7 @@
 
 ### Mitä opin
 * Työympäristön pystytys ei ole koskaan helppoa
-* Suunnitelmat näyttävä hyvältä vain paperilla
+* Suunnitelmat näyttävät hyvältä vain paperilla
 
 ### Itsekritiikkiä
 * Jäi mielestä kokonaan pois ohjelman perusrungon toiminnallisuus -> ei edes aloitettu hakua
