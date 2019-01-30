@@ -36,4 +36,5 @@ Näistä luodaan omat tulos dokumentit. Jossa on mainittu seuraavat:
 *Sivupainona on generaattori joka asettaa painot ja esteet kartalle, joko oikeasti generoiden tai ottaa tiedoston vastaan josta lukee kartan ja siitä generoi ohjelman muistinsisäisen kartan. Jos algoritmit loppuu kesken sovelletaan matopeliin tai työstetään generaattorille kartta tyylejä.*
 
 ##### Lähteet
-https://www.cs.helsinki.fi/u/saska/tira.pdf
+https://www.cs.helsinki.fi/u/saska/tira.pdf leveyshaun vaativuudet
+https://movingai.com/benchmarks/grids.html karttoja lainattu, pienellä modauksella
