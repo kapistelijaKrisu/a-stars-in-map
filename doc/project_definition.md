@@ -2,13 +2,18 @@
 
 
 
-## Algoritmit
-* leveyssunntainen haku
-* syvyyssuntainen haku
-* dijkstra
-* Bellmanin-Ford
-* a-star
-* a-star variaatiot, jos riittää aika (optional)
+## Algoritmit (lähtökohta)
+
+| Algoritmi | Aikavaativuus | Tilavaativuus |
+|-----------|---------------|---------------|
+| leveyssunntainen haku| O( \| V \| + \| E \| )| \| V \| |
+| syvyyssuntainen haku|  O( \| V \| + \| E \| )| \| V \| |
+| Bellmanin-Ford| O( \| V \| * \| E \| ) | \| V \| |
+| dijkstra| O( ( \| V \| + \| E \| ) log \| V \| ) | \| V \| |
+| a-star| O( ( \| V \| + \| E \| ) log \| V \| ) | \| V \| |
+| a-star variaatiot, jos riittää aika (optional)| O( ( \| V \| + \| E \| ) log \| V \| ) | \| V \| |
+
+Vaikka alustavasti nämä näyttävät aika samoilta, kiinnostuksen kohteena onkin, "kuinka samoja" nämä tosiaan ovat
 
 ## Tietorakenteet algoritmeilla (Voi muuttua inspiraation myötä)
 * painollinen ja painoton taulukkokartta, missä painottomassa painot ovat kaikilla sama.

@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="35ac46c0-c7ad-4dce-811f-18904db6fc23" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app.test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/mapGenerator/MapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/mapGenerator/NoWeightSimpleGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/NoWeightSimpleGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/model/WebMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/WebMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/searchAlgorithm/BreathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/analysis/searchAlgorithm/SearchAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/analysis/app/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/app/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/analysis/model/WebMapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/app_definition.md" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/app_definition.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -86,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/src/test/java/app/AppTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="341">
-              <caret line="26" column="42" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="26" selection-end-column="42" />
+              <caret line="26" column="42" selection-start-line="22" selection-start-column="8" selection-end-line="26" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="205">
@@ -116,10 +104,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/model/WebMapTest.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="42" column="41" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="41" />
+            <state relative-caret-position="340">
+              <caret line="55" column="27" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -128,22 +116,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="21" column="32" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
+            <state relative-caret-position="221">
+              <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -207,7 +183,6 @@
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/CustomPoint.java" />
-        <option value="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/WebMap.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/Main.java" />
@@ -215,6 +190,7 @@
         <option value="$PROJECT_DIR$/src/main/java/app/Input.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/test/java/app/AppTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java" />
       </list>
     </option>
@@ -229,7 +205,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -306,20 +282,6 @@
             <path>
               <item name="app" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="main" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="app" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="main" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="mapGenerator" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="app" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
               <item name="test" type="2674bda8:ScopeViewTreeModel$GroupNode" />
             </path>
             <path>
@@ -327,20 +289,6 @@
               <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
               <item name="test" type="2674bda8:ScopeViewTreeModel$GroupNode" />
               <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="app" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="test" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="mapGenerator" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="app" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="app" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="test" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="model" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -349,7 +297,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548873157496" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548874398269" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -494,18 +442,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="WebMapTest_neighboursAll4Test - 2019.01.30 at 19h 14m 03s.xml">
-      <configuration name="WebMapTest.neighboursAll4Test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WebMapTest_neighboursAll4Test - 2019.01.30 at 19h 14m 52s.xml">
-      <configuration name="WebMapTest.neighboursAll4Test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WebMapTest_neighboursAll4Test - 2019.01.30 at 19h 15m 19s.xml">
-      <configuration name="WebMapTest.neighboursAll4Test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WebMapTest_neighboursAll4Test - 2019.01.30 at 19h 16m 25s.xml">
-      <configuration name="WebMapTest.neighboursAll4Test" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="WebMapTest_neighboursAll4Test - 2019.01.30 at 19h 16m 34s.xml">
       <configuration name="WebMapTest.neighboursAll4Test" configurationId="JUnit" />
     </history-entry>
@@ -524,12 +460,23 @@
     <history-entry file="AppTest - 2019.01.30 at 20h 17m 34s.xml">
       <configuration name="AppTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="NoWeightSimpleGeneratorTest_generateMapTest - 2019.01.30 at 20h 29m 49s.xml">
+      <configuration name="NoWeightSimpleGeneratorTest.generateMapTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NoWeightSimpleGeneratorTest_generateMapTest - 2019.01.30 at 20h 30m 50s.xml">
+      <configuration name="NoWeightSimpleGeneratorTest.generateMapTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WebMapTest - 2019.01.30 at 20h 31m 12s.xml">
+      <configuration name="WebMapTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="NoWeightSimpleGeneratorTest_generateMapTest - 2019.01.30 at 20h 31m 30s.xml">
+      <configuration name="NoWeightSimpleGeneratorTest.generateMapTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="316" y="44" width="1400" height="992" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26119402" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26119402" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -539,7 +486,7 @@
       <window_info anchor="bottom" id="Build" sideWeight="0.49925372" weight="0.32945284" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49925372" visible="true" weight="0.3329453" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49925372" visible="true" weight="0.32945284" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49925372" visible="true" weight="0.32945284" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39813736" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -579,14 +526,6 @@
           <line>16</line>
           <properties />
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java</url>
-          <line>17</line>
-          <properties class="mapGenerator.NoWeightSimpleGeneratorTest" method="generateMapTest">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -719,17 +658,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/app/AppTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
-          <caret line="26" column="42" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="26" selection-end-column="42" />
+          <caret line="26" column="42" selection-start-line="22" selection-start-column="8" selection-end-line="26" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -738,8 +670,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="32" />
+        <state relative-caret-position="340">
+          <caret line="55" column="27" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -748,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/model/WebMapTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="42" column="41" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="41" />
+        <state relative-caret-position="884">
+          <caret line="52" column="42" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -768,17 +700,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
+        <state relative-caret-position="221">
+          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="clean build" />
     <option value="build" />
   </component>
   <component name="masterDetails">
