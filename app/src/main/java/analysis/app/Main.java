@@ -1,4 +1,6 @@
-package main;
+package main.java.analysis.app;
+
+import main.java.analysis.app.App;
 
 public class Main {
 

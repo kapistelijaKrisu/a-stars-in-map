@@ -1,6 +1,6 @@
-package searchAlgorithm;
+package main.java.analysis.searchAlgorithm;
 
-import model.WebMap;
+import main.java.analysis.model.WebMap;
 
 public class BreathSearch extends SearchAlgorithm {
     @Override

@@ -1,10 +1,10 @@
-package main;
+package main.java.analysis.app;
 
-import mapGenerator.MapGenerator;
-import mapGenerator.NoWeightSimpleGenerator;
-import model.WebMap;
-import searchAlgorithm.BreathSearch;
-import searchAlgorithm.SearchAlgorithm;
+import main.java.analysis.mapGenerator.MapGenerator;
+import main.java.analysis.mapGenerator.NoWeightSimpleGenerator;
+import main.java.analysis.model.WebMap;
+import main.java.analysis.searchAlgorithm.BreathSearch;
+import main.java.analysis.searchAlgorithm.SearchAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class App {
             for (Map.Entry<String, MapGenerator> pair : mapGenerators.entrySet()) {
                 System.out.println("press " + pair.getKey() + " for using: " + pair.getValue().toString());
             }
-            System.out.println("Press anything else to return to main program.");
+            System.out.println("Press anything else to return to analysis program.");
             this.currentMap = mapGenerators.get(scanner.nextLine()).createMap();
             System.out.println("Map has been set!");
             return;
@@ -88,7 +88,7 @@ public class App {
                 settingsMap.get(scanner.nextLine()).runSearch(currentMap);
                 return;
             } catch (NullPointerException e) {
-                System.out.println("Errors.Going back to main program.");
+                System.out.println("Errors.Going back to analysis program.");
                 if (devMode) e.printStackTrace();
                 return;
             }

@@ -1,6 +1,6 @@
-package mapGenerator;
+package main.java.analysis.mapGenerator;
 
-import model.WebMap;
+import main.java.analysis.model.WebMap;
 
 import java.awt.*;
 import java.util.Scanner;

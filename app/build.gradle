@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+sourceCompatibility = '1.11'
+targetCompatibility = '1.11'
+version = '1.1.0'
+
+application {
+    mainClassName = "main.java.analysis.app.Main"
+}
+
+run{
+    standardInput = System.in
+}
+
+/*repositories {
+    mavenCentral()
+}*/

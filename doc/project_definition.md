@@ -1,7 +1,6 @@
 # Määrittelydokumentti
 
-## Kieli
-* Java
+
 
 ## Algoritmit
 * leveyssunntainen haku
@@ -11,7 +10,7 @@
 * a-star
 * a-star variaatiot, jos riittää aika (optional)
 
-## Tietorakenteet (Voi muuttua inspiraation myötä)
+## Tietorakenteet algoritmeilla (Voi muuttua inspiraation myötä)
 * painollinen ja painoton taulukkokartta, missä painottomassa painot ovat kaikilla sama.
 * keko
 * jono
@@ -20,6 +19,7 @@
 ## Syöte
 * taulukko, jolla ominaisuutena kuinka monta pistettä siihen astuminen maksaa
 * pari syöte lukua jolla conffaa karttageneraattorin
+* syötteessä lainattu karttoja https://movingai.com/benchmarks/grids.html
 
 ## Tavoitteet ja O-analyysit
 ### Kyseessä on tutkimustyö ja tämä täytetään vertailuja toteuttaessa. 
@@ -33,7 +33,7 @@ Näistä luodaan omat tulos dokumentit. Jossa on mainittu seuraavat:
 * taulukko jota käytettiin vertaamiseen
 * tietokoneen tiedot siis käyttöjärjestelmä, tietokoneen osat.
 
-*Sivupainona on generaattori joka asettaa painot ja esteet kartalle. Jos algoritmit loppuu kesken sovelletaan matopeliin tai työstetään generaattorille kartta tyylejä.*
+*Sivupainona on generaattori joka asettaa painot ja esteet kartalle, joko oikeasti generoiden tai ottaa tiedoston vastaan josta lukee kartan ja siitä generoi ohjelman muistinsisäisen kartan. Jos algoritmit loppuu kesken sovelletaan matopeliin tai työstetään generaattorille kartta tyylejä.*
 
 ##### Lähteet
 https://www.cs.helsinki.fi/u/saska/tira.pdf

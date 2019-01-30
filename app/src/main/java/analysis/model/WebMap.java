@@ -1,4 +1,4 @@
-package model;
+package main.java.analysis.model;
 
 import java.awt.*;
 import java.util.ArrayDeque;
