@@ -4,6 +4,7 @@
 * Ohjelman tarkka määrittely ~3h
 * Suunniteltu kartan lukija ~10min
 * gradlen asennus ja pystytys ~1h
+* Testien aloitus ja tekeminen nykyisiin luokkiin ~4h
 
 ### Suunniteltu seuraavaksi
 * unit testit päärungolle ja webmapille
@@ -12,4 +13,4 @@
 
 ### Mitä opin
 * visual code best md file editor
-
+* mockitolla ongelmia tietyn tyyppisten luokkien kanssa -> ei käytetäkkään
