@@ -1,6 +1,6 @@
-package main.java.analysis.searchAlgorithm;
+package searchAlgorithm;
 
-import main.java.analysis.model.WebMap;
+import model.WebMap;
 
 public abstract class SearchAlgorithm {
 

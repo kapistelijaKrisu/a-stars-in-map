@@ -1,10 +1,10 @@
-package main.java.analysis.app;
+package app;
 
-import main.java.analysis.mapGenerator.MapGenerator;
-import main.java.analysis.mapGenerator.NoWeightSimpleGenerator;
-import main.java.analysis.model.WebMap;
-import main.java.analysis.searchAlgorithm.BreathSearch;
-import main.java.analysis.searchAlgorithm.SearchAlgorithm;
+import mapGenerator.MapGenerator;
+import mapGenerator.NoWeightSimpleGenerator;
+import model.WebMap;
+import searchAlgorithm.BreathSearch;
+import searchAlgorithm.SearchAlgorithm;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,9 @@ public class App {
     private final boolean devMode;
 
     //todo magic numbers given names
-    public App(boolean devMode) {
+    public App(boolean devMode, Scanner scanner) {
         this.devMode = devMode;
-        this.scanner = new Scanner(System.in);
+        this.scanner = scanner;
         state = 0;
         currentMap = new WebMap();
 

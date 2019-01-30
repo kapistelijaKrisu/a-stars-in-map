@@ -32,14 +32,14 @@
 * Ohjelman juurikansion vieressä on maps niminen kansio
 * maps kansiosta valitaan .map tyyppinen tiedosto
 ##### .map rakenne
-* tiedosto muotoiltu siten, että jokaiselle merkille on annettu numeerinen painoarvo
+* tiedosto muotoiltu siten, että jokaiselle merkille on annettu numeerinen painoarvo (0 = seinä)
 * kerrottu korkeus ja leveys
 * kerrottu milloin kartta alkaa
 
 ```
 # esimerkki sisällöstä
 decode-begin
-T 2147483647
+T 0
 . 1
 decode-end
 

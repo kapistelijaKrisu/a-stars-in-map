@@ -1,4 +1,4 @@
-package main.java.analysis.model;
+package model;
 
 import java.awt.*;
 import java.util.ArrayDeque;
@@ -20,13 +20,13 @@ public class WebMap {
         if (isAvailableLocation(under)) neighbours.add(under);
 
         var over = new Point(location.x, location.y - 1);
-        if (isAvailableLocation(over)) neighbours.add(under);
+        if (isAvailableLocation(over)) neighbours.add(over);
 
         var right = new Point(location.x + 1, location.y);
-        if (isAvailableLocation(right)) neighbours.add(under);
+        if (isAvailableLocation(right)) neighbours.add(right);
 
         var left = new Point(location.x - 1, location.y);
-        if (isAvailableLocation(left)) neighbours.add(under);
+        if (isAvailableLocation(left)) neighbours.add(left);
 
         return neighbours;
     }
@@ -47,7 +47,7 @@ public class WebMap {
                 mapInString += xAxis + " ";
             }
             mapInString += "\n";
-            mapInString += "Starting location: " + tileAt.x + "," + tileAt.y + "\n";
+            mapInString += "At location: " + tileAt.x + "," + tileAt.y + "\n";
             mapInString += "Target location: " + tileTarget.x + "," + tileTarget.y + "\n";
         }
         return mapInString;

@@ -1,4 +1,4 @@
-package main.java.analysis.mapGenerator;
+package mapGenerator;
 
 import java.util.Arrays;
 import java.util.Scanner;
