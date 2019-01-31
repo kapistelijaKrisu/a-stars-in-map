@@ -38,9 +38,14 @@ public class WebMap {
         return true;
     }
 
-    // todo use string builder
+    public boolean isValid() {
+        return !(map == null || tileAt == null || tileTarget == null);
+    }
+
+    // todo use string builder, remove last \n
     @Override
     public String toString() {
+        if (!isValid()) return "invalid map. Set map, tileAt, tileTarget";
         String mapInString = "";
         for (int[] yAxis : map) {
             for (int xAxis : yAxis) {

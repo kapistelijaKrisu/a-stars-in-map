@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class App {
 
     private final Scanner scanner;
-    private final Map<String, MapGenerator> mapGenerators;
-    private final Map<String, SearchAlgorithm> settingsMap;
+    private Map<String, MapGenerator> mapGenerators;
+    private Map<String, SearchAlgorithm> algorithmMap;
     private int state;
     private WebMap currentMap;
     private final boolean devMode;
@@ -25,9 +25,8 @@ public class App {
         this.scanner = scanner;
         state = 0;
         currentMap = new WebMap();
-
-        settingsMap = new HashMap<>();
-        settingsMap.put("b", new BreathSearch());
+        algorithmMap = new HashMap<>();
+        algorithmMap.put("b", new BreathSearch());
 
         mapGenerators = new HashMap<>();
         mapGenerators.put("s", new NoWeightSimpleGenerator(scanner));
@@ -77,21 +76,37 @@ public class App {
 
 
     private void runSearch() {
-        while (true) {
+        if (currentMap != null && currentMap.isValid()) {
             try {
                 System.out.println("Chosen map:");
                 System.out.println(currentMap.toString());
                 System.out.println("Choose algorithm to run on map:");
-                for (Map.Entry<String, SearchAlgorithm> pair : settingsMap.entrySet()) {
+                for (Map.Entry<String, SearchAlgorithm> pair : algorithmMap.entrySet()) {
                     System.out.println("press " + pair.getKey() + " for testing: " + pair.getValue().toString());
                 }
-                settingsMap.get(scanner.nextLine()).runSearch(currentMap);
+                algorithmMap.get(scanner.nextLine()).runSearch(currentMap);
+                System.out.println("Finished search. Returning to main program.");
                 return;
             } catch (NullPointerException e) {
-                System.out.println("Errors.Going back to analysis program.");
+                System.out.println("Errors. Going back to analysis program.");
                 if (devMode) e.printStackTrace();
                 return;
             }
+        } else {
+            System.out.println("No map set. returning to main program");
         }
+    }
+
+    // for testing
+   public void setAlgorithmMap(Map<String, SearchAlgorithm> algorithmMap) {
+        this.algorithmMap = algorithmMap;
+   }
+
+    public void setMapGenerators(Map<String, MapGenerator> mapGenerators) {
+        this.mapGenerators = mapGenerators;
+    }
+
+    public void setCurrentMap(WebMap currentMap) {
+        this.currentMap = currentMap;
     }
 }

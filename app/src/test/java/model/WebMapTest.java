@@ -1,5 +1,7 @@
 package model;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -43,6 +45,52 @@ public class WebMapTest {
         assertEquals(data, map.getMap());
         assertEquals(targetLocation, map.getTileTarget());
         assertEquals(atLocation, map.getTileAt());
+    }
+
+    @Test //todo remove last character
+    public void printTest() {
+        atLocation = new Point(1,2);
+        targetLocation = new Point(2,3);
+        map.setMap(null);
+
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        map.setTileTarget(targetLocation);
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        map.setTileAt(atLocation);
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        map.setMap(data);
+        map.setTileAt(null);
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        map.setTileAt(atLocation);
+        assertEquals("0 1 2 \n" +
+                "At location: 1,2\n" +
+                "Target location: 2,3\n" +
+                "3 4 5 \n" +
+                "At location: 1,2\n" +
+                "Target location: 2,3\n" +
+                "6 7 8 \n" +
+                "At location: 1,2\n" +
+                "Target location: 2,3\n", map.toString());
+
+    }
+
+    @Test //todo remove last character
+    public void isValidTest() {
+        atLocation = new Point(1,2);
+        targetLocation = new Point(2,3);
+        map.setMap(null);
+
+        assertFalse(map.isValid());
+        map.setTileTarget(targetLocation);
+        assertFalse(map.isValid());
+        map.setTileAt(atLocation);
+        assertFalse(map.isValid());
+        map.setMap(data);
+        map.setTileAt(null);
+        assertFalse(map.isValid());
+        map.setTileAt(atLocation);
+        assertTrue(map.isValid());
+
     }
 
     @Test
