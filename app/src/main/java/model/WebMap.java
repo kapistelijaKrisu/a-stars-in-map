@@ -42,7 +42,7 @@ public class WebMap {
         return !(map == null || tileAt == null || tileTarget == null);
     }
 
-    // todo use string builder, remove last \n
+    // todo use string builder, remove last \n, currently no harm -> low priority
     @Override
     public String toString() {
         if (!isValid()) return "invalid map. Set map, tileAt, tileTarget";

@@ -51,6 +51,15 @@ public class App {
                 case "2":
                     runSearch();
                     break;
+                case "3": // testing file creation currently
+                    if (devMode) {
+                        var algorithm = algorithmMap.get("b");
+                        algorithm.setMap(currentMap);
+                        algorithm.runSearch();
+                    } else {
+                        state = 0;
+                    }
+                    break;
 
                 default:
                     state = 0;
@@ -84,7 +93,9 @@ public class App {
                 for (Map.Entry<String, SearchAlgorithm> pair : algorithmMap.entrySet()) {
                     System.out.println("press " + pair.getKey() + " for testing: " + pair.getValue().toString());
                 }
-                algorithmMap.get(scanner.nextLine()).runSearch(currentMap);
+                var algorithm = algorithmMap.get(scanner.nextLine());
+                algorithm.setMap(currentMap);
+                algorithm.runSearch();
                 System.out.println("Finished search. Returning to main program.");
                 return;
             } catch (NullPointerException e) {

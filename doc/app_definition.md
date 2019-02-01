@@ -33,8 +33,13 @@
 * maps kansiosta valitaan .map tyyppinen tiedosto
 ##### .map rakenne
 * tiedosto muotoiltu siten, että jokaiselle merkille on annettu numeerinen painoarvo (0 = seinä)
-* kerrottu korkeus ja leveys
+* kerrottu korkeus 
+* kerrottu leveys
+* kerrottu alkupiste x y
+* kerrottu määränpää x y
 * kerrottu milloin kartta alkaa
+* # toimii kommenttin merkistä
+* älä laita määränpäätä seinään
 
 ```
 # esimerkki sisällöstä
@@ -42,12 +47,13 @@ decode-begin
 T 0
 . 1
 decode-end
-
+start 1 1
+target 1 0
 height 2
 width 3
 map
-T.T
-T.T
+T.y
+T.x
 ```
 
 #### 1.2 Kartan luominen
@@ -63,14 +69,15 @@ T.T
 
 ### 3 ??????
 Tässä taika-askeleessa algoritmi käy haunsa läpi ja kirjoittaa tuloksensa juurikansion viereen muodossa 
-doc/reports/algoritmin_nimi/kartan_nimi/aika_leima.tiedostopääteTBD. Vielä määrittämättä raportin sisältö.  
-#### Muistilista tarvittavasta siällöstä
+doc/reports/algoritmin_nimi/kartan_nimi/aika_leima.md. Vielä määrittämättä raportin sisältö.  
+#### Muistilista raportin suunnitteluun
 * Miten kirjoitetaan koneen specsit raporttiin
 * Kovakoodata vai lukea teoreettiset tila-, aikavaativuudet jostain
-* Tiedostotyyppivaihtoehtoina html, pdf, md
 * Piirtää tai linkittää kartan
 * Kirjoittaa ajan
 * Tilan käytön selvitys?
+#### Raportin suunnitelma tähän mennessä
+* md tyyppinen tiedosto 
 
 ### 4 Profit
 Palataan päävalikkoon. Voit ihailla tai analysoida tuloksia.

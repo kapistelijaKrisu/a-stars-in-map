@@ -4,7 +4,7 @@ import model.WebMap;
 
 public class BreathSearch extends SearchAlgorithm {
     @Override
-    protected void searchAlgorithm(WebMap map) {
+    protected void searchAlgorithm() {
 
     }
 

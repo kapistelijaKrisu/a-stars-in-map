@@ -83,7 +83,7 @@ public class AppTest {
         app.setCurrentMap(mockMap);
         app.run();
 
-        verify(mockGenerator, times(1)).runSearch(mockMap);
+        verify(mockGenerator, times(1)).runSearch();
     }
 
     @Test
@@ -102,7 +102,7 @@ public class AppTest {
         app.setCurrentMap(mockMap);
         app.run();
 
-        verify(mockGenerator, never()).runSearch(mockMap);
+        verify(mockGenerator, never()).runSearch();
     }
 
     @Test
@@ -119,6 +119,6 @@ public class AppTest {
         app.setAlgorithmMap(algorithmMap);
         app.run();
 
-        verify(mockGenerator, never()).runSearch(any());
+        verify(mockGenerator, never()).runSearch();
     }
 }
