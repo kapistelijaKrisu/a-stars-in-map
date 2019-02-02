@@ -16,12 +16,14 @@
 * raportin templaten palasien koonti (systemTools paketti) ~2h
 
 ### Suunniteltu seuraavaksi
-* leveyshaun testit
-* .map tiedostojen luku
-* ohjelma tallentamaan raportit siis templaten viimeistely ja sen arvojen vaihto
+* 1 ohjelma tallentamaan raportit siis templaten viimeistely ja sen arvojen vaihto
+* 2 .map tiedostojen luku
+* 3 leveyshaun testit
+* 4 tässä vaiheessa jäljelle jää enään algoritmien implementaatiot
 
 ### Epäselvyyksiä
 * kuinka tarkka javadocin pitäis olla, pitää privaatit muuttujat myäs luetella?
+* Jos pääsen implementoimaan hakuja ensi viikolla, pitikö tietorakenteet myös tehdä alusta asti?
 
 ### Mitä opin
 * visual code best md file editor
