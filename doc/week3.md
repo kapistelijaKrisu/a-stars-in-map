@@ -23,7 +23,7 @@
 
 ### Epäselvyyksiä
 * kuinka tarkka javadocin pitäis olla, pitää privaatit muuttujat myäs luetella?
-* Jos pääsen implementoimaan hakuja ensi viikolla, pitikö tietorakenteet myös tehdä alusta asti?
+* Pitääkö ohjelman rungon tietorakenteet myös käsin tehdä?
 
 ### Mitä opin
 * visual code best md file editor
