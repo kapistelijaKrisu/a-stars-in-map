@@ -12,11 +12,16 @@
 * Esiversio javadocseista valmiisiin komponentteihin, pitää selvittää miten viitataan luokkaan ja @param ja muuttujille ~30min
 * Javadocin generoinnin konffaus ~1h
 * pieni refaktorointi (magic numbers pois, siivota abstractit luokat) ~2h
+* kirjoituksen suunnittelua ~2h
 * raportin templaten palasien koonti (systemTools paketti) ~2h
 
 ### Suunniteltu seuraavaksi
 * leveyshaun testit
-* ohjelma tallentamaan raportit, templaten viimeistely ja sen arvojen vaihto
+* .map tiedostojen luku
+* ohjelma tallentamaan raportit siis templaten viimeistely ja sen arvojen vaihto
+
+### Epäselvyyksiä
+* kuinka tarkka javadocin pitäis olla, pitää privaatit muuttujat myäs luetella?
 
 ### Mitä opin
 * visual code best md file editor
