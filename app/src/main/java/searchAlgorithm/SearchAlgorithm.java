@@ -2,44 +2,67 @@ package searchAlgorithm;
 
 import model.WebMap;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Base class that does all the ground work for preparing analysis file.
+ * work in progress
+ */
 public abstract class SearchAlgorithm {
     protected WebMap map;
+    protected Map<String, String> templateValueMap;
     private String reportFilePath;
+    private final AnalysisWriter analysisWriter;
 
-    protected abstract void searchAlgorithm();
 
-    //todo write to a file, add filepath to constructor
-    // todo announce completion details...where results written etc
-    public void runSearch() {
-        if (reportFilePath != null) { // if processed already
-            prepareReportDirectoriesAndFile();
+    public SearchAlgorithm() {
+        analysisWriter = new AnalysisWriter();
+        templateValueMap = new HashMap<>();
+    }
+
+    /**
+     * Runs implemented algorithm and writes report based on it
+     * todo announce completion details...where results written etc
+     * @throws IllegalStateException when algorithm or map does not have name
+     * @throws IOException failing to write on designated report file
+     */
+    public void runSearch() throws IllegalStateException, IOException {
+        if (reportFilePath == null) {
+            if (map == null || !map.isValid()) throw new IllegalStateException("Requires valid map and name, and name for algorithm");
+            reportFilePath = "/doc/reports/" + map.getName() + "/" + toString();
         }
         searchAlgorithm();
-
-
+        analysisWriter.writeReport(templateValueMap, reportFilePath);
     }
 
-    //todo test path forms in jar
-    private void prepareReportDirectoriesAndFile() {
-        var root = new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent();
-        //create sub directories
-        //get report directorypath
-        //generate filename
-        //doc/reports/algoritmin_nimi/kartan_nimi/aika_leima.md
-        reportFilePath = "asd.md";
+    /**
+     * Implementation of the search algorithm
+     */
+    protected abstract void searchAlgorithm();
 
-    }
-
-    protected FileWriter getWriterForUse() throws IOException {
-        return new FileWriter(reportFilePath);
-    }
-
-
-    public void setMap(WebMap map) {
+    /**
+     * Directory is based on map name as well and gets cleaned when a map is set
+     * for upkeepin reporting structure.
+     * Other than that it's a normal setter.
+     * @param map map to be set
+     */
+    public void setMapClean(WebMap map) {
         this.map = map;
+        this.reportFilePath = null;
+    }
+
+    // for testing
+    public WebMap getMap() {
+        return map;
+    }
+
+    public String getReportFilePath() {
+        return reportFilePath;
+    }
+
+    public void setReportFilePath(String reportFilePath) {
+        this.reportFilePath = reportFilePath;
     }
 }

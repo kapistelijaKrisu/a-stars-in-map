@@ -53,14 +53,14 @@ public class WebMapTest {
         targetLocation = new Point(2,3);
         map.setMap(null);
 
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setTileTarget(targetLocation);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setTileAt(atLocation);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setMap(data);
         map.setTileAt(null);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.toString());
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setTileAt(atLocation);
         assertEquals("0 1 2 \n" +
                 "At location: 1,2\n" +
@@ -70,7 +70,7 @@ public class WebMapTest {
                 "Target location: 2,3\n" +
                 "6 7 8 \n" +
                 "At location: 1,2\n" +
-                "Target location: 2,3\n", map.toString());
+                "Target location: 2,3\n", map.getTextualView());
 
     }
 

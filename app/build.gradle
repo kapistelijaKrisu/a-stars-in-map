@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'jacoco'
+    id 'idea'
 }
 
 sourceCompatibility = '1.11'
@@ -9,7 +10,7 @@ targetCompatibility = '1.11'
 version = '1.1.0'
 
 application {
-    mainClassName = "main.java.app.Main"
+    mainClassName = "app.Main"
 }
 
 run{
@@ -25,7 +26,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.from = files(classDirectories.files.collect() {
             fileTree(dir: it, exclude: [
-                    'app/Main.class'
+                    'app/Main.class',
+                    'systemTools/SystemSpecReader.class'
             ])
         })
     }
@@ -37,6 +39,14 @@ repositories {
 }
 
 dependencies {
+    //oshi dependency, fails regardless if using windows and it's not in english
+    //if u do have an english windows and error logs annoy you, uncomment this
+    //error is about failing to read some registrys that we are not using anyway
+    //compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
+    //getting cpu and os
+    implementation 'com.github.oshi:oshi-core:3.13.0'
+
     testCompile "org.mockito:mockito-core:+"
     testCompile "org.mockito:mockito-inline:+"
     testCompileOnly(

@@ -3,7 +3,10 @@ package mapGenerator;
 import model.WebMap;
 
 import java.awt.*;
-import java.util.Scanner;
+
+/**
+ * A WebMap generator which needs an implementation of how WebMap values are set.
+ */
 
 public abstract class MapGenerator {
 
@@ -11,13 +14,15 @@ public abstract class MapGenerator {
     protected int startX, startY;
     protected int targetX, targetY;
 
-    protected final Scanner scanner;
-
-    public MapGenerator(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
+    /**
+     * @return coordinates of to be generated map.
+     */
     protected abstract int[][] generateTiles();
+
+    /**
+     * Set int startX, startY, targetX, targetY here however it is wanted.
+     */
+    protected abstract void setConfigValues();
 
     protected WebMap generateMap() {
         var webMap = new WebMap();
@@ -27,32 +32,14 @@ public abstract class MapGenerator {
         return webMap;
     }
 
-    protected void setConfigValues() {
-        while (true) {
-            try {
-                System.out.println("set width: ");
-                width = Integer.parseInt(scanner.nextLine());
-                System.out.println("set height: ");
-                height = Integer.parseInt(scanner.nextLine());
-                System.out.println("set starting location x");
-                startX = Integer.parseInt(scanner.nextLine());
-                System.out.println("set starting location y");
-                startY = Integer.parseInt(scanner.nextLine());
-                System.out.println("set target location x");
-                targetX = Integer.parseInt(scanner.nextLine());
-                System.out.println("set target location y");
-                targetY = Integer.parseInt(scanner.nextLine());
 
-                if (startY < 0 || startX < 0 || targetX < 0 || targetY < 0) throw new ArrayIndexOutOfBoundsException();
-                if (startY >= height || startX >= width || targetX >= width || targetY >= height) throw new ArrayIndexOutOfBoundsException();
-                return;
-            } catch (Exception e) {
-                System.out.println("values should be between 1-" + Integer.MAX_VALUE);
-            }
-        }
-    }
 
-    //todo save file on disc, print info of map
+    /**
+     * @return WebMap for a SearchAlgorithm to use.
+     * WebMap map is set by generateTiles().
+     * WebMap start point and target point are set by int startX, startY, targetX, targetY,
+     * which are configured in setConfigValues.
+     */
     public WebMap createMap() {
         setConfigValues();
         WebMap map = generateMap();

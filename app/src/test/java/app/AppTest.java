@@ -9,6 +9,7 @@ import searchAlgorithm.SearchAlgorithm;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -65,7 +66,7 @@ public class AppTest {
     }
 
     @Test
-    public void algorithmIsCalledWhenValidMapSetTest() {
+    public void algorithmIsCalledWhenValidMapSetTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
         var mockGenerator = mock(SearchAlgorithm.class);
         var mockMap = new WebMap();
@@ -87,7 +88,7 @@ public class AppTest {
     }
 
     @Test
-    public void algorithmIsNotCalledWhenInvalidMapSetTest() {
+    public void algorithmIsNotCalledWhenInvalidMapSetTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
         var mockGenerator = mock(SearchAlgorithm.class);
         var mockMap = new WebMap();
@@ -106,7 +107,7 @@ public class AppTest {
     }
 
     @Test
-    public void algorithmNotCalledWhenMapNotSetTest() {
+    public void algorithmNotCalledWhenMapNotSetTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
         var mockGenerator = mock(SearchAlgorithm.class);
         algorithmMap.put("test", mockGenerator);
@@ -121,4 +122,52 @@ public class AppTest {
 
         verify(mockGenerator, never()).runSearch();
     }
+
+    @Test
+    public void algorithmExceptionCalledWhenDoesNotExistTest() throws IOException {
+        var algorithmMap = new HashMap<String, SearchAlgorithm>();
+        var mockGenerator = mock(SearchAlgorithm.class);
+        var mockMap = new WebMap();
+        mockMap.setMap(new int[2][2]);
+        mockMap.setTileAt(new Point());
+        mockMap.setTileTarget(new Point());
+        algorithmMap.put("test", mockGenerator);
+        String input = "2\nnot here\nexit";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        scanner =  new Scanner(System.in);
+        app = new App(true, scanner);
+        app.setAlgorithmMap(algorithmMap);
+        app.setCurrentMap(mockMap);
+        app.run();
+
+        verify(mockGenerator, never()).runSearch();
+    }
+
+    @Test
+    public void algorithmIsCalledAndIOExceptionCaughtTest() throws IOException {
+        var algorithmMap = new HashMap<String, SearchAlgorithm>();
+        var mockGenerator = mock(SearchAlgorithm.class);
+        doThrow(IOException.class)
+                .when(mockGenerator)
+                .runSearch();
+        var mockMap = new WebMap();
+        mockMap.setMap(new int[2][2]);
+        mockMap.setTileAt(new Point());
+        mockMap.setTileTarget(new Point());
+        algorithmMap.put("test", mockGenerator);
+        String input = "2\ntest\nexit";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        scanner =  new Scanner(System.in);
+        app = new App(true, scanner);
+        app.setAlgorithmMap(algorithmMap);
+        app.setCurrentMap(mockMap);
+        app.run();
+
+        verify(mockGenerator, times(1)).runSearch();
+    }
+
 }

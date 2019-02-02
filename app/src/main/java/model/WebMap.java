@@ -4,15 +4,26 @@ import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
+/**
+ * Data model to be searched by a SearchAlgorithm.
+ */
 public class WebMap {
     private int[][] map;
     private Point tileAt;
     private Point tileTarget;
+    private String name;
+    private static final int WALL = 0;
 
     public WebMap() {
-
+        name = "nameless map";
     }
 
+    /**
+     *
+     * @param location coordinate of where neighbours are picked from
+     * @return list of neigbours from left, right, up and down.
+     * Considers of being at the edge of map or being next to a wall which is a cell with value of 0.
+     */
     public Collection<Point> getNeighbours(Point location) {
         var neighbours = new ArrayDeque<Point>();
 
@@ -31,20 +42,30 @@ public class WebMap {
         return neighbours;
     }
 
+    /**
+     *
+     * @return if such a map can exist, requirements:
+     * width and height of map above 0
+     * starting location tileAt exists within map
+     * target location tileTarget exists within map
+     * todo add name to test, improve validaiton by checkoing points are inside map
+     */
+    public boolean isValid() {
+        return !(map == null || tileAt == null || tileTarget == null || name == null);
+    }
     private boolean isAvailableLocation(Point neighbourCanditate) {
         if (neighbourCanditate.x < 0 || neighbourCanditate.y < 0) return false;
         if (neighbourCanditate.x >= map[0].length || neighbourCanditate.y >= map.length) return false;
-        if (map[neighbourCanditate.y][neighbourCanditate.x] == 0) return false;
+        if (map[neighbourCanditate.y][neighbourCanditate.x] == WALL) return false;
         return true;
     }
 
-    public boolean isValid() {
-        return !(map == null || tileAt == null || tileTarget == null);
-    }
-
     // todo use string builder, remove last \n, currently no harm -> low priority
-    @Override
-    public String toString() {
+
+    /**
+     * @return textual representation of map if it is valid.
+     */
+    public String getTextualView() {
         if (!isValid()) return "invalid map. Set map, tileAt, tileTarget";
         String mapInString = "";
         for (int[] yAxis : map) {
@@ -80,5 +101,13 @@ public class WebMap {
 
     public void setTileTarget(Point tileTarget) {
         this.tileTarget = tileTarget;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -4,17 +4,25 @@
 * Ohjelman tarkka määrittely ~3h
 * Suunniteltu kartan lukija ~10min
 * gradlen asennus ja pystytys ~1h
-* Testien aloitus ja tekeminen nykyisiin luokkiin ~4h
+* Testien aloitus ja tekeminen nykyisiin luokkiin ~5h
 * Teoreettiset vaativuudet lisätty ~15min
 * Mockito ja jacoco käyttöön, testejä täydennetty ~2h
+* Oshi apin lukemista ~1h https://github.com/oshi/oshi
+* Raportin luonnin alkaminen (kansiorakenne, nimeäminen, templaten aloitus) ~2h
+* Esiversio javadocseista valmiisiin komponentteihin, pitää selvittää miten viitataan luokkaan ja @param ja muuttujille ~30min
+* Javadocin generoinnin konffaus ~1h
+* pieni refaktorointi (magic numbers pois, siivota abstractit luokat) ~2h
+* raportin templaten palasien koonti (systemTools paketti) ~2h
 
 ### Suunniteltu seuraavaksi
 * leveyshaun testit
-* ohjelma tallentamaan raportit
+* ohjelma tallentamaan raportit, templaten viimeistely ja sen arvojen vaihto
 
 ### Mitä opin
 * visual code best md file editor
 * mockitolla ongelmia tietyn tyyppisten luokkien kanssa -> ei käytetäkkään
 * löytyi tapauksia missä mockitosta onkin hyötyä -> takaisin käyttöön
+* Mockitolla voi testata abstrakteja luokkia
 * Gradle on oikeasti päivittänyt asioita -> jacocoTestReport conffaus ongelmia
 * Jacocon peruspystytys gradle 5:lla
+* oshi on jännä kirjasto koneen specsien etsimiseen
