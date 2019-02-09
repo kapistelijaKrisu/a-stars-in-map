@@ -1,49 +1,69 @@
 package mapGenerator;
 
+import model.WebMap;
+
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * Simple wightless map generator that asks user for parameters for generating a map.
  */
-public class NoWeightSimpleGenerator extends MapGenerator {
+public class NoWeightSimpleGenerator implements MapGenerator {
     protected final Scanner scanner;
+    private int mapWidth, mapHeight;
+    private Point mapStartLocation;
+    private Point mapTargetLocation;
+    private String mapName = "nameless";
 
     /**
      *
      * @param scanner used to interact with user for configuring values.
-     * todo save file on disc, print info of map
      */
     public NoWeightSimpleGenerator(Scanner scanner) {
         this.scanner = scanner;
     }
 
+
     /**
+     * Asks user input values to create a map. And will loop forever until valid values are given.
+     * Values requird by user:
+     * width over 0
+     * height over 0
+     * tile start x coordinate within 0 and width - 1
+     * tile start y coordinate within 0 and height - 1
+     * tile target x coordinate within 0 and width - 1
+     * tile target y coordinate within 0 and height - 1
+     * @return a valid map
      *
-     * @return map of configured height n width with every value being 1.
      */
     @Override
-    protected int[][] generateTiles() {
-        int[][] map = new int[height][width];
+    public WebMap createMap() {
+        setConfigValues();
+        WebMap map = new WebMap();
+        map.setName(mapName);
+        map.setMap(generateTiles());
+        map.setTileTarget(mapTargetLocation);
+        map.setTileAt(mapStartLocation);
+        return  map;
+    }
+
+    private int[][] generateTiles() {
+        int[][] map = new int[mapHeight][mapWidth];
         for (int[] row : map) {
             Arrays.fill(row, 1);
         }
         return map;
     }
 
-    /**
-     * Config all values that are needed for generating a valid WebMap.
-     * Asks user for parameters until valid values are given.
-     * Upon error asks all values again.
-     */
-    @Override
-    protected void setConfigValues() {
+    private void setConfigValues() {
         while (true) {
             try {
+                int startX, startY, targetX, targetY;
                 System.out.println("set width: ");
-                width = Integer.parseInt(scanner.nextLine());
+                mapWidth =Integer.parseInt(scanner.nextLine());
                 System.out.println("set height: ");
-                height = Integer.parseInt(scanner.nextLine());
+                mapHeight = Integer.parseInt(scanner.nextLine());
                 System.out.println("set starting location x");
                 startX = Integer.parseInt(scanner.nextLine());
                 System.out.println("set starting location y");
@@ -54,8 +74,10 @@ public class NoWeightSimpleGenerator extends MapGenerator {
                 targetY = Integer.parseInt(scanner.nextLine());
 
                 if (startY < 0 || startX < 0 || targetX < 0 || targetY < 0) throw new ArrayIndexOutOfBoundsException();
-                if (startY >= height || startX >= width || targetX >= width || targetY >= height) throw new ArrayIndexOutOfBoundsException();
-                if (width < 0 || height < 0) throw new IllegalArgumentException();
+                if (startY >= mapHeight || startX >= mapWidth || targetX >= mapWidth || targetY >= mapHeight) throw new ArrayIndexOutOfBoundsException();
+                if (mapHeight <= 0 || mapWidth <= 0) throw new IllegalArgumentException();
+                mapStartLocation = new Point(startX, startY);
+                mapTargetLocation = new Point(targetX, targetY);
                 return;
             } catch (Exception e) {
                 System.out.println("width and height should be between 1-" + Integer.MAX_VALUE + ". x,y values should be between 0-" + (Integer.MAX_VALUE - 1));
@@ -67,4 +89,5 @@ public class NoWeightSimpleGenerator extends MapGenerator {
     public String toString() {
         return "simple weightless and walless map generator";
     }
+
 }

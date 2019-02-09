@@ -4,8 +4,6 @@ import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -13,11 +11,10 @@ import java.util.Properties;
  */
 
 public class SystemSpecReader {
-    OperatingSystem operatingSystem;
-    HardwareAbstractionLayer hardwareAbstractionLayer;
-    Runtime runtime = Runtime.getRuntime();
-    List<String> interestinPropertyKeys;
-
+    private final OperatingSystem operatingSystem;
+    private final HardwareAbstractionLayer hardwareAbstractionLayer;
+    private final Runtime runtime = Runtime.getRuntime();
+    private final Properties properties;
     /**
      * Initializes few internal helpers
      * Not really testable since results vary by hardware / os / java
@@ -26,38 +23,48 @@ public class SystemSpecReader {
         SystemInfo systemInfo = new SystemInfo();
         operatingSystem = systemInfo.getOperatingSystem();
         hardwareAbstractionLayer = systemInfo.getHardware();
-
-        interestinPropertyKeys = new ArrayList<>();
-        interestinPropertyKeys.add("sun.management.compiler");
-        interestinPropertyKeys.add("java.runtime.version");
-        interestinPropertyKeys.add("java.vm.version");
-        interestinPropertyKeys.add("java.vm.name");
+        properties = System.getProperties();
     }
 
     /**
      * gets cpu name
-     *
      * @return cpu name
      */
 
     public String getCpu() {
-        getJvm();
         return hardwareAbstractionLayer.getProcessor().getName();
     }
 
     /**
-     * gets some jvm specs
      *
-     * @return properties of process: sun.management.compiler, java.runtime.version, java.vm.version, java.vm.name
-     * separated by lineseparator
+     * @return compiler defined in properties
      */
-    public String getJvm() {
-        Properties p = System.getProperties();
-        String result = "";
-        for (String key : interestinPropertyKeys) {
-            result += key + ": " + p.get(key) + System.lineSeparator();
-        }
-        return result;
+    public String getCompiler() {
+        return properties.get("sun.management.compiler").toString();
+    }
+
+    /**
+     *
+     * @return runtime defined in properties
+     */
+    public String getRuntime() {
+        return properties.get("java.runtime.version").toString();
+    }
+
+    /**
+     *
+     * @return virtual machine name defined in properties
+     */
+    public String getVirtualMachineName() {
+        return properties.get("java.vm.name").toString();
+    }
+
+    /**
+     *
+     * @return virtual machine verions defined in properties
+     */
+    public String getVirtualMachineVersion() {
+        return properties.get("java.vm.version").toString();
     }
 
     /**
@@ -70,7 +77,7 @@ public class SystemSpecReader {
     /**
      * @return human readable available heap space of this process
      */
-    public String getAvailableHeapSizeRedable() {
+    public String getAvailableHeapSizeReadable() {
         long availableMemory = getAvailableHeapSize();
         return availableMemory / (1024 * 1024) + " megabyte " + availableMemory % 1024 + " kilobytes";
     }
@@ -82,8 +89,4 @@ public class SystemSpecReader {
         return runtime.maxMemory() - runtime.freeMemory();
     }
 
-    // testing that the wanted keys are in there
-    public List<String> getInterestingPropertyKeys() {
-        return interestinPropertyKeys;
-    }
 }

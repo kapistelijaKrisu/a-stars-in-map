@@ -1,8 +1,9 @@
 package model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,39 +46,66 @@ public class WebMapTest {
         assertEquals(data, map.getMap());
         assertEquals(targetLocation, map.getTileTarget());
         assertEquals(atLocation, map.getTileAt());
+
+        assertEquals("nameless map", map.getName());
+        map.setName("not a default name");
+        assertEquals("not a default name", map.getName());
+    }
+
+    @Test
+    public void nameTest() {
+        atLocation = new Point(1,2);
+        targetLocation = new Point(2,2);
+        map.setTileTarget(targetLocation);
+        map.setTileAt(atLocation);
+        map.setMap(data);
+        assertTrue(map.isValid());
+        String test = "name";
+        assertTrue(map.isValid());
+        char[] illegal_chars = { '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':' };
+        for (int i = 0; i < illegal_chars.length; i++) {
+            map.setName(test + illegal_chars[i]);
+            assertFalse(map.isValid());
+        }
+
     }
 
     @Test //todo remove last character
     public void printTest() {
         atLocation = new Point(1,2);
-        targetLocation = new Point(2,3);
+        targetLocation = new Point(2,2);
         map.setMap(null);
-
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        map.setName(null);
         assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setTileTarget(targetLocation);
         assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setTileAt(atLocation);
         assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
         map.setMap(data);
-        map.setTileAt(null);
         assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
-        map.setTileAt(atLocation);
-        assertEquals("0 1 2 \n" +
-                "At location: 1,2\n" +
-                "Target location: 2,3\n" +
-                "3 4 5 \n" +
-                "At location: 1,2\n" +
-                "Target location: 2,3\n" +
-                "6 7 8 \n" +
-                "At location: 1,2\n" +
-                "Target location: 2,3\n", map.getTextualView());
+
+        map.setName("now all values are valid");
+        assertEquals("width: 3 height: 3\nAt location: 1,2\nTarget location: 2,2", map.getTextualView());
+
+        map.setTileTarget(new Point(1, -1));
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        map.setTileTarget(new Point(-1, 1));
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        map.setTileTarget(new Point(-1, 1));
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        map.setTileTarget(new Point(1, -1));
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+
+        map.setTileTarget(new Point(0, 0));
+        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
 
     }
 
     @Test //todo remove last character
     public void isValidTest() {
         atLocation = new Point(1,2);
-        targetLocation = new Point(2,3);
+        targetLocation = new Point(2,2);
         map.setMap(null);
 
         assertFalse(map.isValid());

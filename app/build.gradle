@@ -27,7 +27,9 @@ jacocoTestReport {
         classDirectories.from = files(classDirectories.files.collect() {
             fileTree(dir: it, exclude: [
                     'app/Main.class',
-                    'systemTools/SystemSpecReader.class'
+                    'systemTools/SystemSpecReader.class',
+                    'IOoperations/mapReader/MapLocator.class',
+                    'IOoperations/analysisWriter/AnalysisWriter.class'
             ])
         })
     }

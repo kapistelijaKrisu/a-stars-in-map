@@ -1,20 +1,21 @@
 package app;
 
-import systemTools.SystemSpecReader;
-
+import IOoperations.analysisWriter.AnalysisWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
     /**
      * Entry point for program
-     * @param args entrypoint arguments
-     * Currently test results in a fixed location and dev mode is hardcoded
-     * TODO add path where to save test results later as param, add dev mode option
-     * */
+     * 1st argument is devmode, true if argument is true else false.
+     * @param args entrypoint arguments.
+     */
     public static void main(String[] args) {
-        System.out.println("Hello there");
-        var app = new App(true, new Scanner(System.in));
+
+        AnalysisWriter analysisWriter = new AnalysisWriter();
+        boolean devMode = args.length == 0 || args[0].equals("true");
+        var app = new App(devMode, new Scanner(System.in), analysisWriter);
         app.run();
     }
 }

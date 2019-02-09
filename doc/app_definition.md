@@ -32,14 +32,15 @@
 * Ohjelman juurikansion vieressä on maps niminen kansio
 * maps kansiosta valitaan .map tyyppinen tiedosto
 ##### .map rakenne
-* tiedosto muotoiltu siten, että jokaiselle merkille on annettu numeerinen painoarvo (0 = seinä)
-* kerrottu korkeus 
-* kerrottu leveys
-* kerrottu alkupiste x y
-* kerrottu määränpää x y
-* kerrottu milloin kartta alkaa
-* # toimii kommenttin merkistä
+* tiedosto muotoiltu siten, että jokaiselle yksittäiselle merkille on annettu numeerinen painoarvo (0 = seinä)
+* kerrottu korkeus "width"
+* kerrottu leveys "height" 
+* kerrottu alkupiste x y "start 2 3"
+* kerrottu määränpää x y "target 43 2"
+* # toimii kommenttin merkistä seuraen välilyönti
 * älä laita määränpäätä seinään
+* kerrottu milloin kartta alkaa "map" ja sen jälkeen merkki per arvo luetaan ignooraen välilyöntejä
+* tiedoston luku päättyy kun ollaan luettu korkeuden verran karttaa
 
 ```
 # esimerkki sisällöstä
@@ -52,12 +53,12 @@ target 1 0
 height 2
 width 3
 map
-T.y
-T.x
+T..
+T.T
 ```
 
-#### 1.2 Kartan luominen
-* Heti generaattorin valinna jälkeen generaattori kysyy lisä tietoja mm. lukija listaa kartat maps kansiosta ja kysyy mitä käytetään
+#### 1.2.1 Kartan luominen
+* Heti generaattorin valinna jälkeen generaattori kysyy lisätietoja mm. lukija listaa kartat maps kansiosta, joka on samassa kansiossa juuren kanssa ja kysyy mitä käytetään
 * Kyselyn jälkeen luodaan kartta
 
 ### 2 Valitse ajettava algoritmi
@@ -81,3 +82,9 @@ doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md. Vielä määrittämättä
 
 ### 4 Profit
 Palataan päävalikkoon. Voit ihailla tai analysoida tuloksia.
+
+## Testaus
+Unit testaus mockiton kanssa. Raportointi jacocon kanssa. Testikattavuuden minimi 70% ja tavoite 90%.
+
+## Javadoc
+Kaikki public ja protected.

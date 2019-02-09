@@ -1,12 +1,13 @@
 package app;
 
 import mapGenerator.MapGenerator;
+import mapGenerator.MapGeneratorFromFiles;
 import mapGenerator.NoWeightSimpleGenerator;
 import model.WebMap;
+import IOoperations.analysisWriter.AnalysisWriter;
 import searchAlgorithm.BreathSearch;
 import searchAlgorithm.SearchAlgorithm;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +21,9 @@ import java.util.Scanner;
 
 public class App {
 
-    private static final String GENERATE_MAP = "1", RUN_ALGORITHM_ANALYSIS = "2", DEV_DERP = "3";
+    private static final String GENERATE_MAP = "1", RUN_ALGORITHM_ANALYSIS = "2";
     private static final String BREATH_WIDTH = "b";
-    private static final String SIMPLE_GENERATOR = "s";
+    private static final String SIMPLE_GENERATOR = "s", LOAD_MAP_GENERATOR = "d";
     private static final boolean RUNNING = true, STOPPED = false;
 
     private final Scanner scanner;
@@ -32,16 +33,23 @@ public class App {
     private WebMap currentMap;
     private final boolean devMode;
 
-    public App(boolean devMode, Scanner scanner) {
+    /**
+     * Sets up app to be ready to run.
+     * @param devMode if true then additional logging during exception mode
+     * @param scanner scanner for user input to be used and shared with rest of the app.
+     * @param analysisWriter writer to write down search analysis results.
+     */
+    public App(boolean devMode, Scanner scanner, AnalysisWriter analysisWriter) {
         this.devMode = devMode;
         this.scanner = scanner;
         state = STOPPED;
         currentMap = new WebMap();
         algorithmMap = new HashMap<>();
-        algorithmMap.put(BREATH_WIDTH, new BreathSearch());
+        algorithmMap.put(BREATH_WIDTH, new BreathSearch(analysisWriter));
 
         mapGenerators = new HashMap<>();
         mapGenerators.put(SIMPLE_GENERATOR, new NoWeightSimpleGenerator(scanner));
+        mapGenerators.put(LOAD_MAP_GENERATOR, new MapGeneratorFromFiles(scanner));
 
     }
 
@@ -69,35 +77,12 @@ public class App {
                 case RUN_ALGORITHM_ANALYSIS:
                     runSearch();
                     break;
-                case DEV_DERP: // testing file creation currently
-                    if (devMode) {
-                        try {
-                            var algorithm = algorithmMap.get(BREATH_WIDTH);
-                            currentMap.setTileTarget(new Point(2, 1));
-                            currentMap.setTileAt(new Point(2, 2));
-                            currentMap.setMap(new int[3][3]);
-                            algorithm.setMapClean(currentMap);
-                            algorithm.runSearch();
-                        }catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        state = STOPPED;
-                    }
-                    break;
-
                 default:
                     state = STOPPED;
             }
         }
     }
 
-    /**
-     *  Sets map to be used for analysis.
-     *  Requires user input.
-     *  User is guided through options.
-     *  todo load map option
-     */
     private void generateMap() {
         try {
             System.out.println("Choose generator to set map:");
@@ -113,12 +98,6 @@ public class App {
             if (devMode) e.printStackTrace();
         }
     }
-
-    /**
-     *  Runs search algorithm analysis of users choice from list that app has.
-     *  Requires user input.
-     *  User is guided through options.
-     */
 
     private void runSearch() {
         if (currentMap != null && currentMap.isValid()) {

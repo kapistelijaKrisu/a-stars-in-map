@@ -8,13 +8,13 @@ import java.util.*;
 /**
  * classic breath-first-search
  */
-public class BreathSearch extends SearchAlgorithm {
+public class DepthSearch extends SearchAlgorithm {
 
     /**
      * classic breath-first-search that extends SearchAlgorithm so it handles report writing.
      * @param analysisWriter writer that writes the analysis report files.
      */
-    public BreathSearch(AnalysisWriter analysisWriter) {
+    public DepthSearch(AnalysisWriter analysisWriter) {
         super(analysisWriter);
     }
 
@@ -32,7 +32,7 @@ public class BreathSearch extends SearchAlgorithm {
         Point previous = null;
 
         while (!queue.isEmpty()) {
-            Point polled = queue.poll();
+            Point polled = queue.pollLast();
             path.put(polled, previous);
             previous = polled;
             if (polled.equals(map.getTileTarget())) {
@@ -66,6 +66,6 @@ public class BreathSearch extends SearchAlgorithm {
 
     @Override
     public String toString() {
-        return "breath width";
+        return "depth search";
     }
 }
