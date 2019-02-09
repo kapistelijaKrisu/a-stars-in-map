@@ -4,11 +4,9 @@ import IOoperations.analysisWriter.AnalysisWriter;
 import model.WebMap;
 import systemTools.SystemSpecReader;
 
-import java.awt.*;
+import java.awt.Point;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Base class that does all the ground work for preparing analysis file.
@@ -81,13 +79,25 @@ public abstract class SearchAlgorithm {
 
     //todo tidy this into smaller bits
     protected void handleReportWriting(Map<Point, Point> path, Set<Point> visited, long startTime, long spaceLeftAtStart) {
-        long elapsedTime = System.nanoTime() - startTime;
         long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart;
-        int[][] baseMap = map.getMap();
-        StringBuilder sb = new StringBuilder(baseMap.length * baseMap[0].length + baseMap.length);
+        templateValueMap.put("{test_space}", "" + spaceDifference);
+        templateValueMap.put("{test_used_steps}", "" + (path.size() - 1));
+        setProcessedMap(path, visited);
+        setTimeElapsed(startTime);
+    }
+
+    private void setProcessedMap(Map<Point, Point> path, Set<Point> visited) {
+        List<Point> goalPath = new ArrayList<>();
+        Point locationAt = path.get(map.getTileTarget());
+        while (locationAt != null) {
+            goalPath.add(locationAt);
+            locationAt = path.get(locationAt);
+        }
         int max_steps = 0;
         int pathWeight = 0;
-        sb.append("How map was processed").append(System.lineSeparator());
+        int[][] baseMap = map.getMap();
+        StringBuilder sb = new StringBuilder(baseMap.length * baseMap[0].length + baseMap.length);
+
         for (int y = 0; y < baseMap.length; y++) {
             for (int x = 0; x < baseMap[0].length; x++) {
                 if (map.getTileAt().x == x && map.getTileAt().y == y && map.getTileAt().equals(map.getTileTarget())) {
@@ -100,7 +110,7 @@ public abstract class SearchAlgorithm {
                     sb.append('T');
                 } else if (baseMap[y][x] == 0) { //wall
                     sb.append('w');
-                } else if (path.containsKey(new Point(x, y)) || path.containsValue(new Point(x, y))) {
+                } else if (goalPath.contains(new Point(x, y))) {
                     sb.append('x');
                     max_steps++;
                     pathWeight += baseMap[y][x];
@@ -115,8 +125,13 @@ public abstract class SearchAlgorithm {
             }
             sb.append(System.lineSeparator());
         }
+        templateValueMap.put("{test_processed_map}", sb.toString());
+        templateValueMap.put("{test_path_weight}", "" + pathWeight);
+        templateValueMap.put("{test_max_steps}", "" + max_steps);
+    }
 
-
+    private void setTimeElapsed(long startTime) {
+        long elapsedTime = System.nanoTime() - startTime;
         long nanos = elapsedTime % 1000;
         long millis = elapsedTime / 1000 % 1000;
         long sec = elapsedTime / (1000 * 1000) % (1000 * 1000);
@@ -128,13 +143,7 @@ public abstract class SearchAlgorithm {
         if (sec != 0)  timeReport += " seconds " + sec;
         if (millis != 0)  timeReport += " millis " + millis + " ";
         timeReport += "nanos " + nanos;
-
-        templateValueMap.put("{test_processed_map}", sb.toString());
         templateValueMap.put("{test_time}", timeReport);
-        templateValueMap.put("{test_space}", "" + spaceDifference);
-        templateValueMap.put("{test_used_steps}", "" + (path.size() - 1));
-        templateValueMap.put("{test_path_weight}", "" + pathWeight);
-        templateValueMap.put("{test_max_steps}", "" + max_steps);
     }
 
     /**

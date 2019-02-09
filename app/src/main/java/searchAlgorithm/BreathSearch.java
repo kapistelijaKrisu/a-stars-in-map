@@ -28,19 +28,17 @@ public class BreathSearch extends SearchAlgorithm {
 
         visited.add(orignalStart);
         queue.add(orignalStart);
-
-        Point previous = null;
+        path.put(orignalStart, null);
 
         while (!queue.isEmpty()) {
             Point polled = queue.poll();
-            path.put(polled, previous);
-            previous = polled;
             if (polled.equals(map.getTileTarget())) {
                 super.handleReportWriting(path, visited, timeOfStart, spaceLeft);
                 return;
             } else {
                 for (Point neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
+                        path.put(neighbour, polled);
                         visited.add(neighbour);
                         queue.add(neighbour);
                     }
