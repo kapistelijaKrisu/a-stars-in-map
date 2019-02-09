@@ -16,6 +16,7 @@
 * map generaattori interfaceksi ja siihen liittyvät muutokset ~1h
 
 ### Suunniteltu seuraavaksi
+* 0 pathi tulostaa missä kaikkialla on käyty eikä itse a -> b, fixata pitää
 * 1 leveys-, syvyyshaun testaus ja dokkari
 * 2 template_usage.md viimeistely
 * 3 dijkstra ja a* totetus

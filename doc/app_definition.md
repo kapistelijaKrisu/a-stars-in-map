@@ -70,12 +70,8 @@ T.T
 
 ### 3 ??????
 Tässä taika-askeleessa algoritmi käy haunsa läpi ja kirjoittaa tuloksensa juurikansion viereen muodossa 
-doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md. Vielä määrittämättä raportin sisältö.  
+doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md.   
 #### Muistilista raportin suunnitteluun
-* Miten kirjoitetaan koneen specsit raporttiin
-* Kovakoodata vai lukea teoreettiset tila-, aikavaativuudet jostain
-* Piirtää tai linkittää kartan
-* Kirjoittaa ajan
 * Tilan käytön selvitys?
 #### Raportin suunnitelma tähän mennessä
 * md tyyppinen tiedosto 

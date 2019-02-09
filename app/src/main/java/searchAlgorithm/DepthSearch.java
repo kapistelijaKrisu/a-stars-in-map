@@ -6,12 +6,12 @@ import java.awt.*;
 import java.util.*;
 
 /**
- * classic breath-first-search
+ * classic dreath-first-search
  */
 public class DepthSearch extends SearchAlgorithm {
 
     /**
-     * classic breath-first-search that extends SearchAlgorithm so it handles report writing.
+     * classic dreath-first-search that extends SearchAlgorithm so it handles report writing.
      * @param analysisWriter writer that writes the analysis report files.
      */
     public DepthSearch(AnalysisWriter analysisWriter) {

@@ -1,7 +1,6 @@
 package app;
 
 import IOoperations.analysisWriter.AnalysisWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {

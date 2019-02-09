@@ -85,7 +85,6 @@ public abstract class SearchAlgorithm {
         long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart;
         int[][] baseMap = map.getMap();
         StringBuilder sb = new StringBuilder(baseMap.length * baseMap[0].length + baseMap.length);
-        int steps = 0;
         int max_steps = 0;
         int pathWeight = 0;
         sb.append("How map was processed").append(System.lineSeparator());
@@ -96,7 +95,6 @@ public abstract class SearchAlgorithm {
                 }else if (map.getTileAt().x == x && map.getTileAt().y == y) {
                     sb.append('S');
                 }else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
-                    steps++;
                     max_steps++;
                     pathWeight += baseMap[y][x];
                     sb.append('T');
@@ -104,12 +102,10 @@ public abstract class SearchAlgorithm {
                     sb.append('w');
                 } else if (path.containsKey(new Point(x, y)) || path.containsValue(new Point(x, y))) {
                     sb.append('x');
-                    steps++;
                     max_steps++;
                     pathWeight += baseMap[y][x];
                 } else if (visited.contains(new Point(x, y))) {
                     sb.append('v');
-                    steps++;
                     max_steps++;
                     pathWeight += baseMap[y][x];
                 } else {
