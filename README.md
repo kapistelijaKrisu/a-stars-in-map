@@ -6,5 +6,6 @@ search algorithm comparison with a labyrinth generator
 [Viikko 2 raportti ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week2.md)  
 [Viikko 3 raportti ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week3.md)  
 [Viikko 4 raportti ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week4.md)  
+[Viikko 5 raportti ](https://github.com/kapistelijaKrisu/a-stars-in-map/blob/master/doc/week5.md)  
   
 [dokumentti kansio](https://github.com/kapistelijaKrisu/searching-comparison-with-map-gen/tree/master/doc)
