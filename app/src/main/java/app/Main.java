@@ -23,19 +23,24 @@ public class Main {
         var app = new App(devMode, new Scanner(System.in), analysisWriter);
         app.run();
 
-        /* for testin
+/*         for testin
         var mockMap = new WebMap();
-        mockMap.setTileAt(new Point(0,0));
-        mockMap.setTileTarget(new Point(10,4));
-
-        int size = 33;
-        var m = new int[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                m[i][j] = 1;
+        mockMap.setTileStart(new Point(0, 1));
+        mockMap.setTileTarget(new Point(4, 3));
+        int[][] map = new int[6][7];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                map[i][j] = 1;
             }
         }
-        mockMap.setMap(m);
+        map[0][3] = 0;
+        map[1][1] = 0;
+        map[2][1] = 0;
+        map[2][3] = 0;
+        map[3][1] = 0;
+        map[3][3] = 0;
+        map[4][3] = 0;
+        mockMap.setMap(map);
 
         BreathSearch b = new BreathSearch(analysisWriter);
         b.setMapClean(mockMap);

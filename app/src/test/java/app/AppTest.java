@@ -8,15 +8,14 @@ import org.junit.rules.Timeout;
 import IOoperations.analysisWriter.AnalysisWriter;
 import searchAlgorithm.SearchAlgorithm;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Scanner;
+import mock.WebMapMock;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.assertTrue;
 
 public class AppTest {
 
@@ -70,7 +69,7 @@ public class AppTest {
     public void algorithmIsCalledWhenValidMapSetTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
         var mockGenerator = mock(SearchAlgorithm.class);
-        var mockMap = createValidMap();
+        var mockMap = WebMapMock.getMinimumValidMap();
         algorithmMap.put("test", mockGenerator);
         String input = "2\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -125,7 +124,7 @@ public class AppTest {
     public void algorithmExceptionCalledWhenDoesNotExistTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
         var mockGenerator = mock(SearchAlgorithm.class);
-        var mockMap = createValidMap();
+        var mockMap = WebMapMock.getMinimumValidMap();
         algorithmMap.put("test", mockGenerator);
         String input = "2\nnot here\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -147,7 +146,7 @@ public class AppTest {
         doThrow(IOException.class)
                 .when(mockGenerator)
                 .runSearch();
-        var mockMap = createValidMap();
+        var mockMap = WebMapMock.getMinimumValidMap();
         algorithmMap.put("test", mockGenerator);
         String input = "2\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -162,13 +161,5 @@ public class AppTest {
         verify(mockGenerator, times(1)).runSearch();
     }
 
-    private WebMap createValidMap() {
-        var mockMap = new WebMap();
-        mockMap.setMap(new int[2][2]);
-        mockMap.setTileAt(new Point(0,0));
-        mockMap.setTileTarget(new Point(1,1));
-        mockMap.getMap()[1][1] = 1;
-        assertTrue(mockMap.isValid());
-        return mockMap;
-    }
+
 }

@@ -46,7 +46,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
             loadMapFromFile(mapFile);
             WebMap map = new WebMap();
             map.setName(mapName);
-            map.setTileAt(mapStartLocation);
+            map.setTileStart(mapStartLocation);
             map.setTileTarget(mapTargetLocation);
             map.setMap(mapArea);
             return map;

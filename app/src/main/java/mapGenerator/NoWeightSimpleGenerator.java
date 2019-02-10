@@ -44,7 +44,7 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         map.setName(mapName);
         map.setMap(generateTiles());
         map.setTileTarget(mapTargetLocation);
-        map.setTileAt(mapStartLocation);
+        map.setTileStart(mapStartLocation);
         return  map;
     }
 

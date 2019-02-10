@@ -7,9 +7,19 @@
   <component name="ChangeListManager">
     <list default="true" id="35ac46c0-c7ad-4dce-811f-18904db6fc23" name="Default Changelist" comment="Path  bit too verbose">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGeneratorFromFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGeneratorFromFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapGenerator/NoWeightSimpleGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/NoWeightSimpleGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/WebMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/WebMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/app/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/app/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/week4.md" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/week4.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -68,13 +78,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="95" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="57">
+              <caret line="102" column="84" selection-start-line="102" selection-start-column="84" selection-end-line="102" selection-end-column="84" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7355#7356#0" expanded="true" />
-                <element signature="e#7433#7434#0" expanded="true" />
-                <element signature="e#7545#7546#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,8 +90,80 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+            <state relative-caret-position="153">
+              <caret line="42" column="28" lean-forward="true" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/mock/MockAnalysisWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-136">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="95" lean-forward="true" selection-end-line="95" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/DepthAlgorithmTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="32" column="60" selection-start-line="32" selection-start-column="60" selection-end-line="32" selection-end-column="60" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/model/WebMapTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="81" column="90" lean-forward="true" selection-start-line="81" selection-start-column="90" selection-end-line="81" selection-end-column="90" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/mock/WebMapMock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,20 +174,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="578">
+              <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,6 +209,12 @@
       <find>searchAlgorithm</find>
       <find>fillDefaultTemplateValues</find>
       <find>fillAnalysisReportValues</find>
+      <find>received</find>
+      <find>&quot;&quot;</find>
+      <find>Equal</find>
+      <find>visited</find>
+      <find>pathWeight</find>
+      <find>tileAt</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,12 +234,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/model/WebMap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/analysis/Main.java" />
-        <option value="$PROJECT_DIR$/src/build.gradle" />
-        <option value="$PROJECT_DIR$/src/test/java/analysis/app/App.java" />
-        <option value="$PROJECT_DIR$/src/test/java/analysis/app/AppTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/analysis/searchAlgorithm/SearchAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/main/java/analysis/searchAlgorithm/BreathSearch.java" />
         <option value="$PROJECT_DIR$/src/main/java/analysis/model/WebMap.java" />
         <option value="$PROJECT_DIR$/src/main/java/analysis/mapGenerator/MapGenerator.java" />
@@ -193,9 +260,7 @@
         <option value="$PROJECT_DIR$/src/test/java/IOoperations/analysisWriter/AnalysisWriterTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/IOoperations/mapReader/MapReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java" />
-        <option value="$PROJECT_DIR$/src/test/java/app/AppTest.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/testMapSuccess.map" />
         <option value="$PROJECT_DIR$/src/test/resources/testMapFail.map" />
         <option value="$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java" />
@@ -203,14 +268,22 @@
         <option value="$PROJECT_DIR$/src/main/java/mapGenerator/MapGeneratorFromFiles.java" />
         <option value="$PROJECT_DIR$/src/main/java/IOoperations/mapReader/MapLocator.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/App.java" />
-        <option value="$PROJECT_DIR$/src/main/java/model/WebMap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" />
         <option value="$PROJECT_DIR$/src/test/java/IOoperations/analysisWriter/ReportValidatorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/ReportValidator.java" />
         <option value="$PROJECT_DIR$/src/main/resources/ReportTemplate.md" />
-        <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" />
-        <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" />
+        <option value="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" />
+        <option value="$PROJECT_DIR$/src/test/java/searchAlgorithm/MockAnalysisWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/WebMap.java" />
+        <option value="$PROJECT_DIR$/src/test/java/WebMapMock.java" />
+        <option value="$PROJECT_DIR$/src/test/java/mock/WebMapMock.java" />
+        <option value="$PROJECT_DIR$/src/test/java/app/AppTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/mock/MockAnalysisWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" />
+        <option value="$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" />
+        <option value="$PROJECT_DIR$/src/test/java/searchAlgorithm/DepthAlgorithmTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/Main.java" />
       </list>
     </option>
@@ -232,6 +305,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -265,7 +339,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -305,57 +378,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="IOoperations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="IOoperations" type="462c0819:PsiDirectoryNode" />
-              <item name="analysisWriter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="IOoperations" type="462c0819:PsiDirectoryNode" />
-              <item name="mapReader" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mapGenerator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="searchAlgorithm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="systemTools" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="app" type="b2602c69:ProjectViewProjectNode" />
@@ -391,23 +414,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="analysisWriter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mapGenerator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="mock" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="app" type="b2602c69:ProjectViewProjectNode" />
@@ -424,12 +431,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549752527092" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549833419905" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -452,45 +459,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.app [run]">
-    <configuration name="app [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="javadoc" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="app [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.app [test]">
     <configuration name="app [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -510,51 +479,84 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="MapGeneratorFromFilesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DepthAlgorithmTest.doesThrowErrorsWithInvalidMapTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="app.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="mapGenerator.*" />
+          <option name="PATTERN" value="searchAlgorithm.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="mapGenerator" />
-      <option name="MAIN_CLASS_NAME" value="mapGenerator.MapGeneratorFromFilesTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="searchAlgorithm" />
+      <option name="MAIN_CLASS_NAME" value="searchAlgorithm.DepthAlgorithmTest" />
+      <option name="METHOD_NAME" value="doesThrowErrorsWithInvalidMapTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MapGeneratorFromFilesTest.errorInNoMapsFoundTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="app.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="mapGenerator.*" />
+          <option name="PATTERN" value="searchAlgorithm.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="mapGenerator" />
-      <option name="MAIN_CLASS_NAME" value="mapGenerator.MapGeneratorFromFilesTest" />
-      <option name="METHOD_NAME" value="errorInNoMapsFoundTest" />
+      <option name="PACKAGE_NAME" value="searchAlgorithm" />
+      <option name="MAIN_CLASS_NAME" value="searchAlgorithm.DepthAlgorithmTest" />
+      <option name="METHOD_NAME" value="valuesSetCorectlyWhereStartIsNotTargetTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsTargetTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="searchAlgorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="searchAlgorithm" />
+      <option name="MAIN_CLASS_NAME" value="searchAlgorithm.DepthAlgorithmTest" />
+      <option name="METHOD_NAME" value="valuesSetCorectlyWhereStartIsTargetTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebMapTest.printTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.WebMapTest" />
+      <option name="METHOD_NAME" value="printTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.DepthAlgorithmTest.doesThrowErrorsWithInvalidMapTest" />
+      <item itemvalue="JUnit.DepthAlgorithmTest.valuesSetCorectlyWhereStartIsTargetTest" />
+      <item itemvalue="JUnit.DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" />
       <item itemvalue="Gradle.app [test]" />
-      <item itemvalue="Gradle.app [run]" />
-      <item itemvalue="Gradle.app [javadoc]" />
-      <item itemvalue="JUnit.MapGeneratorFromFilesTest" />
-      <item itemvalue="JUnit.MapGeneratorFromFilesTest.errorInNoMapsFoundTest" />
+      <item itemvalue="JUnit.WebMapTest.printTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.app [run]" />
-        <item itemvalue="Gradle.app [javadoc]" />
         <item itemvalue="Gradle.app [test]" />
-        <item itemvalue="JUnit.MapGeneratorFromFilesTest" />
-        <item itemvalue="JUnit.MapGeneratorFromFilesTest.errorInNoMapsFoundTest" />
+        <item itemvalue="JUnit.WebMapTest.printTest" />
+        <item itemvalue="JUnit.DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" />
+        <item itemvalue="JUnit.DepthAlgorithmTest.valuesSetCorectlyWhereStartIsTargetTest" />
+        <item itemvalue="JUnit.DepthAlgorithmTest.doesThrowErrorsWithInvalidMapTest" />
       </list>
     </recent_temporary>
   </component>
@@ -572,34 +574,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="MapGeneratorFromFilesTest - 2019.02.09 at 20h 09m 45s.xml">
-      <configuration name="MapGeneratorFromFilesTest" configurationId="JUnit" />
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 09m 43s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 20h 10m 09s.xml">
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 10m 05s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 10m 16s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 10m 25s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 11m 46s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DepthAlgorithmTest_valuesSetCorectlyWhereStartIsNotTargetTest - 2019.02.10 at 23h 13m 09s.xml">
+      <configuration name="DepthAlgorithmTest.valuesSetCorectlyWhereStartIsNotTargetTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="app_[test] - 2019.02.10 at 23h 13m 33s.xml">
       <configuration name="app [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 21h 47m 44s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
+    <history-entry file="WebMapTest_printTest - 2019.02.10 at 23h 14m 06s.xml">
+      <configuration name="WebMapTest.printTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 22h 08m 31s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
+    <history-entry file="WebMapTest_printTest - 2019.02.10 at 23h 14m 33s.xml">
+      <configuration name="WebMapTest.printTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 22h 08m 42s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 22h 08m 57s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 23h 01m 07s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 23h 01m 08s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 23h 01m 50s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
-    <history-entry file="app_[test] - 2019.02.09 at 23h 59m 45s.xml">
+    <history-entry file="app_[test] - 2019.02.10 at 23h 14m 49s.xml">
       <configuration name="app [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
   </component>
@@ -607,7 +609,7 @@
     <frame x="196" y="69" width="1686" height="923" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17281672" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17466174" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -615,8 +617,8 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49925372" weight="0.3325" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49925372" visible="true" weight="0.35822785" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49925372" weight="0.33164558" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49925372" visible="true" weight="0.35822785" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36708862" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -624,7 +626,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50074625" side_tool="true" weight="0.32945284" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.3278481" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3278481" />
       <window_info anchor="bottom" id="Build" order="11" sideWeight="0.49925372" weight="0.32945284" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -637,7 +639,7 @@
       <window_info anchor="right" id="Gradle" order="8" visible="true" weight="0.09348094" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1709717" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17466174" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -646,15 +648,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49925372" weight="0.3325" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49925372" weight="0.35375" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3675" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49925372" weight="0.35822785" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.36708862" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50074625" side_tool="true" weight="0.32945284" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32875" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.3278481" />
       <window_info anchor="bottom" id="Build" order="11" sideWeight="0.49925372" weight="0.32945284" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -688,15 +690,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java</url>
-          <line>55</line>
+          <line>52</line>
           <properties />
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java</url>
-          <line>90</line>
+          <url>file://$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java</url>
+          <line>29</line>
           <properties />
-          <option name="timeStamp" value="59" />
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="64" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -751,28 +759,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/build.gradle" />
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/util/stream/ForEachOps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="182" selection-start-line="182" selection-end-line="182" />
-          <folding>
-            <element signature="e#6061#6062#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.desktop/java/awt/Point.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="218" column="33" lean-forward="true" selection-start-line="214" selection-start-column="8" selection-end-line="218" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/CustomPoint.java" />
     <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/util/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-582">
@@ -959,55 +945,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/WebMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-103">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ReportTemplate.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="493">
-            <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="37" column="23" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/SearchAlgorithmTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/model/WebMapTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2533">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1034,16 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/app/AppTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="165" column="8" selection-start-line="165" selection-start-column="8" selection-end-line="169" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="572">
@@ -1054,20 +985,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/ReportValidator.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="62" column="13" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
+        <state relative-caret-position="572">
+          <caret line="64" column="29" lean-forward="true" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/WebMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="238">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/app/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/ReportValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="38" column="7" lean-forward="true" selection-start-line="38" selection-start-column="7" selection-end-line="55" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/util/stream/ForEachOps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="182" selection-start-line="182" selection-end-line="182" />
+          <folding>
+            <element signature="e#6061#6062#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ReportTemplate.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="117">
+            <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/mock/WebMapMock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/mock/MockAnalysisWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1076,21 +1082,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        <state relative-caret-position="57">
+          <caret line="102" column="84" selection-start-line="102" selection-start-column="84" selection-end-line="102" selection-end-column="84" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7355#7356#0" expanded="true" />
-            <element signature="e#7433#7434#0" expanded="true" />
-            <element signature="e#7545#7546#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+        <state relative-caret-position="357">
+          <caret line="95" lean-forward="true" selection-end-line="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/DepthAlgorithmTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="32" column="60" selection-start-line="32" selection-start-column="60" selection-end-line="32" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/model/WebMapTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="81" column="90" lean-forward="true" selection-start-line="81" selection-start-column="90" selection-end-line="81" selection-end-column="90" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1099,8 +1132,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        <state relative-caret-position="153">
+          <caret line="42" column="28" lean-forward="true" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1110,10 +1143,10 @@
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="test" />
     <option value="javadoc" />
     <option value="run" />
     <option value="clean build test" />
-    <option value="test" />
     <option value="run --args 'false'" />
     <option value="run --false" />
     <option value="run false" />

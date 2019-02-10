@@ -19,8 +19,8 @@ public class DepthSearch extends SearchAlgorithm {
     }
 
     @Override
-    protected void searchAlgorithm(long timeOfStart, long spaceLeft) {
-        Point orignalStart = map.getTileAt();
+    protected void searchAlgorithm(long timeOfStart, long spaceAtStart) {
+        Point orignalStart = map.getTileStart();
 
         Map<Point, Point> path = new HashMap();
         Set<Point> visited = new HashSet();
@@ -28,30 +28,29 @@ public class DepthSearch extends SearchAlgorithm {
 
         visited.add(orignalStart);
         queue.add(orignalStart);
-
-        Point previous = null;
+        path.put(orignalStart, null);
 
         while (!queue.isEmpty()) {
             Point polled = queue.pollLast();
-            path.put(polled, previous);
-            previous = polled;
             if (polled.equals(map.getTileTarget())) {
-                super.handleReportWriting(path, visited, timeOfStart, spaceLeft);
+                super.handleReportWriting(path, timeOfStart, spaceAtStart);
                 return;
             } else {
                 for (Point neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
+                        path.put(neighbour, polled);
                         visited.add(neighbour);
                         queue.add(neighbour);
                     }
                 }
             }
         }
+        super.handleReportWriting(path, timeOfStart, spaceAtStart);
     }
 
     @Override
     public String getTheoreticalTime() {
-        return "O( | V + E| )";
+        return "O( | V + E | )";
     }
 
     @Override
@@ -61,7 +60,7 @@ public class DepthSearch extends SearchAlgorithm {
 
     @Override
     public String getAdditionalDocumentation() {
-        return "";
+        return "TBD";
     }
 
     @Override

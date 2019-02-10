@@ -4,7 +4,6 @@ import IOoperations.mapReader.MapLocator;
 import model.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
@@ -13,14 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class MapGeneratorFromFilesTest {
 
@@ -50,7 +47,7 @@ public class MapGeneratorFromFilesTest {
         mapGeneratorFromFiles.setMapLocator(mockLocator);
 
         WebMap map = mapGeneratorFromFiles.createMap();
-        assertEquals(new Point(1, 1), map.getTileAt());
+        assertEquals(new Point(1, 1), map.getTileStart());
         assertEquals(new Point(1, 0), map.getTileTarget());
         assertEquals(map.getName(), "testMapSuccess");
         assertTrue(map.isValid());

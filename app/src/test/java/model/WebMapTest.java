@@ -41,11 +41,11 @@ public class WebMapTest {
         targetLocation = new Point(2,3);
 
         map.setTileTarget(targetLocation);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
         assertEquals(data, map.getMap());
         assertEquals(targetLocation, map.getTileTarget());
-        assertEquals(atLocation, map.getTileAt());
+        assertEquals(atLocation, map.getTileStart());
 
         assertEquals("nameless map", map.getName());
         map.setName("not a default name");
@@ -57,7 +57,7 @@ public class WebMapTest {
         atLocation = new Point(1,2);
         targetLocation = new Point(2,2);
         map.setTileTarget(targetLocation);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
         map.setMap(data);
         assertTrue(map.isValid());
         String test = "name";
@@ -75,30 +75,30 @@ public class WebMapTest {
         atLocation = new Point(1,2);
         targetLocation = new Point(2,2);
         map.setMap(null);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setName(null);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setTileTarget(targetLocation);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
-        map.setTileAt(atLocation);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        map.setTileStart(atLocation);
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setMap(data);
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
 
         map.setName("now all values are valid");
         assertEquals("width: 3 height: 3\nAt location: 1,2\nTarget location: 2,2", map.getTextualView());
 
         map.setTileTarget(new Point(1, -1));
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setTileTarget(new Point(-1, 1));
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setTileTarget(new Point(-1, 1));
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
         map.setTileTarget(new Point(1, -1));
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
 
         map.setTileTarget(new Point(0, 0));
-        assertEquals("invalid map. Set map, tileAt, tileTarget", map.getTextualView());
+        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
 
     }
 
@@ -111,12 +111,12 @@ public class WebMapTest {
         assertFalse(map.isValid());
         map.setTileTarget(targetLocation);
         assertFalse(map.isValid());
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
         assertFalse(map.isValid());
         map.setMap(data);
-        map.setTileAt(null);
+        map.setTileStart(null);
         assertFalse(map.isValid());
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
         assertTrue(map.isValid());
 
     }
@@ -124,9 +124,9 @@ public class WebMapTest {
     @Test
     public void neighboursAll4Test() {
         atLocation = new Point(1,1);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
-        var neighbours = map.getNeighbours(map.getTileAt());
+        var neighbours = map.getNeighbours(map.getTileStart());
 
         expectedNeighbours.add(new Point(0,1));
         expectedNeighbours.add(new Point(2,1));
@@ -139,9 +139,9 @@ public class WebMapTest {
     @Test // 0,0 is a wall
     public void neighboursLeftTest() {
         atLocation = new Point(0,1);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
-        var neighbours = map.getNeighbours(map.getTileAt());
+        var neighbours = map.getNeighbours(map.getTileStart());
 
         expectedNeighbours.add(new Point(1,1));
         expectedNeighbours.add(new Point(0,2));
@@ -152,9 +152,9 @@ public class WebMapTest {
     @Test
     public void neighboursRightTest() {
         atLocation = new Point(2,1);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
-        var neighbours = map.getNeighbours(map.getTileAt());
+        var neighbours = map.getNeighbours(map.getTileStart());
 
         expectedNeighbours.add(new Point(1,1));
         expectedNeighbours.add(new Point(2,0));
@@ -166,9 +166,9 @@ public class WebMapTest {
     @Test // 0,0 is a wall
     public void neighboursTopTest() {
         atLocation = new Point(1,0);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
-        var neighbours = map.getNeighbours(map.getTileAt());
+        var neighbours = map.getNeighbours(map.getTileStart());
 
         expectedNeighbours.add(new Point(2,0));
         expectedNeighbours.add(new Point(1,1));
@@ -179,9 +179,9 @@ public class WebMapTest {
     @Test
     public void neighboursUnderTest() {
         atLocation = new Point(1,2);
-        map.setTileAt(atLocation);
+        map.setTileStart(atLocation);
 
-        var neighbours = map.getNeighbours(map.getTileAt());
+        var neighbours = map.getNeighbours(map.getTileStart());
 
         expectedNeighbours.add(new Point(0,2));
         expectedNeighbours.add(new Point(2,2));

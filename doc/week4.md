@@ -26,6 +26,7 @@
 * 5 kopy pastaa hakualgoritmit ja pistä ne käyttämään käsin tehdyt tietorakenteet
 * 6 jar luonti 
 * 7 funkkari ajaakseen kaikki algoritmit jokaiseen karttaan
+* 8 analyysiin karsi leveyttä jos liian suuri
 
 ### Mitä opin
 * joskus vaikka samoja asioita tehdään toteutus on niin erilaista että rajapinta on selvempää kuin abstrakti luokka

@@ -19,8 +19,8 @@ public class BreathSearch extends SearchAlgorithm {
     }
 
     @Override
-    protected void searchAlgorithm(long timeOfStart, long spaceLeft) {
-        Point orignalStart = map.getTileAt();
+    protected void searchAlgorithm(long timeOfStart, long spaceAtStart) {
+        Point orignalStart = map.getTileStart();
 
         Map<Point, Point> path = new HashMap();
         Set<Point> visited = new HashSet();
@@ -33,7 +33,7 @@ public class BreathSearch extends SearchAlgorithm {
         while (!queue.isEmpty()) {
             Point polled = queue.poll();
             if (polled.equals(map.getTileTarget())) {
-                super.handleReportWriting(path, visited, timeOfStart, spaceLeft);
+                super.handleReportWriting(path, timeOfStart, spaceAtStart);
                 return;
             } else {
                 for (Point neighbour : map.getNeighbours(polled)) {
@@ -45,11 +45,12 @@ public class BreathSearch extends SearchAlgorithm {
                 }
             }
         }
+        super.handleReportWriting(path, timeOfStart, spaceAtStart);
     }
 
     @Override
     public String getTheoreticalTime() {
-        return "O( | V + E| )";
+        return "O( | V + E | )";
     }
 
     @Override
@@ -59,7 +60,7 @@ public class BreathSearch extends SearchAlgorithm {
 
     @Override
     public String getAdditionalDocumentation() {
-        return "";
+        return "TBD";
     }
 
     @Override

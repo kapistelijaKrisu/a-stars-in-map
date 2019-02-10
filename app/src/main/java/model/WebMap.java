@@ -6,13 +6,13 @@ import java.util.Collection;
 
 /**
  * int[][] type of a web which additionally includes knowledge to act as a web to be searched .
- * These values are tileAt, tileTarget, value of 0 is considered to be a wall. and name can be used as a file name.
+ * These values are tileStart, tileTarget, value of 0 is considered to be a wall. and name can be used as a file name.
  * Negative values are allowed.
  * Data model to be searched by a SearchAlgorithm.
  */
 public class WebMap {
     private int[][] map;
-    private Point tileAt;
+    private Point tileStart;
     private Point tileTarget;
     private String name;
     private static final int WALL = 0;
@@ -49,18 +49,18 @@ public class WebMap {
     /**
      * @return if such a map can exist, requirements:
      * width and height of map above 0
-     * starting location tileAt exists within map
+     * starting location tileStart exists within map
      * target location tileTarget exists within map
      * target is not a wall
      * name is not null and can be used as a file name
      * todo add name to test, improve validaiton by checkoing points are inside map
      */
     public boolean isValid() {
-        boolean valid = !(map == null || tileAt == null || tileTarget == null || name == null);
+        boolean valid = !(map == null || tileStart == null || tileTarget == null || name == null);
         if (!valid) return false;
         valid = map.length > 0 && map[0].length > 0;
         if (!valid) return false;
-        valid = tileAt.x >= 0 && tileAt.x < map[0].length && tileAt.y >= 0 && tileAt.y < map.length;
+        valid = tileStart.x >= 0 && tileStart.x < map[0].length && tileStart.y >= 0 && tileStart.y < map.length;
         if (!valid) return false;
         valid = tileTarget.x >= 0 && tileTarget.x < map[0].length && tileTarget.y >= 0 && tileTarget.y < map.length;
         if (!valid) return false;
@@ -82,9 +82,9 @@ public class WebMap {
      * @return textual representation of map if it is valid.
      */
     public String getTextualView() {
-        if (!isValid()) return "invalid map. Set map, tileAt, tileTarget";
+        if (!isValid()) return "invalid map. Set map, tileStart, tileTarget";
         String mapInString = "width: " + map[0].length + " height: " + map.length + "\n";
-        mapInString += "At location: " + tileAt.x + "," + tileAt.y + "\n";
+        mapInString += "At location: " + tileStart.x + "," + tileStart.y + "\n";
         mapInString += "Target location: " + tileTarget.x + "," + tileTarget.y;
 
         return mapInString;
@@ -100,12 +100,12 @@ public class WebMap {
         this.map = map;
     }
 
-    public Point getTileAt() {
-        return tileAt;
+    public Point getTileStart() {
+        return tileStart;
     }
 
-    public void setTileAt(Point tileAt) {
-        this.tileAt = tileAt;
+    public void setTileStart(Point tileStart) {
+        this.tileStart = tileStart;
     }
 
     public Point getTileTarget() {

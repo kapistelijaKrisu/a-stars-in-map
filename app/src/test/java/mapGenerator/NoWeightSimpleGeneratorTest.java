@@ -85,7 +85,7 @@ public class NoWeightSimpleGeneratorTest {
     }
 
     private void assertValues(WebMap tiles) {
-        assertEquals(new Point(1,2), tiles.getTileAt());
+        assertEquals(new Point(1,2), tiles.getTileStart());
         assertEquals(new Point(6,7), tiles.getTileTarget());
         assertEquals(9, tiles.getMap()[0].length);
         assertEquals(8, tiles.getMap().length);

@@ -28,11 +28,11 @@ Markups for processed map that is formed at the end on {test_processed_map}
 
 * . not visited
 * v = visited but not walked
-* x = walked path
+* X = walked path
 * S start node
 * T target node
 * O start and target node if same
-* w wall
+* # wall
 
 ## Validation
 Values are passed during "SearchAlorithm.runSearch()"  in a map to "AnalysisWriter". ReportValidator validates it first. If any of listed values in ReportValidator are missing then report is not written.
