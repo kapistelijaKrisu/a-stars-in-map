@@ -1,12 +1,11 @@
 package searchAlgorithm;
-import IOoperations.analysisWriter.AnalysisWriter;
 import mock.MockAnalysisWriter;
 import mock.WebMapMock;
 import model.WebMap;
+import model.WeightedPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +33,7 @@ public class BreathSearchTest {
     @Test
     public void doesThrowErrorsWithInvalidMapTest() throws IOException {
         var invalidMap = WebMapMock.getMinimumValidMap();
-        invalidMap.setTileTarget(new Point(-1,22));
+        invalidMap.setTileTarget(-1,22);
         breathSearch.setMapClean(invalidMap);
         try {
             breathSearch.runSearch();
@@ -51,7 +50,7 @@ public class BreathSearchTest {
     @Test
     public void valuesSetCorectlyWhereStartIsTargetTest() throws IOException {
         WebMap map = WebMapMock.getMinimumValidMap();
-        map.setTileStart(map.getTileTarget());
+        map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
         breathSearch.setMapClean(map);
         breathSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
@@ -61,11 +60,11 @@ public class BreathSearchTest {
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
-        assertEquals("0", mockWriter.receivedTestMaxSteps());
+        assertEquals("1", mockWriter.receivedTestMaxSteps());
         assertEquals("0", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = "# # \r\n# O ";
+        String expectedProcessedMap = ". # \r\n# O ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -81,13 +80,14 @@ public class BreathSearchTest {
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
-        assertEquals("7", mockWriter.receivedTestPathWeight());
+        assertEquals("20", mockWriter.receivedTestPathWeight());
         assertEquals("27", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = "X X X # v v . \r\n" +
+        String expectedProcessedMap =
+                "X X X # v v . \r\n" +
                 "S # X X X v v \r\n" +
                 "v # v # X v . \r\n" +
-                "v # v # T . . \r\n" +
+                "v # v # F . . \r\n" +
                 "v v v # v . . \r\n" +
                 "v v v v v v . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());

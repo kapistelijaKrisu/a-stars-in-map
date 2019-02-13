@@ -2,9 +2,9 @@ package searchAlgorithm;
 
 import IOoperations.analysisWriter.AnalysisWriter;
 import model.WebMap;
+import model.WeightedPoint;
 import systemTools.SystemSpecReader;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.util.*;
 
@@ -18,11 +18,11 @@ public abstract class SearchAlgorithm {
     private String reportFilePath;
     private final AnalysisWriter analysisWriter;
     private final SystemSpecReader systemSpecReader; //singleton?
-
+    Map<WeightedPoint, WeightedPoint> path;
 
     public SearchAlgorithm(AnalysisWriter analysisWriter) {
         this.analysisWriter = analysisWriter;
-        templateValueMap = new HashMap<>();
+        templateValueMap = new TreeMap<>();
         systemSpecReader = new SystemSpecReader();
     }
 
@@ -33,7 +33,7 @@ public abstract class SearchAlgorithm {
      * @param timeOfStart       time in nanos of when method is called.
      * @param getAvailableSpace space left when method is called.
      */
-    protected abstract void searchAlgorithm(long timeOfStart, long getAvailableSpace);
+    protected abstract void searchAlgorithm(long timeOfStart, long getAvailableSpace, Map<WeightedPoint, WeightedPoint> path);
 
     /**
      * Runs implemented algorithm and writes report based on it
@@ -48,7 +48,8 @@ public abstract class SearchAlgorithm {
                 throw new IllegalStateException("Requires valid map and name, and name for algorithm");
             reportFilePath = "/doc/reports/" + map.getName() + "/" + toString();
         }
-        searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize());
+        path = new HashMap<>();
+        searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize(), path);
         fillDefaultTemplateValues(templateValueMap);
         try {
             analysisWriter.writeReport(templateValueMap, reportFilePath);
@@ -82,7 +83,7 @@ public abstract class SearchAlgorithm {
     }
 
     //todo tidy this into smaller bits
-    protected void handleReportWriting(Map<Point, Point> path, long startTime, long spaceLeftAtStart) {
+    protected void handleReportWriting(Map<WeightedPoint, WeightedPoint> path, long startTime, long spaceLeftAtStart) {
         long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart;
         templateValueMap.put("{test_space}", "" + spaceDifference);
         templateValueMap.put("{test_used_steps}", "" + (path.size() - 1));
@@ -90,12 +91,13 @@ public abstract class SearchAlgorithm {
         setTimeElapsed(startTime);
     }
 
-    private void setProcessedMap(Map<Point, Point> path) {
-        List<Point> goalPath = new ArrayList<>();
-        Point locationAt = path.get(map.getTileTarget());
+    private void setProcessedMap(Map<WeightedPoint, WeightedPoint> path) {
+        List<WeightedPoint> goalPath = new ArrayList<>();
+        WeightedPoint locationAt = path.get(map.getTileTarget());
+
         while (locationAt != null) {
             goalPath.add(locationAt);
-            locationAt = path.get(locationAt);
+            locationAt = path.getOrDefault(locationAt, null);
         }
         int max_steps = 0;
         int pathWeight = 0;
@@ -104,6 +106,7 @@ public abstract class SearchAlgorithm {
 
         for (int y = 0; y < baseMap.length; y++) {
             for (int x = 0; x < baseMap[0].length; x++) {
+                WeightedPoint coordinate = map.getCoordinate(x, y);
                 if (map.getTileStart().x == x && map.getTileStart().y == y && map.getTileStart().equals(map.getTileTarget())) {
                     sb.append('O');
                     max_steps--;
@@ -111,15 +114,20 @@ public abstract class SearchAlgorithm {
                     sb.append('S');
                     max_steps--;
                 } else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
-                    if (goalPath.contains(new Point(x, y))) pathWeight += baseMap[y][x];
-                    sb.append('T');
-                } else if (baseMap[y][x] == 0) { //wall
+                    if (path.containsKey(map.getCoordinate(x, y))) {//replan
+                        pathWeight += baseMap[y][x];
+                        sb.append('F');
+                        pathWeight += coordinate.weight;
+                    } else {
+                        sb.append('N');
+                    }
+                } else if (coordinate.weight == 0) { //wall
                     sb.append('#');
                     max_steps--;
-                } else if (goalPath.contains(new Point(x, y))) {
+                } else if (goalPath.contains(coordinate)) {
                     sb.append('X');
-                    pathWeight += baseMap[y][x];
-                } else if (path.containsKey(new Point(x, y))) {
+                    pathWeight += coordinate.weight;
+                } else if (path.containsKey(coordinate)) {
                     sb.append('v');
                 } else {
                     sb.append('.');
@@ -135,18 +143,19 @@ public abstract class SearchAlgorithm {
         templateValueMap.put("{test_max_steps}", "" + max_steps);
     }
 
+
     private void setTimeElapsed(long startTime) {
         long elapsedTime = System.nanoTime() - startTime;
         long nanos = elapsedTime % 1000;
-        long millis = elapsedTime / 1000 % 1000;
-        long sec = elapsedTime / (1000 * 1000) % (1000 * 1000);
-        long mins = elapsedTime / (1000L * 1000 * 60) % (1000L * 1000 * 60 * 60);
-        long hours = elapsedTime / (1000L * 1000 * 60 * 60) % (1000L * 1000 * 60 * 60);
+        long milliseconds = (elapsedTime / 1000) % 1000;
+        long seconds = (milliseconds / 1000) % 60;
+        long minutes = ((milliseconds / (1000 * 60)) % 60);
+        long hours = ((milliseconds / (1000 * 60 * 60)) % 24);
         String timeReport = "";
-        if (hours != 0) timeReport += "hours " + hours;
-        if (mins != 0) timeReport += " minutes " + mins;
-        if (sec != 0) timeReport += " seconds " + sec;
-        if (millis != 0) timeReport += " millis " + millis + " ";
+        if (hours > 0) timeReport += "hours " + hours;
+        if (minutes > 0) timeReport += " minutes " + minutes;
+        if (seconds > 0) timeReport += " seconds " + seconds;
+        if (milliseconds > 0) timeReport += " millis " + milliseconds + " ";
         timeReport += "nanos " + nanos;
         templateValueMap.put("{test_time}", timeReport);
     }

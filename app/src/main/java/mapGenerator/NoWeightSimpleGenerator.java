@@ -2,7 +2,6 @@ package mapGenerator;
 
 import model.WebMap;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -12,8 +11,7 @@ import java.util.Scanner;
 public class NoWeightSimpleGenerator implements MapGenerator {
     protected final Scanner scanner;
     private int mapWidth, mapHeight;
-    private Point mapStartLocation;
-    private Point mapTargetLocation;
+    private int startX, startY, targetX, targetY;
     private String mapName = "nameless";
 
     /**
@@ -43,8 +41,8 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         WebMap map = new WebMap();
         map.setName(mapName);
         map.setMap(generateTiles());
-        map.setTileTarget(mapTargetLocation);
-        map.setTileStart(mapStartLocation);
+        map.setTileTarget(targetX, targetY);
+        map.setTileStart(startX, startY);
         return  map;
     }
 
@@ -59,7 +57,6 @@ public class NoWeightSimpleGenerator implements MapGenerator {
     private void setConfigValues() {
         while (true) {
             try {
-                int startX, startY, targetX, targetY;
                 System.out.println("set width: ");
                 mapWidth =Integer.parseInt(scanner.nextLine());
                 System.out.println("set height: ");
@@ -76,8 +73,6 @@ public class NoWeightSimpleGenerator implements MapGenerator {
                 if (startY < 0 || startX < 0 || targetX < 0 || targetY < 0) throw new ArrayIndexOutOfBoundsException();
                 if (startY >= mapHeight || startX >= mapWidth || targetX >= mapWidth || targetY >= mapHeight) throw new ArrayIndexOutOfBoundsException();
                 if (mapHeight <= 0 || mapWidth <= 0) throw new IllegalArgumentException();
-                mapStartLocation = new Point(startX, startY);
-                mapTargetLocation = new Point(targetX, targetY);
                 return;
             } catch (Exception e) {
                 System.out.println("width and height should be between 1-" + Integer.MAX_VALUE + ". x,y values should be between 0-" + (Integer.MAX_VALUE - 1));

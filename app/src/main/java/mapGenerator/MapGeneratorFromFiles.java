@@ -2,6 +2,7 @@ package mapGenerator;
 
 import IOoperations.mapReader.MapLocator;
 import model.WebMap;
+import model.WeightedPoint;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -27,7 +28,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
     private int mapWidth;
     private int mapLine;
     private String mapName;
-    private Point mapStartLocation, mapTargetLocation;
+    private int mapStartLocationX, mapStartLocationY, mapTargetLocationX, mapTargetLocationY;
     private MapLocator mapLocator;
 
     public MapGeneratorFromFiles(Scanner scanner) {
@@ -46,8 +47,8 @@ public class MapGeneratorFromFiles implements MapGenerator {
             loadMapFromFile(mapFile);
             WebMap map = new WebMap();
             map.setName(mapName);
-            map.setTileStart(mapStartLocation);
-            map.setTileTarget(mapTargetLocation);
+            map.setTileStart(mapStartLocationX , mapStartLocationY);
+            map.setTileTarget(mapTargetLocationX, mapTargetLocationY);
             map.setMap(mapArea);
             return map;
         } catch (IOException | NullPointerException e) {
@@ -118,10 +119,12 @@ public class MapGeneratorFromFiles implements MapGenerator {
                 state = BASIC;
                 break;
             case "start":
-                mapStartLocation = new Point(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                mapStartLocationX = Integer.parseInt(tokens[1]);
+                mapStartLocationY = Integer.parseInt(tokens[2]);
                 break;
             case "target":
-                mapTargetLocation = new Point(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                mapTargetLocationX = Integer.parseInt(tokens[1]);
+                mapTargetLocationY = Integer.parseInt(tokens[2]);
                 break;
             case "width":
                 mapWidth = Integer.parseInt(tokens[1]);
@@ -159,8 +162,10 @@ public class MapGeneratorFromFiles implements MapGenerator {
     private void clean() {
         state = BASIC;
         decodeValues = new HashMap<>();
-        mapStartLocation = null;
-        mapTargetLocation = null;
+        mapStartLocationX = -1;
+        mapTargetLocationX = -1;
+        mapStartLocationY = -1;
+        mapTargetLocationY = -1;
         mapArea = null;
         mapHeight = 0;
         mapWidth = 0;

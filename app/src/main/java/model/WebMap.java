@@ -1,6 +1,4 @@
 package model;
-
-import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
@@ -12,8 +10,7 @@ import java.util.Collection;
  */
 public class WebMap {
     private int[][] map;
-    private Point tileStart;
-    private Point tileTarget;
+    private int startX, startY, targetX, targetY;
     private String name;
     private static final int WALL = 0;
     private static final char[] ILLEGAL_CHARACTERS = { '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':' };
@@ -28,22 +25,34 @@ public class WebMap {
      * @return list of neigbours from left, right, up and down.
      * Considers of being at the edge of map or being next to a wall which is a cell with value of 0.
      */
-    public Collection<Point> getNeighbours(Point location) {
-        var neighbours = new ArrayDeque<Point>();
+    public Collection<WeightedPoint> getNeighbours(WeightedPoint location) {
+        var neighbours = new ArrayDeque<WeightedPoint>();
 
-        var under = new Point(location.x, location.y + 1);
-        if (isAvailableLocation(under)) neighbours.add(under);
-
-        var over = new Point(location.x, location.y - 1);
-        if (isAvailableLocation(over)) neighbours.add(over);
-
-        var right = new Point(location.x + 1, location.y);
-        if (isAvailableLocation(right)) neighbours.add(right);
-
-        var left = new Point(location.x - 1, location.y);
-        if (isAvailableLocation(left)) neighbours.add(left);
+        if (isAvailableLocation(location.x, location.y + 1)){
+            neighbours.add(new WeightedPoint(location.x, location.y + 1, map[location.y + 1][location.x]));
+        }
+        if (isAvailableLocation(location.x, location.y - 1)){
+            neighbours.add(new WeightedPoint(location.x, location.y - 1, map[location.y - 1][location.x]));
+        }
+        if (isAvailableLocation(location.x + 1, location.y)) {
+            neighbours.add(new WeightedPoint(location.x + 1, location.y, map[location.y][location.x + 1]));
+        }
+        if (isAvailableLocation(location.x - 1, location.y)){
+            neighbours.add(new WeightedPoint(location.x - 1, location.y, map[location.y][location.x - 1]));
+        }
 
         return neighbours;
+    }
+
+    /**
+     *
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @return WeightedPoint object representing asked coordinate
+     * @throws IndexOutOfBoundsException if out of map range
+     */
+    public WeightedPoint getCoordinate(int x, int y) throws IndexOutOfBoundsException {
+        return new WeightedPoint(x, y, map[y][x]);
     }
 
     /**
@@ -56,25 +65,25 @@ public class WebMap {
      * todo add name to test, improve validaiton by checkoing points are inside map
      */
     public boolean isValid() {
-        boolean valid = !(map == null || tileStart == null || tileTarget == null || name == null);
+        boolean valid = !(map == null || !isAvailableLocation(startX, startY) || !isAvailableLocation(targetX, targetY) || name == null);
         if (!valid) return false;
         valid = map.length > 0 && map[0].length > 0;
         if (!valid) return false;
-        valid = tileStart.x >= 0 && tileStart.x < map[0].length && tileStart.y >= 0 && tileStart.y < map.length;
+        valid = startX >= 0 && startX < map[0].length && startY >= 0 && startY < map.length;
         if (!valid) return false;
-        valid = tileTarget.x >= 0 && tileTarget.x < map[0].length && tileTarget.y >= 0 && tileTarget.y < map.length;
+        valid = targetX >= 0 && targetX < map[0].length && targetY >= 0 && targetY < map.length;
         if (!valid) return false;
         for (int i = 0; i < ILLEGAL_CHARACTERS.length ; i++) {
             for (char charAt: name.toCharArray()) {
                 if (charAt == ILLEGAL_CHARACTERS[i]) return false;
             }
         }
-        return map[tileTarget.y][tileTarget.x] != WALL;
+        return true;
     }
-    private boolean isAvailableLocation(Point neighbourCanditate) {
-        if (neighbourCanditate.x < 0 || neighbourCanditate.y < 0) return false;
-        if (neighbourCanditate.x >= map[0].length || neighbourCanditate.y >= map.length) return false;
-        if (map[neighbourCanditate.y][neighbourCanditate.x] == WALL) return false;
+    private boolean isAvailableLocation(int x, int y) {
+        if (x < 0 || y < 0) return false;
+        if (x >= map[0].length || y >= map.length) return false;
+        if (map[y][x] == WALL) return false;
         return true;
     }
 
@@ -84,10 +93,29 @@ public class WebMap {
     public String getTextualView() {
         if (!isValid()) return "invalid map. Set map, tileStart, tileTarget";
         String mapInString = "width: " + map[0].length + " height: " + map.length + "\n";
-        mapInString += "At location: " + tileStart.x + "," + tileStart.y + "\n";
-        mapInString += "Target location: " + tileTarget.x + "," + tileTarget.y;
+        mapInString += "Start location: " + startX + "," + startY + "\n";
+        mapInString += "Target location: " + targetX + "," + targetY;
 
         return mapInString;
+    }
+
+
+    public WeightedPoint getTileStart() throws IndexOutOfBoundsException {
+        return new WeightedPoint(startX, startY, map[startY][startX]);
+    }
+
+    public WeightedPoint getTileTarget() throws IndexOutOfBoundsException {
+        return new WeightedPoint(targetX, targetY, map[targetY][targetX]);
+    }
+
+    public void setTileStart(int x, int y) {
+        this.startX = x;
+        this.startY = y;
+    }
+
+    public void setTileTarget(int x, int y) {
+        this.targetX = x;
+        this.targetY = y;
     }
 
     // setters n getters
@@ -100,22 +128,6 @@ public class WebMap {
         this.map = map;
     }
 
-    public Point getTileStart() {
-        return tileStart;
-    }
-
-    public void setTileStart(Point tileStart) {
-        this.tileStart = tileStart;
-    }
-
-    public Point getTileTarget() {
-        return tileTarget;
-    }
-
-    public void setTileTarget(Point tileTarget) {
-        this.tileTarget = tileTarget;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -123,4 +135,6 @@ public class WebMap {
     public String getName() {
         return name;
     }
+
+
 }

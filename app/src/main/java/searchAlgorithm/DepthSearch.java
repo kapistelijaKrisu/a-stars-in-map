@@ -1,8 +1,8 @@
 package searchAlgorithm;
 
 import IOoperations.analysisWriter.AnalysisWriter;
+import model.WeightedPoint;
 
-import java.awt.*;
 import java.util.*;
 
 /**
@@ -19,24 +19,23 @@ public class DepthSearch extends SearchAlgorithm {
     }
 
     @Override
-    protected void searchAlgorithm(long timeOfStart, long spaceAtStart) {
-        Point orignalStart = map.getTileStart();
+    protected void searchAlgorithm(long timeOfStart, long spaceAtStart, Map<WeightedPoint, WeightedPoint> path) {
+        WeightedPoint orignalStart = map.getTileStart();
 
-        Map<Point, Point> path = new HashMap();
-        Set<Point> visited = new HashSet();
-        ArrayDeque<Point> queue = new ArrayDeque<>();
+        Set<WeightedPoint> visited = new HashSet();
+        ArrayDeque<WeightedPoint> queue = new ArrayDeque<>();
 
         visited.add(orignalStart);
         queue.add(orignalStart);
         path.put(orignalStart, null);
 
         while (!queue.isEmpty()) {
-            Point polled = queue.pollLast();
+            WeightedPoint polled = queue.pollLast();
             if (polled.equals(map.getTileTarget())) {
                 super.handleReportWriting(path, timeOfStart, spaceAtStart);
                 return;
             } else {
-                for (Point neighbour : map.getNeighbours(polled)) {
+                for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
                         path.put(neighbour, polled);
                         visited.add(neighbour);
