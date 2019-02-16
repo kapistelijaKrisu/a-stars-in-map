@@ -41,7 +41,11 @@ gradle-app.setting
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# intellij generated files
+# intellij and vscode generated files
 app/.idea
 app/out
 app/bin
+app/.settings
+app/.classpath
+app/.project
+app/app.**
