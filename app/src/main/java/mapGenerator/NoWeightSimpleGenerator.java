@@ -1,12 +1,12 @@
 package mapGenerator;
 
-import model.WebMap;
+import model.web.WebMap;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Simple wightless map generator that asks user for parameters for generating a map.
+ * Simple weightless map generator that asks user for parameters for generating a map.
  */
 public class NoWeightSimpleGenerator implements MapGenerator {
     protected final Scanner scanner;
@@ -25,7 +25,7 @@ public class NoWeightSimpleGenerator implements MapGenerator {
 
     /**
      * Asks user input values to create a map. And will loop forever until valid values are given.
-     * Values requird by user:
+     * Values required by user:
      * width over 0
      * height over 0
      * tile start x coordinate within 0 and width - 1

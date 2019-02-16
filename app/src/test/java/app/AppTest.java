@@ -1,7 +1,7 @@
 package app;
 
 import mapGenerator.MapGenerator;
-import model.WebMap;
+import model.web.WebMap;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;

@@ -1,8 +1,8 @@
 package searchAlgorithm;
 
 import IOoperations.analysisWriter.AnalysisWriter;
-import model.WebMap;
-import model.WeightedPoint;
+import model.web.WebMap;
+import model.web.WeightedPoint;
 import systemTools.SystemSpecReader;
 
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.*;
 
 /**
  * Base class that does all the ground work for preparing analysis file.
- * work in progress
  */
 public abstract class SearchAlgorithm {
     protected WebMap map;
@@ -31,9 +30,10 @@ public abstract class SearchAlgorithm {
      * During this call handleReportWriting needs to be called to get rest or report done.
      *
      * @param timeOfStart       time in nanos of when method is called.
-     * @param getAvailableSpace space left when method is called.
+     * @param availableSpace    space left in jvm heap when method is called.
+     * @param path              place to store which step is taken form where.
      */
-    protected abstract void searchAlgorithm(long timeOfStart, long getAvailableSpace, Map<WeightedPoint, WeightedPoint> path);
+    protected abstract void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path);
 
     /**
      * Runs implemented algorithm and writes report based on it
@@ -82,7 +82,6 @@ public abstract class SearchAlgorithm {
 
     }
 
-    //todo tidy this into smaller bits
     protected void handleReportWriting(Map<WeightedPoint, WeightedPoint> path, long startTime, long spaceLeftAtStart) {
         long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart;
         templateValueMap.put("{test_space}", "" + spaceDifference);
@@ -101,12 +100,11 @@ public abstract class SearchAlgorithm {
         }
         int max_steps = 0;
         int pathWeight = 0;
-        int[][] baseMap = map.getMap();
-        StringBuilder sb = new StringBuilder((baseMap.length * baseMap[0].length * 2) + (baseMap.length * 2));
+        StringBuilder sb = new StringBuilder((map.width() * map.height() * 2) + (map.height() * 2));
 
-        for (int y = 0; y < baseMap.length; y++) {
-            for (int x = 0; x < baseMap[0].length; x++) {
-                WeightedPoint coordinate = map.getCoordinate(x, y);
+        for (int y = 0; y < map.height(); y++) {
+            for (int x = 0; x < map.width(); x++) {
+                WeightedPoint coordinate = new WeightedPoint(x, y, map.getLocationWeight(x, y));
                 if (map.getTileStart().x == x && map.getTileStart().y == y && map.getTileStart().equals(map.getTileTarget())) {
                     sb.append('O');
                     max_steps--;
@@ -114,8 +112,7 @@ public abstract class SearchAlgorithm {
                     sb.append('S');
                     max_steps--;
                 } else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
-                    if (path.containsKey(map.getCoordinate(x, y))) {//replan
-                        pathWeight += baseMap[y][x];
+                    if (path.containsKey(coordinate)) {//replan
                         sb.append('F');
                         pathWeight += coordinate.weight;
                     } else {

@@ -1,4 +1,5 @@
-package model;
+package model.web;
+
 import java.util.ArrayDeque;
 import java.util.Collection;
 
@@ -51,18 +52,17 @@ public class WebMap {
      * @return WeightedPoint object representing asked coordinate
      * @throws IndexOutOfBoundsException if out of map range
      */
-    public WeightedPoint getCoordinate(int x, int y) throws IndexOutOfBoundsException {
-        return new WeightedPoint(x, y, map[y][x]);
+    public int getLocationWeight(int x, int y) throws IndexOutOfBoundsException {
+        return map[y][x];
     }
 
     /**
-     * @return if such a map can exist, requirements:
+     * @return true if such a map is considered valid, requirements:
      * width and height of map above 0
      * starting location tileStart exists within map
      * target location tileTarget exists within map
-     * target is not a wall
+     * target or start point is not a wall
      * name is not null and can be used as a file name
-     * todo add name to test, improve validaiton by checkoing points are inside map
      */
     public boolean isValid() {
         boolean valid = !(map == null || !isAvailableLocation(startX, startY) || !isAvailableLocation(targetX, targetY) || name == null);
@@ -89,6 +89,7 @@ public class WebMap {
 
     /**
      * @return textual representation of map if it is valid.
+     * TODO improve to get  better idea of map. but a full visual view can be more confusing.
      */
     public String getTextualView() {
         if (!isValid()) return "invalid map. Set map, tileStart, tileTarget";
@@ -100,19 +101,40 @@ public class WebMap {
     }
 
 
+    /**
+     *
+     * @return current starting location
+     * @throws IndexOutOfBoundsException if coordinates are out of map
+     */
     public WeightedPoint getTileStart() throws IndexOutOfBoundsException {
         return new WeightedPoint(startX, startY, map[startY][startX]);
     }
 
+    /**
+     *
+     * @return current target location
+     * @throws IndexOutOfBoundsException if coordinates are out of map
+     */
     public WeightedPoint getTileTarget() throws IndexOutOfBoundsException {
         return new WeightedPoint(targetX, targetY, map[targetY][targetX]);
     }
 
+    /**
+     * Sets starting coordinates.
+     * get will throw exception if given coordinates don't exist
+     * @param x start x-coordinate
+     * @param y start y-coordinate
+     */
     public void setTileStart(int x, int y) {
         this.startX = x;
         this.startY = y;
     }
-
+    /**
+     * Sets target coordinates.
+     * get will throw exception if given coordinates don't exist
+     * @param x target x-coordinate
+     * @param y target y-coordinate
+     */
     public void setTileTarget(int x, int y) {
         this.targetX = x;
         this.targetY = y;
@@ -120,12 +142,23 @@ public class WebMap {
 
     // setters n getters
 
-    public int[][] getMap() {
-        return map;
+    public int width() throws IndexOutOfBoundsException {
+        return map[0].length;
+    }
+    public int height() throws NullPointerException {
+        return map.length;
     }
 
     public void setMap(int[][] map) {
         this.map = map;
+    }
+
+    /**
+     * Should be used for testing only
+     * @return internal map
+     */
+    public int[][] getMap() {
+        return map;
     }
 
     public void setName(String name) {

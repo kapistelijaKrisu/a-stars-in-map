@@ -17,7 +17,7 @@ public class AnalysisWriter {
     private String root;
 
     /**
-     * A file writer that uses ReportTemplate.md to write an analysis at root level.
+     * A file writer that uses ReportTemplate.md to write an analysis of search algorithm at root level.
      */
     public AnalysisWriter() {
         root = new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent();

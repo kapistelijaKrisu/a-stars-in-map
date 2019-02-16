@@ -1,6 +1,6 @@
 package mock;
 
-import model.WebMap;
+import model.web.WebMap;
 
 public class WebMapMock {
     /**

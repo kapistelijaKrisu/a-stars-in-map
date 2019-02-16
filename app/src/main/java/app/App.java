@@ -3,10 +3,9 @@ package app;
 import mapGenerator.MapGenerator;
 import mapGenerator.MapGeneratorFromFiles;
 import mapGenerator.NoWeightSimpleGenerator;
-import model.WebMap;
+import model.web.WebMap;
 import IOoperations.analysisWriter.AnalysisWriter;
-import searchAlgorithm.BreathSearch;
-import searchAlgorithm.SearchAlgorithm;
+import searchAlgorithm.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,14 +14,14 @@ import java.util.Scanner;
 
 /**
  *  Main program that consists of two parts.
- *  Generating map of WebMap class for an algorithm.
+ *  Generating map instance of WebMap class for an algorithm.
  *  Running an algorithm of choice from list with set map and writes results on a file.
  */
 
 public class App {
 
     private static final String GENERATE_MAP = "1", RUN_ALGORITHM_ANALYSIS = "2";
-    private static final String BREATH_WIDTH = "b";
+    private static final String WIDTH_FIRST = "b", DEPTH_FIRST = "s", DIJKSTRA = "d", A_STAR = "a";
     private static final String SIMPLE_GENERATOR = "s", LOAD_MAP_GENERATOR = "d";
     private static final boolean RUNNING = true, STOPPED = false;
 
@@ -45,7 +44,10 @@ public class App {
         state = STOPPED;
         currentMap = new WebMap();
         algorithmMap = new HashMap<>();
-        algorithmMap.put(BREATH_WIDTH, new BreathSearch(analysisWriter));
+        algorithmMap.put(WIDTH_FIRST, new BreathSearch(analysisWriter));
+        algorithmMap.put(DEPTH_FIRST, new DepthSearch(analysisWriter));
+        algorithmMap.put(DIJKSTRA, new Dijkstra(analysisWriter));
+        algorithmMap.put(A_STAR, new AStar(analysisWriter));
 
         mapGenerators = new HashMap<>();
         mapGenerators.put(SIMPLE_GENERATOR, new NoWeightSimpleGenerator(scanner));
@@ -57,9 +59,8 @@ public class App {
      *  Launches main program if not running already.
      *  User is asked for interaction.
      *  User is guided through options.
-     *  todo add path where to save test results later as param.
+     *  Test results will be on same level as program in a path /doc/reports/
      */
-
 
     public void run() {
         state = RUNNING;

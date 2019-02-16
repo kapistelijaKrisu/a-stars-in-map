@@ -1,10 +1,8 @@
 package mapGenerator;
 
 import IOoperations.mapReader.MapLocator;
-import model.WebMap;
-import model.WeightedPoint;
+import model.web.WebMap;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *  Generates an in app memory of a WebMap that is read from map directory.
- *  User is asked which map from the directory is loaded
+ *  User is asked which map from the directory is loaded. Uses MapLocator to find maps.
  */
 public class MapGeneratorFromFiles implements MapGenerator {
     private Scanner scanner;
@@ -38,7 +36,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
 
     /**
      * if maps folder exists and has files then asks user which map to load
-     * @return read map from file, if file has mistakes returns null. refer to app_definition.md for a valid map file.
+     * @return read map from file, if file has mistakes or map is not valid returns null. refer to app_definition.md for a valid map file.
      */
     @Override
     public WebMap createMap() {

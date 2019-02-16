@@ -1,10 +1,8 @@
-package model;
+package model.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
-
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +75,7 @@ public class WebMapTest {
 
     }
 
-    @Test //todo remove last character
+    @Test //todo next last character
     public void isValidTest() {
         map.setMap(null);
 

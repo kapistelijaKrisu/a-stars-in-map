@@ -1,17 +1,17 @@
 package searchAlgorithm;
 
 import IOoperations.analysisWriter.AnalysisWriter;
-import model.WeightedPoint;
+import model.web.WeightedPoint;
 
 import java.util.*;
 
 /**
- * classic breath-first-search
+ * classic Dijkstra with minheap and int[][] array to hold current known distances.
  */
 public class Dijkstra extends SearchAlgorithm {
 
     /**
-     * classic breath-first-search that extends SearchAlgorithm so it handles report writing.
+     * classic Dijkstra that extends SearchAlgorithm so it handles report writing.
      *
      * @param analysisWriter writer that writes the analysis report files.
      */
@@ -19,15 +19,19 @@ public class Dijkstra extends SearchAlgorithm {
         super(analysisWriter);
     }
 
-    @Override
-    protected void searchAlgorithm(long timeOfStart, long spaceAtStart, Map<WeightedPoint, WeightedPoint> path) {
+    /**
+     * Runs Dijkstra with a heap and uses double[][] for upkeeping current know distances.
+     * @param timeOfStart       time in nanos of when method is called.
+     * @param availableSpace    space left in jvm heap when method is called.
+     * @param path              place to store which step is taken form where.
+     */
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path) {
 
         PriorityQueue<WeightedPoint> visited = new PriorityQueue<>();
-        int[][] distances = new int[map.getMap().length][map.getMap()[0].length];
-        for (int y = 0; y < map.getMap().length; y++) {
-            for (int x = 0; x < map.getMap()[0].length; x++) {
-                visited.add(new WeightedPoint(x, y, 99));
-                distances[y][x] = 99;
+        int[][] distances = new int[map.height()][map.width()];
+        for (int y = 0; y < map.height(); y++) {
+            for (int x = 0; x < map.width(); x++) {
+                distances[y][x] = Integer.MAX_VALUE;
             }
         }
         distances[map.getTileStart().y][map.getTileStart().x] = 0;
@@ -38,33 +42,39 @@ public class Dijkstra extends SearchAlgorithm {
         while (!visited.isEmpty()) {
             WeightedPoint polled = visited.poll();
             for (WeightedPoint neighbour : map.getNeighbours(polled)) {
-                int newKey = getNewWeight(polled.weight, map.getMap()[neighbour.y][neighbour.x]);
+                int totalWeight = getNewWeight(neighbour.weight, distances[polled.y][polled.x]);
                 int currentKnownWeight = distances[neighbour.y][neighbour.x];
-                if (currentKnownWeight > newKey) {
-                    visited.remove(neighbour);
-                    visited.add(new WeightedPoint(neighbour.x, neighbour.y, newKey));
-                    distances[neighbour.y][neighbour.x] = newKey;
+                if (currentKnownWeight > totalWeight) {
+                    visited.add(new WeightedPoint(neighbour.x, neighbour.y, totalWeight));
+                    distances[neighbour.y][neighbour.x] = totalWeight;
                     path.put(neighbour, polled);
                 }
                 if (neighbour.equals(map.getTileTarget())) {
-                    super.handleReportWriting(path, timeOfStart, spaceAtStart);
+                    super.handleReportWriting(path, timeOfStart, availableSpace);
                     return;
                 }
             }
         }
-        super.handleReportWriting(path, timeOfStart, spaceAtStart);
+        super.handleReportWriting(path, timeOfStart, availableSpace);
     }
 
-    private int getNewWeight(int dist, int weight) {
-        Long safe = Math.min((long) dist + weight, 99);
+    private int getNewWeight(double dist, double weight) {
+        Double safe = Math.min(dist + weight, Integer.MAX_VALUE);
         return safe.intValue();
     }
 
+    /**
+     *
+     * @return known theoretical time complecity.
+     */
     @Override
     public String getTheoreticalTime() {
-        return "O( | V + E | )";
+        return "O( | V + E | log | V |)";
     }
-
+    /**
+     *
+     * @return known theoretical space complecity.
+     */
     @Override
     public String getTheoreticalSpace() {
         return "| V |";

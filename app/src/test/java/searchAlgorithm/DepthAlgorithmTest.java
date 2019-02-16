@@ -3,7 +3,7 @@ package searchAlgorithm;
 
 import mock.MockAnalysisWriter;
 import mock.WebMapMock;
-import model.WebMap;
+import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +83,7 @@ public class DepthAlgorithmTest {
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
-        assertEquals("32", mockWriter.receivedTestPathWeight());
+        assertEquals("28", mockWriter.receivedTestPathWeight());
         assertEquals("21", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap = "X X X # v v v \r\n" +

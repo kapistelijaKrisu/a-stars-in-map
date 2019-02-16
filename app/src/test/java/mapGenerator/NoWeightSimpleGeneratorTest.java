@@ -1,6 +1,6 @@
 package mapGenerator;
 
-import model.WebMap;
+import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

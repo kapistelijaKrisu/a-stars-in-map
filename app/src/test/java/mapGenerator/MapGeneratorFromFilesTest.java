@@ -1,7 +1,7 @@
 package mapGenerator;
 
 import IOoperations.mapReader.MapLocator;
-import model.WebMap;
+import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

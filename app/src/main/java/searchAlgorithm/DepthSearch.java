@@ -1,7 +1,7 @@
 package searchAlgorithm;
 
 import IOoperations.analysisWriter.AnalysisWriter;
-import model.WeightedPoint;
+import model.web.WeightedPoint;
 
 import java.util.*;
 
@@ -11,15 +11,21 @@ import java.util.*;
 public class DepthSearch extends SearchAlgorithm {
 
     /**
-     * classic dreath-first-search that extends SearchAlgorithm so it handles report writing.
+     * classic depth-first-search that extends SearchAlgorithm so it handles report writing.
      * @param analysisWriter writer that writes the analysis report files.
      */
     public DepthSearch(AnalysisWriter analysisWriter) {
         super(analysisWriter);
     }
 
+    /**
+     * Runs depth search by using stack and adding neighbours to it and then comparing popped neightbour wit target.
+     * @param timeOfStart       time in nanos of when method is called.
+     * @param availableSpace    space left in jvm heap when method is called.
+     * @param path              place to store which step is taken form where.
+     */
     @Override
-    protected void searchAlgorithm(long timeOfStart, long spaceAtStart, Map<WeightedPoint, WeightedPoint> path) {
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path) {
         WeightedPoint orignalStart = map.getTileStart();
 
         Set<WeightedPoint> visited = new HashSet();
@@ -32,7 +38,7 @@ public class DepthSearch extends SearchAlgorithm {
         while (!queue.isEmpty()) {
             WeightedPoint polled = queue.pollLast();
             if (polled.equals(map.getTileTarget())) {
-                super.handleReportWriting(path, timeOfStart, spaceAtStart);
+                super.handleReportWriting(path, timeOfStart, availableSpace);
                 return;
             } else {
                 for (WeightedPoint neighbour : map.getNeighbours(polled)) {
@@ -44,14 +50,22 @@ public class DepthSearch extends SearchAlgorithm {
                 }
             }
         }
-        super.handleReportWriting(path, timeOfStart, spaceAtStart);
+        super.handleReportWriting(path, timeOfStart, availableSpace);
     }
 
+    /**
+     *
+     * @return known time complexity
+     */
     @Override
     public String getTheoreticalTime() {
         return "O( | V + E | )";
     }
 
+    /**
+     *
+     * @return known space complexity
+     */
     @Override
     public String getTheoreticalSpace() {
         return "| V |";

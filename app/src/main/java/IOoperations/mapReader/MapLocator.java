@@ -12,7 +12,7 @@ public class MapLocator {
 
     /**
      *
-     * @return list of files inside maps folder that are of .map type
+     * @return List of files inside maps folder that are of .map type
      * @throws IOException if maps directory is not found in same lever as program
      */
     public List<File> findMaps() throws IOException {
