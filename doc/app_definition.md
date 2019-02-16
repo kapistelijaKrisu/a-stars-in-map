@@ -79,8 +79,8 @@ doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md.
 ### 4 Profit
 Palataan päävalikkoon. Voit ihailla tai analysoida tuloksia.
 
-## Testaus
-Unit testaus mockiton kanssa. Raportointi jacocon kanssa. Testikattavuuden minimi 70% ja tavoite 90%.
+## Testaus 
+Katso TestDoc.md (Lisää gitubin linkki tähä)
 
 ## Javadoc
-Kaikki public ja protected.
+Kaikki public ja protected. Löytyy javadoc kansiosta.
