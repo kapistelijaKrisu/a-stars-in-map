@@ -13,10 +13,11 @@
 * 1 kopy pastaa hakualgoritmit ja pistä ne käyttämään käsin tehdyt tietorakenteet, jos myönnetään lupa ja kokeile eri apurakenteita/heurestiikkoja
 * 2 lisää järkeviä karttoja
 * 3 vertailu dokumentit
-* 4 järkevä sisältö hakualgoritmien getAdditionalDocumentation kenttään.
-* 5 jar luonti 
-* 6 funkkari ajaakseen kaikki algoritmit jokaiseen karttaan
-* 7 analyysiin karsi leveyttä jos liian suuri
+* 4 enumit ja devmoden poisto lintti (peer review tulos)
+* 5 järkevä sisältö hakualgoritmien getAdditionalDocumentation kenttään.
+* 6 jar luonti 
+* 7 funkkari ajaakseen kaikki algoritmit jokaiseen karttaan
+* 8 analyysiin karsi leveyttä jos liian suuri
 
 ### Epäselvää
  * Dokkarit. Siis dokkarin vaatimukset tai pikemminkin mikä puuttuu dokkareista
