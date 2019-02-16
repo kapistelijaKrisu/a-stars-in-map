@@ -4,7 +4,7 @@
 * Testi päivitykset 3h~
 * Testi dokumentaatio 1h~
 * Dijkstra ja A * toteutukset 2h~
-* hakujen käsintehdyt aputietorakenteet (ei käytössä vielä odottaa vastausta Epäselvyys kohdassa) 3h~
+* Hakujen käsintehdyt aputietorakenteet (ei käytössä vielä odottaa vastausta Epäselvyys kohdassa) 3h~
 * javadoc päivitykset 4h~
 * vertaispalaute 3h~
 
@@ -19,11 +19,10 @@
 * 7 analyysiin karsi leveyttä jos liian suuri
 
 ### Epäselvää
-* Mitkä dokkarit puuttuu
+ * Dokkarit. Siis dokkarin vaatimukset tai pikemminkin mikä puuttuu dokkareista
 * Saako tehdä vertailua algoritmien kanssa jossa käytetty valmiita tietorakenteita
 * Jatkuvastu herjattu dokkareista, jos niitä halutaan niin ohjeet olisi kiva jos niiden "aikataulusta" + https://github.com/TiraLabra/2019_3/blob/master/pages/dokumentaatio.md ei kerro mistään muusta kuin javadoceista
  ja https://github.com/TiraLabra/2019_3/blob/master/pages/aikataulu.md määrittele mikä on tarpeeksi "started"
- * Siis dokkarin vaatimukset tai pikemminkin mikä puuttuu dokkareista
 
 ### Mitä opin
 * astar algoritmin. Keko.

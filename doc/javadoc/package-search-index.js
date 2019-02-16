@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"app"},{"l":"mapGenerator"},{"l":"model"},{"l":"searchAlgorithm"},{"l":"systemTools"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"app"},{"l":"IOoperations.analysisWriter"},{"l":"IOoperations.mapReader"},{"l":"mapGenerator"},{"l":"model.structure"},{"l":"model.web"},{"l":"searchAlgorithm"},{"l":"systemTools"}]

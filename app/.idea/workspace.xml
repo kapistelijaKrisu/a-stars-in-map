@@ -6,32 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35ac46c0-c7ad-4dce-811f-18904db6fc23" name="Default Changelist" comment="Path  bit too verbose">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_core_2_24_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_inline_2_24_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app.test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IOoperations/analysisWriter/AnalysisWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/IOoperations/mapReader/MapLocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IOoperations/mapReader/MapLocator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGeneratorFromFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/MapGeneratorFromFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapGenerator/NoWeightSimpleGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapGenerator/NoWeightSimpleGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/WebMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/web/WebMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/WeightedPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/web/WeightedPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/Dijkstra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/Dijkstra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/searchAlgorithm/SearchAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/app/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/app/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mapGenerator/MapGeneratorFromFilesTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mapGenerator/NoWeightSimpleGeneratorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/mock/WebMapMock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mock/WebMapMock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/WebMapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/web/WebMapTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/searchAlgorithm/BreathSearchTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/searchAlgorithm/DepthAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/searchAlgorithm/DepthAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/searchAlgorithm/SearchAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/searchAlgorithm/SearchAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../doc/week5.md" beforeDir="false" afterPath="$PROJECT_DIR$/../doc/week5.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/ReportTemplate.md" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/ReportTemplate.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -110,11 +85,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="50" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
+            <state relative-caret-position="170">
+              <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,7 +121,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/searchAlgorithm/DijkstraTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
@@ -264,10 +242,10 @@
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/DepthSearch.java" />
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/BreathSearch.java" />
         <option value="$PROJECT_DIR$/src/main/java/searchAlgorithm/AStar.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/Main.java" />
         <option value="$PROJECT_DIR$/src/test/java/model/web/WeightedPointTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/searchAlgorithm/AStarTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/searchAlgorithm/DijkstraTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/Main.java" />
       </list>
     </option>
   </component>
@@ -473,7 +451,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550346017963" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550347005367" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/build.gradle" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -621,9 +599,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="app_[test] - 2019.02.16 at 19h 44m 22s.xml">
-      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
-    </history-entry>
     <history-entry file="app_[test] - 2019.02.16 at 19h 45m 13s.xml">
       <configuration name="app [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
@@ -651,13 +626,16 @@
     <history-entry file="app_[test] - 2019.02.16 at 21h 39m 45s.xml">
       <configuration name="app [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
+    <history-entry file="app_[test] - 2019.02.16 at 21h 40m 30s.xml">
+      <configuration name="app [test]" configurationId="GradleRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="247" y="110" width="1686" height="923" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7218935" visible="true" weight="0.18450184" />
-      <window_info id="Structure" order="1" sideWeight="0.2781065" side_tool="true" visible="true" weight="0.18450184" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7227848" visible="true" weight="0.18450184" />
+      <window_info id="Structure" order="1" sideWeight="0.27721518" side_tool="true" visible="true" weight="0.18450184" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -665,7 +643,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49925372" weight="0.33164558" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49925372" visible="true" weight="0.35822785" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49925372" weight="0.35822785" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36708862" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -786,7 +764,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/Main.java</url>
-          <line>20</line>
+          <line>19</line>
           <properties />
           <option name="timeStamp" value="136" />
         </line-breakpoint>
@@ -1318,13 +1296,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="50" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/model/web/WeightedPointTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
@@ -1355,12 +1326,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="javadoc" />
     <option value="run" />
     <option value="test" />
-    <option value="javadoc" />
     <option value="clean build test" />
     <option value="run --args 'false'" />
     <option value="run --false" />

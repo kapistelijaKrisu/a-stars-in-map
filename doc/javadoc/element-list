@@ -1,5 +1,8 @@
 app
+IOoperations.analysisWriter
+IOoperations.mapReader
 mapGenerator
-model
+model.structure
+model.web
 searchAlgorithm
 systemTools
