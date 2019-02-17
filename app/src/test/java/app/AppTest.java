@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;
 import file_operations.analysis_writer.AnalysisWriter;
-import search_algorithm.SearchAlgorithm;
+import search_algorithm.AnalysableAlgorithm;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,8 +31,8 @@ public class AppTest {
         var mapGenerators = new HashMap<String, MapGenerator>();
         var mockGenerator = mock(MapGenerator.class);
         mapGenerators.put("test", mockGenerator);
-        var mockSearch = mock(SearchAlgorithm.class);
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
+        var mockSearch = mock(AnalysableAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
         algorithmMap.put("test", mockSearch);
 
         String input = "1\nb\n1\n1\n1\n1\n1\n1\nexit\n";
@@ -40,7 +40,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(false, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setMapGenerators(mapGenerators);
         app.run();
@@ -59,7 +59,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setMapGenerators(mapGenerator);
         app.run();
 
@@ -68,8 +68,8 @@ public class AppTest {
 
     @Test
     public void algorithmIsCalledWhenValidMapSetTest() throws IOException {
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockSearch = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
+        var mockSearch = mock(AnalysableAlgorithm.class);
         var mockMap = WebMapMock.getMinimumValidMap();
         algorithmMap.put("test", mockSearch);
         String input = "2\ntest\nexit";
@@ -77,7 +77,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
         app.run();
@@ -87,8 +87,8 @@ public class AppTest {
 
     @Test
     public void algorithmIsNotCalledWhenInvalidMapSetTest() throws IOException {
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockGenerator = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
+        var mockGenerator = mock(AnalysableAlgorithm.class);
         var mockMap = new WebMap();
         algorithmMap.put("test", mockGenerator);
         String input = "2\ntest\nexit";
@@ -96,7 +96,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
         app.run();
@@ -106,15 +106,15 @@ public class AppTest {
 
     @Test
     public void algorithmNotCalledWhenMapNotSetTest() throws IOException {
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockGenerator = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
+        var mockGenerator = mock(AnalysableAlgorithm.class);
         algorithmMap.put("test", mockGenerator);
         String input = "2\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.run();
 
@@ -123,8 +123,8 @@ public class AppTest {
 
     @Test
     public void algorithmExceptionCalledWhenDoesNotExistTest() throws IOException {
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockGenerator = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
+        var mockGenerator = mock(AnalysableAlgorithm.class);
         var mockMap = WebMapMock.getMinimumValidMap();
         algorithmMap.put("test", mockGenerator);
         String input = "2\nnot here\nexit";
@@ -132,7 +132,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
         app.run();
@@ -142,8 +142,8 @@ public class AppTest {
 
     @Test
     public void algorithmIsCalledAndIOExceptionCaughtTest() throws IOException {
-        var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockGenerator = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, AnalysableAlgorithm>();
+        var mockGenerator = mock(AnalysableAlgorithm.class);
         doThrow(IOException.class)
                 .when(mockGenerator)
                 .runSearch();
@@ -154,7 +154,7 @@ public class AppTest {
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
+        app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
         app.run();

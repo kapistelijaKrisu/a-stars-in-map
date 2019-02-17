@@ -21,14 +21,14 @@
 
 ### 1 Aseta kartta
 
-#### 1.1 Karttagenetaattorin valinta
+#### 1.1 Karttageneraattorin valinta
 * Sisälle rakennettu NoWeightSimpleGenerator alkuvaiheiden testausta varten
 * Rakennetaan samanlainen random painojen kanssa.
 * Varsinaista analyysiä varten luodaan lukija
 * Joskus harmaassa tulevaisuudessa voisi luoda graafinen generaattori millä voi piirtää haluttu testikartta (Ei tira labran scopessa)
 
 
-##### Kartan luominen lukijalla
+##### Kartan lataaminen tiedostosta lukijalla
 * Ohjelman juurikansion vieressä on maps niminen kansio
 * maps kansiosta valitaan .map tyyppinen tiedosto
 ##### .map rakenne
@@ -57,7 +57,7 @@ T..
 T.T
 ```
 
-#### 1.2.1 Kartan luominen
+#### 1.2.1 Kartan luominen/lataaminen
 * Heti generaattorin valinna jälkeen generaattori kysyy lisätietoja mm. lukija listaa kartat maps kansiosta, joka on samassa kansiossa juuren kanssa ja kysyy mitä käytetään
 * Kyselyn jälkeen luodaan kartta
 
@@ -80,7 +80,7 @@ doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md.
 Palataan päävalikkoon. Voit ihailla tai analysoida tuloksia.
 
 ## Testaus 
-Katso TestDoc.md (Lisää gitubin linkki tähä)
+[testaus dokumentti](https://github.com/kapistelijaKrisu/searching-comparison-with-map-gen/blob/master/doc/TestDoc.md)
 
 ## Javadoc
 Kaikki public ja protected. Löytyy javadoc kansiosta.

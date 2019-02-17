@@ -25,10 +25,11 @@
 * Saako tehdä vertailua algoritmien kanssa jossa käytetty valmiita tietorakenteita
 * Jatkuvastu herjattu dokkareista, jos niitä halutaan niin ohjeet olisi kiva jos niiden "aikataulusta" + https://github.com/TiraLabra/2019_3/blob/master/pages/dokumentaatio.md ei kerro mistään muusta kuin javadoceista
  ja https://github.com/TiraLabra/2019_3/blob/master/pages/aikataulu.md määrittele mikä on tarpeeksi "started"
+ * Dokkarin kieli pakko olla suomi?
 
 ### Mitä opin
 * astar algoritmin. Keko.
 ### Itsekehua
 * Lyhyessä ajassa projekti meni aja tasalle
 ### Itsekritiikkia
-* ajan puutteen lisäksi suomi englanti menny sekaisin dokkareissa. Pitäisi viikkoraporteja lukuunottamatta olla kaikki enlanniksi.
+* ajan puutteen lisäksi suomi englanti menny sekaisin dokkareissa. Pitäisi viikkoraporteja lukuunottamatta olla kaikki enlanniksi. vai saako?

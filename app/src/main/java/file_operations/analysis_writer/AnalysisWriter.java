@@ -34,13 +34,14 @@ public class AnalysisWriter {
     public void writeReport(Map<String, String> replacingValues, String path) throws IOException, IllegalArgumentException {
         if (!AnalysisWriter.reportValidator.validateMapper((replacingValues)) || path == null)
             throw new IllegalArgumentException(AnalysisWriter.reportValidator.getValidatorCondition());
+        System.out.println("Phase 1/3. Creating directories..");
         buildDirectories(path);
         String template = readRawReportTemplate();
-        System.out.println("Beginning to parse template");
+        System.out.println("Phase 2/3. Beginning to parse template..");
         for (Map.Entry<String, String> pair : replacingValues.entrySet()) {
             template = template.replace(pair.getKey(), pair.getValue());
         }
-        System.out.println("Parsing done. Proceeding to write into a file");
+        System.out.println("Phase 3/3. Parsing done. Proceeding to write into a file..");
 
         PrintWriter writer = getAnalysisWriter(path);
         writer.write(template);

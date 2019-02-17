@@ -20,7 +20,7 @@ public class DateConverterTest {
     @Test
     public void nullExceptionTest() {
         DateConverter dateConverter = new DateConverter();
-        Throwable exception = assertThrows(NullPointerException.class, () -> dateConverter.getDateAsString(null));
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> dateConverter.getDateAsString(null));
         assertEquals("Given null as LocalDateTime", exception.getMessage());
     }
 }

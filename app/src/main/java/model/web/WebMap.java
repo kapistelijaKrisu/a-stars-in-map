@@ -7,7 +7,7 @@ import java.util.Collection;
  * int[][] type of a web which additionally includes knowledge to act as a web to be searched .
  * These values are tileStart, tileTarget, value of 0 is considered to be a wall. and name can be used as a file name.
  * Negative values are allowed.
- * Data model to be searched by a SearchAlgorithm.
+ * Data model to be searched by a AnalysableAlgorithm.
  */
 public class WebMap {
     private int[][] map;

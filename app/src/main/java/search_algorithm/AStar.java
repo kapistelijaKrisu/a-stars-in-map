@@ -8,10 +8,10 @@ import java.util.*;
 /**
  * classic A*
  */
-public class AStar extends SearchAlgorithm {
+public class AStar extends AnalysableAlgorithm {
 
     /**
-     * classic A* that extends SearchAlgorithm so it handles report writing.
+     * classic A* that extends AnalysableAlgorithm so it handles report writing.
      *
      * @param analysisWriter writer that writes the analysis report files.
      */
@@ -24,10 +24,10 @@ public class AStar extends SearchAlgorithm {
      * Heuristic is WeightedPoint's rough estimate result from calculateDistance method.
      *  @param timeOfStart       time in nanos of when method is called.
      *  @param availableSpace    space left in jvm heap when method is called.
-     *  @param path              place to store which step is taken form where.
+     *  @param fromToNodeSet              place to store which step is taken form where.
      */
     @Override
-    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path) {
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
 
         PriorityQueue<WeightedPoint> visited = new PriorityQueue<>();
         double[][] distancesKnownFromStart = new double[map.height()][map.width()];
@@ -39,7 +39,7 @@ public class AStar extends SearchAlgorithm {
         distancesKnownFromStart[map.getTileStart().y][map.getTileStart().x] = 0;
         visited.add(new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0));
 
-        path.put(map.getTileStart(), null);
+        fromToNodeSet.put(map.getTileStart(), null);
 
         while (!visited.isEmpty()) {
             WeightedPoint polled = visited.poll();
@@ -52,16 +52,16 @@ public class AStar extends SearchAlgorithm {
                     if (currentKnownWeight > totalDistance) {
                         visited.add(new WeightedPoint(neighbour.x, neighbour.y, totalDistance));
                         distancesKnownFromStart[neighbour.y][neighbour.x] = neighbour.weight + distancesKnownFromStart[polled.y][polled.x];
-                        path.put(neighbour, polled);
+                        fromToNodeSet.put(neighbour, polled);
                     }
                     if (neighbour.equals(map.getTileTarget())) {
-                        super.handleReportWriting(path, timeOfStart, availableSpace);
+                        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
                         return;
                     }
                 }
             }
         }
-        super.handleReportWriting(path, timeOfStart, availableSpace);
+        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
     }
 
     /**

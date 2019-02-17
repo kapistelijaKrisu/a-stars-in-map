@@ -8,10 +8,10 @@ import java.util.*;
 /**
  * classic Dijkstra with minheap and int[][] array to hold current known distances.
  */
-public class Dijkstra extends SearchAlgorithm {
+public class Dijkstra extends AnalysableAlgorithm {
 
     /**
-     * classic Dijkstra that extends SearchAlgorithm so it handles report writing.
+     * classic Dijkstra that extends AnalysableAlgorithm so it handles report writing.
      *
      * @param analysisWriter writer that writes the analysis report files.
      */
@@ -23,9 +23,9 @@ public class Dijkstra extends SearchAlgorithm {
      * Runs Dijkstra with a heap and uses double[][] for upkeeping current know distances.
      * @param timeOfStart       time in nanos of when method is called.
      * @param availableSpace    space left in jvm heap when method is called.
-     * @param path              place to store which step is taken form where.
+     * @param fromToNodeSet              place to store which step is taken form where.
      */
-    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path) {
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
 
         PriorityQueue<WeightedPoint> visited = new PriorityQueue<>();
         int[][] distances = new int[map.height()][map.width()];
@@ -37,7 +37,7 @@ public class Dijkstra extends SearchAlgorithm {
         distances[map.getTileStart().y][map.getTileStart().x] = 0;
         visited.add(new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0));
 
-        path.put(map.getTileStart(), null);
+        fromToNodeSet.put(map.getTileStart(), null);
 
         while (!visited.isEmpty()) {
             WeightedPoint polled = visited.poll();
@@ -47,15 +47,15 @@ public class Dijkstra extends SearchAlgorithm {
                 if (currentKnownWeight > totalWeight) {
                     visited.add(new WeightedPoint(neighbour.x, neighbour.y, totalWeight));
                     distances[neighbour.y][neighbour.x] = totalWeight;
-                    path.put(neighbour, polled);
+                    fromToNodeSet.put(neighbour, polled);
                 }
                 if (neighbour.equals(map.getTileTarget())) {
-                    super.handleReportWriting(path, timeOfStart, availableSpace);
+                    super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
                     return;
                 }
             }
         }
-        super.handleReportWriting(path, timeOfStart, availableSpace);
+        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
     }
 
     private int getNewWeight(double dist, double weight) {

@@ -27,19 +27,16 @@ public class App {
 
     private final Scanner scanner;
     private Map<String, MapGenerator> mapGenerators;
-    private Map<String, SearchAlgorithm> algorithmMap;
+    private Map<String, AnalysableAlgorithm> algorithmMap;
     private boolean state;
     private WebMap currentMap;
-    private final boolean devMode;
 
     /**
      * Sets up app to be ready to run.
-     * @param devMode if true then additional logging during exception mode
      * @param scanner scanner for user input to be used and shared with rest of the app.
      * @param analysisWriter writer to write down search analysis results.
      */
-    public App(boolean devMode, Scanner scanner, AnalysisWriter analysisWriter) {
-        this.devMode = devMode;
+    public App(Scanner scanner, AnalysisWriter analysisWriter) {
         this.scanner = scanner;
         state = STOPPED;
         currentMap = new WebMap();
@@ -97,7 +94,6 @@ public class App {
             return;
         } catch (Exception e) {
             System.out.println("Errors in input try again");
-            if (devMode) e.printStackTrace();
         }
     }
 
@@ -107,7 +103,7 @@ public class App {
                 System.out.println("Chosen map:");
                 System.out.println(currentMap.getTextualView());
                 System.out.println("Choose algorithm to run on map:");
-                for (Map.Entry<String, SearchAlgorithm> pair : algorithmMap.entrySet()) {
+                for (Map.Entry<String, AnalysableAlgorithm> pair : algorithmMap.entrySet()) {
                     System.out.println("press " + pair.getKey() + " for testing: " + pair.getValue().toString());
                 }
                 var algorithm = algorithmMap.get(scanner.nextLine());
@@ -115,13 +111,8 @@ public class App {
                 algorithm.runSearch();
                 System.out.println("Finished search. Returning to main program.");
                 return;
-            } catch (NullPointerException e) {
+            } catch (NullPointerException | IOException e) {
                 System.out.println("Errors. Going back to analysis program.");
-                if (devMode) e.printStackTrace();
-                return;
-            } catch (IOException e) {
-                System.out.println("Unable to handle IO operations");
-                if (devMode) e.printStackTrace();
                 return;
             }
         } else {
@@ -130,7 +121,7 @@ public class App {
     }
 
     // for testing
-   public void setAlgorithmMap(Map<String, SearchAlgorithm> algorithmMap) {
+   public void setAlgorithmMap(Map<String, AnalysableAlgorithm> algorithmMap) {
         this.algorithmMap = algorithmMap;
    }
 

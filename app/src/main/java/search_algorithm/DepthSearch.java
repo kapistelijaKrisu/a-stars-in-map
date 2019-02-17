@@ -8,10 +8,10 @@ import java.util.*;
 /**
  * classic dreath-first-search
  */
-public class DepthSearch extends SearchAlgorithm {
+public class DepthSearch extends AnalysableAlgorithm {
 
     /**
-     * classic depth-first-search that extends SearchAlgorithm so it handles report writing.
+     * classic depth-first-search that extends AnalysableAlgorithm so it handles report writing.
      * @param analysisWriter writer that writes the analysis report files.
      */
     public DepthSearch(AnalysisWriter analysisWriter) {
@@ -22,10 +22,10 @@ public class DepthSearch extends SearchAlgorithm {
      * Runs depth search by using stack and adding neighbours to it and then comparing popped neightbour wit target.
      * @param timeOfStart       time in nanos of when method is called.
      * @param availableSpace    space left in jvm heap when method is called.
-     * @param path              place to store which step is taken form where.
+     * @param fromToNodeSet              place to store which step is taken form where.
      */
     @Override
-    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> path) {
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
         WeightedPoint orignalStart = map.getTileStart();
 
         Set<WeightedPoint> visited = new HashSet();
@@ -33,24 +33,24 @@ public class DepthSearch extends SearchAlgorithm {
 
         visited.add(orignalStart);
         queue.add(orignalStart);
-        path.put(orignalStart, null);
+        fromToNodeSet.put(orignalStart, null);
 
         while (!queue.isEmpty()) {
             WeightedPoint polled = queue.pollLast();
             if (polled.equals(map.getTileTarget())) {
-                super.handleReportWriting(path, timeOfStart, availableSpace);
+                super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
                 return;
             } else {
                 for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
-                        path.put(neighbour, polled);
+                        fromToNodeSet.put(neighbour, polled);
                         visited.add(neighbour);
                         queue.add(neighbour);
                     }
                 }
             }
         }
-        super.handleReportWriting(path, timeOfStart, availableSpace);
+        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
     }
 
     /**

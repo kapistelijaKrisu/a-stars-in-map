@@ -87,7 +87,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
                 }
                 return foundMaps.get(Integer.parseInt(scanner.nextLine()));
 
-            } catch (IndexOutOfBoundsException | NullPointerException e) {
+            } catch (IndexOutOfBoundsException | NullPointerException | NumberFormatException e) {
                 System.out.println("Illegal input!");
             }
         }
