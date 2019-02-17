@@ -103,7 +103,8 @@ public class WebMapTest {
         expectedNeighbours.add(new WeightedPoint(1,0, 1));
         expectedNeighbours.add(new WeightedPoint(1,2, 7));
 
-        neighbourTest(neighbours);
+        assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
+        assertTrue(expectedNeighbours.containsAll(neighbours));
     }
 
     @Test // 0,0 is a wall
@@ -115,7 +116,8 @@ public class WebMapTest {
         expectedNeighbours.add(new WeightedPoint(1,1, 4));
         expectedNeighbours.add(new WeightedPoint(0,2, 6));
 
-        neighbourTest(neighbours);
+        assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
+        assertTrue(expectedNeighbours.containsAll(neighbours));
     }
 
     @Test
@@ -128,7 +130,8 @@ public class WebMapTest {
         expectedNeighbours.add(new WeightedPoint(2,0, 2));
         expectedNeighbours.add(new WeightedPoint(2,2, 8));
 
-        neighbourTest(neighbours);
+        assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
+        assertTrue(expectedNeighbours.containsAll(neighbours));
     }
 
     @Test // 0,0 is a wall
@@ -140,7 +143,8 @@ public class WebMapTest {
         expectedNeighbours.add(new WeightedPoint(2,0, 2));
         expectedNeighbours.add(new WeightedPoint(1,1, 4));
 
-        neighbourTest(neighbours);
+        assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
+        assertTrue(expectedNeighbours.containsAll(neighbours));
     }
 
     @Test
@@ -153,11 +157,8 @@ public class WebMapTest {
         expectedNeighbours.add(new WeightedPoint(2,2, 8));
         expectedNeighbours.add(new WeightedPoint(1,1, 4));
 
-        neighbourTest(neighbours);
+        assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
+        assertTrue(expectedNeighbours.containsAll(neighbours));
     }
 
-    private void neighbourTest(Collection<WeightedPoint> actual) {
-        assertEquals(expectedNeighbours.size(), actual.size(), "should have correct amount of neighbours");
-        assertTrue(expectedNeighbours.containsAll(actual));
-    }
 }

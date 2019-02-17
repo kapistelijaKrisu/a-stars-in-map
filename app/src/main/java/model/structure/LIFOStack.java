@@ -7,6 +7,9 @@ package model.structure;
  */
 public class LIFOStack<T> {
 
+    private Node<T> head;
+
+    //container for held value
     private static class Node<T> {
         private final T value;
         private Node<T> next;
@@ -28,8 +31,6 @@ public class LIFOStack<T> {
             this.next = nextNode;
         }
     }
-
-    private Node<T> head;
 
     /**
      * Creates empty stack where head is null.

@@ -82,9 +82,8 @@ public class WebMap {
     }
     private boolean isAvailableLocation(int x, int y) {
         if (x < 0 || y < 0) return false;
-        if (x >= map[0].length || y >= map.length) return false;
-        if (map[y][x] == WALL) return false;
-        return true;
+        else if (x >= map[0].length || y >= map.length) return false;
+        else return (map[y][x] != WALL);
     }
 
     /**

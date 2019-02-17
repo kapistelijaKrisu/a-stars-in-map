@@ -1,12 +1,12 @@
 package app;
 
-import mapGenerator.MapGenerator;
+import map_generator.MapGenerator;
 import model.web.WebMap;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;
-import IOoperations.analysisWriter.AnalysisWriter;
-import searchAlgorithm.SearchAlgorithm;
+import file_operations.analysis_writer.AnalysisWriter;
+import search_algorithm.SearchAlgorithm;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -38,14 +38,26 @@ public class AppTest {
     }
 
     @Test
-    public void loopsTest() {
-        String input = "1\n1\n1\n1\n1\n1\n1\n1\nexit\n";
+    public void loopsTest() throws IOException {
+        var mapGenerators = new HashMap<String, MapGenerator>();
+        var mockGenerator = mock(MapGenerator.class);
+        mapGenerators.put("test", mockGenerator);
+        var mockSearch = mock(SearchAlgorithm.class);
+        var algorithmMap = new HashMap<String, SearchAlgorithm>();
+        algorithmMap.put("test", mockSearch);
+
+        String input = "1\nb\n1\n1\n1\n1\n1\n1\nexit\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         scanner =  new Scanner(System.in);
         app = new App(false, scanner, new AnalysisWriter());
+        app.setAlgorithmMap(algorithmMap);
+        app.setMapGenerators(mapGenerators);
         app.run();
+
+        verify(mockGenerator, never()).createMap();
+        verify(mockSearch, never()).runSearch();
     }
 
     @Test
@@ -68,9 +80,9 @@ public class AppTest {
     @Test
     public void algorithmIsCalledWhenValidMapSetTest() throws IOException {
         var algorithmMap = new HashMap<String, SearchAlgorithm>();
-        var mockGenerator = mock(SearchAlgorithm.class);
+        var mockSearch = mock(SearchAlgorithm.class);
         var mockMap = WebMapMock.getMinimumValidMap();
-        algorithmMap.put("test", mockGenerator);
+        algorithmMap.put("test", mockSearch);
         String input = "2\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -81,7 +93,7 @@ public class AppTest {
         app.setCurrentMap(mockMap);
         app.run();
 
-        verify(mockGenerator, times(1)).runSearch();
+        verify(mockSearch, times(1)).runSearch();
     }
 
     @Test

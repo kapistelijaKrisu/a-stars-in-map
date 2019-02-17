@@ -1,11 +1,11 @@
 package app;
 
-import mapGenerator.MapGenerator;
-import mapGenerator.MapGeneratorFromFiles;
-import mapGenerator.NoWeightSimpleGenerator;
+import map_generator.MapGenerator;
+import map_generator.MapGeneratorFromFiles;
+import map_generator.NoWeightSimpleGenerator;
 import model.web.WebMap;
-import IOoperations.analysisWriter.AnalysisWriter;
-import searchAlgorithm.*;
+import file_operations.analysis_writer.AnalysisWriter;
+import search_algorithm.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class App {
     private final Scanner scanner;
     private Map<String, MapGenerator> mapGenerators;
     private Map<String, SearchAlgorithm> algorithmMap;
-    private static boolean state;
+    private boolean state;
     private WebMap currentMap;
     private final boolean devMode;
 
@@ -80,6 +80,7 @@ public class App {
                     break;
                 default:
                     state = STOPPED;
+                    break;
             }
         }
     }

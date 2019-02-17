@@ -1,7 +1,7 @@
 package mock;
 
-import IOoperations.analysisWriter.AnalysisWriter;
-import IOoperations.analysisWriter.ReportValidator;
+import file_operations.analysis_writer.AnalysisWriter;
+import file_operations.analysis_writer.ReportValidator;
 
 import java.io.IOException;
 import java.util.Map;

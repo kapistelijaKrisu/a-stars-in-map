@@ -7,6 +7,10 @@ package model.structure;
  */
 public class FIFOQueue<T> {
 
+    private Node<T> first;
+    private Node<T> last;
+
+    //container for held value
     private static class Node<T> {
         private final T value;
         private Node<T> before;
@@ -32,9 +36,6 @@ public class FIFOQueue<T> {
             return before;
         }
     }
-
-    private Node<T> first;
-    private Node<T> last;
 
     /**
      * Creates an empty queue where head and tail are null.

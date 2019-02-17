@@ -1,6 +1,6 @@
 package app;
 
-import IOoperations.analysisWriter.AnalysisWriter;
+import file_operations.analysis_writer.AnalysisWriter;
 
 import java.util.Scanner;
 

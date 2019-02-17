@@ -13,6 +13,7 @@
 * 1 kopy pastaa hakualgoritmit ja pistä ne käyttämään käsin tehdyt tietorakenteet, jos myönnetään lupa ja kokeile eri apurakenteita/heurestiikkoja
 * 2 lisää järkeviä karttoja
 * 3 vertailu dokumentit
+* bonus korjaa määrittelydokkarin lähteet
 * 4 enumit ja devmoden poisto lintti (peer review tulos)
 * 5 järkevä sisältö hakualgoritmien getAdditionalDocumentation kenttään.
 * 6 jar luonti 
