@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DepthAlgorithmTest {
 
@@ -39,7 +37,7 @@ public class DepthAlgorithmTest {
         depthSearch.setMapClean(invalidMap);
         try {
             depthSearch.runSearch();
-            throw new IllegalStateException("Test failed by reaching this part of code");
+            fail("Test failed by reaching this part of code");
         } catch (IllegalStateException e) {
             assertFalse(mockWriter.isValidatingReturnedTrue());
         }

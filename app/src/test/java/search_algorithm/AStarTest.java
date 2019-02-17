@@ -35,7 +35,7 @@ public class AStarTest {private AStar aStar;
         aStar.setMapClean(invalidMap);
         try {
             aStar.runSearch();
-            assertTrue(false);
+            fail("Test failed by reaching this part of code");
         } catch (IllegalStateException e) {
             assertFalse(mockWriter.isValidatingReturnedTrue());
         }

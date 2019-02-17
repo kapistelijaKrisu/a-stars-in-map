@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class BreathSearchTest {
 
     private BreathSearch breathSearch;
@@ -36,7 +35,7 @@ public class BreathSearchTest {
         breathSearch.setMapClean(invalidMap);
         try {
             breathSearch.runSearch();
-            assertTrue(false);
+            fail("Test failed by reaching this part of code");
         } catch (IllegalStateException e) {
             assertFalse(mockWriter.isValidatingReturnedTrue());
         }

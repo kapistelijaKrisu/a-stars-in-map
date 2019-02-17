@@ -17,7 +17,7 @@ public abstract class SearchAlgorithm {
     private String reportFilePath;
     private final AnalysisWriter analysisWriter;
     private final SystemSpecReader systemSpecReader; //singleton?
-    Map<WeightedPoint, WeightedPoint> path;
+    private Map<WeightedPoint, WeightedPoint> path;
 
     public SearchAlgorithm(AnalysisWriter analysisWriter) {
         this.analysisWriter = analysisWriter;

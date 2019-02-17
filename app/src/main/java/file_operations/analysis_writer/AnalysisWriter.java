@@ -32,7 +32,7 @@ public class AnalysisWriter {
      * @throws IllegalArgumentException if path is null or replacingValues is not valid according to ReportValidator class.
      */
     public void writeReport(Map<String, String> replacingValues, String path) throws IOException, IllegalArgumentException {
-        if (AnalysisWriter.reportValidator.validateMapper((replacingValues)) == false || path == null)
+        if (!AnalysisWriter.reportValidator.validateMapper((replacingValues)) || path == null)
             throw new IllegalArgumentException(AnalysisWriter.reportValidator.getValidatorCondition());
         buildDirectories(path);
         String template = readRawReportTemplate();

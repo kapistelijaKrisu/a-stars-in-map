@@ -17,7 +17,7 @@ public class MapLocator {
      */
     public List<File> findMaps() throws IOException {
         File folder = new File(new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent() + "/maps");
-        if (folder.exists() == false || folder.isDirectory() == false) throw new IOException("Error. \"maps\" folder not found at root of the project!");
+        if (!folder.exists() || !folder.isDirectory()) throw new IOException("Error. \"maps\" folder not found at root of the project!");
         File[] listOfFiles = folder.listFiles();
 
         List<File> locatedMaps = new ArrayList<>();

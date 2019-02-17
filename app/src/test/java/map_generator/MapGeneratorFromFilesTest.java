@@ -12,10 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MapGeneratorFromFilesTest {
@@ -72,17 +72,6 @@ public class MapGeneratorFromFilesTest {
     }
 
     @Test
-    public void noSuchFileForFewRoundsTest() {
-        // shouldn't crash
-        String input = "2\n2\n2\n2\n2\n2\n2\n0\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
-        mapGeneratorFromFiles.setMapLocator(mockLocator);
-        mapGeneratorFromFiles.createMap();
-    }
-
-    @Test
     public void errorInNoMapsFoundTest() throws IOException {
         when(mockLocator.findMaps()).thenReturn(new ArrayList<>());
         String input = "1\n";
@@ -101,11 +90,11 @@ public class MapGeneratorFromFilesTest {
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
         String fileName = "testMapFail.map";
-        ClassLoader classLoader = new MapGeneratorFromFilesTest().getClass().getClassLoader();
-        File mockMap = new File(classLoader.getResource(fileName).getFile());
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File mockMap = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
         mockFiles.add(mockMap);
         mapGeneratorFromFiles.setMapLocator(mockLocator);
         WebMap map = mapGeneratorFromFiles.createMap();
-        assertEquals(null, map);
+        assertNull(map);
     }
 }

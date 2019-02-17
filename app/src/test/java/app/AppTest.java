@@ -27,17 +27,6 @@ public class AppTest {
     private App app;
 
     @Test
-    public void exitsCorrectlyTest() {
-        String input = "not a command";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        scanner =  new Scanner(System.in);
-        app = new App(true, scanner, new AnalysisWriter());
-        app.run();
-    }
-
-    @Test
     public void loopsTest() throws IOException {
         var mapGenerators = new HashMap<String, MapGenerator>();
         var mockGenerator = mock(MapGenerator.class);

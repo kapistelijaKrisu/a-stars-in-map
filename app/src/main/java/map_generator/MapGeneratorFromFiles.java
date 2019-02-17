@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- *  Generates an in app memory of a WebMap that is read from map directory.
- *  User is asked which map from the directory is loaded. Uses MapLocator to find maps.
+ * Generates an in app memory of a WebMap that is read from map directory.
+ * User is asked which map from the directory is loaded. Uses MapLocator to find maps.
  */
 public class MapGeneratorFromFiles implements MapGenerator {
     private Scanner scanner;
@@ -36,6 +36,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
 
     /**
      * if maps folder exists and has files then asks user which map to load
+     *
      * @return read map from file, if file has mistakes or map is not valid returns null. refer to app_definition.md for a valid map file.
      */
     @Override
@@ -45,7 +46,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
             loadMapFromFile(mapFile);
             WebMap map = new WebMap();
             map.setName(mapName);
-            map.setTileStart(mapStartLocationX , mapStartLocationY);
+            map.setTileStart(mapStartLocationX, mapStartLocationY);
             map.setTileTarget(mapTargetLocationX, mapTargetLocationY);
             map.setMap(mapArea);
             return map;
@@ -105,6 +106,9 @@ public class MapGeneratorFromFiles implements MapGenerator {
             case READING_MAP:
                 processInMapReadingState(tokens[0]);
                 break;
+            default:
+                throw new IllegalStateException("Should not enter any not known state!");
+
         }
     }
 

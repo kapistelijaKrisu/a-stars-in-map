@@ -36,7 +36,7 @@ public class DijkstraTest {
         dijkstra.setMapClean(invalidMap);
         try {
             dijkstra.runSearch();
-            assertTrue(false);
+            fail("Test failed by reaching this part of code");
         } catch (IllegalStateException e) {
             assertFalse(mockWriter.isValidatingReturnedTrue());
         }

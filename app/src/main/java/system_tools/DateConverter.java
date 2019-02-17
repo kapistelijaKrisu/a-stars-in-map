@@ -23,8 +23,8 @@ public class DateConverter {
      * @return String representation of @param
      * @throws NullPointerException if param is null
      */
-    public String getDateAsString(LocalDateTime localDateTime) throws NullPointerException {
-        if (localDateTime == null) throw new NullPointerException("Given null as LocalDateTime");
+    public String getDateAsString(LocalDateTime localDateTime) throws IllegalArgumentException {
+        if (localDateTime == null) throw new IllegalArgumentException("Given null as LocalDateTime");
         return dateTimeFormatter.format(localDateTime);
     }
 }
