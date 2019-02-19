@@ -3,8 +3,8 @@ decode-begin
 T 30
 . 1
 decode-end
-start 0 305
-target 225 243
+start 33 0
+target 162 304
 
 height 328
 width 241

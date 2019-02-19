@@ -10,7 +10,7 @@
 ### Päiväkirja skipattu sama kuin tehty
 ### TODO list priority order
 * 1 kopy pastaa hakualgoritmit ja pistä ne käyttämään käsin tehdyt tietorakenteet, jos myönnetään lupa ja kokeile eri apurakenteita/heurestiikkoja
-* 2 maploader unit testit, varmista kartat o valideja
+* 2 maploader unit testit
 * 3 vertailu dokumentit
 * bonus korjaa määrittelydokkarin lähteet ja kieli
 * 4 järkevä sisältö hakualgoritmien getAdditionalDocumentation kenttään.
