@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  * Generates an in app memory of a WebMap that is read from map directory.
- * User is asked which map from the directory is loaded. Uses MapLocator to find maps.
+ * User is asked which map from the directory is loaded. Uses MapLocator to find maploaderdirectory.
  */
 public class MapGeneratorFromFiles implements MapGenerator {
     private Scanner scanner;
@@ -26,7 +26,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
     }
 
     /**
-     * if maps folder exists and has files then asks user which map to load
+     * if maploaderdirectory folder exists and has files then asks user which map to load
      *
      * @return read map from file, if file has mistakes or map is not valid returns null. refer to app_definition.md for a valid map file.
      */
@@ -35,7 +35,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
         while (true) {
             try {
                 System.out.println("Choose map by typing its number");
-                System.out.println("Found maps:");
+                System.out.println("Found maploaderdirectory:");
                 var foundMaps = listMaps();
                 for (int i = 0; i < foundMaps.size(); i++) {
                     System.out.println(i + ": " + foundMaps.get(i).getName());
@@ -59,7 +59,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
     private List<File> listMaps() throws IOException {
         List<File> foundMaps = mapLocator.findMaps();
         if (foundMaps.size() == 0) {
-            throw new IOException("No maps found in folder");
+            throw new IOException("No maploaderdirectory found in folder");
         } else {
             return foundMaps;
         }
@@ -67,7 +67,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
 
     @Override
     public String toString() {
-        return "map loader from maps directory";
+        return "map loader from maploaderdirectory directory";
     }
 
     //for testing
