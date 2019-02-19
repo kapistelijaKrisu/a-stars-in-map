@@ -101,13 +101,13 @@ public abstract class AnalysableAlgorithm {
     private void analyzeSearch(Map<WeightedPoint, WeightedPoint> path) {
         List<WeightedPoint> goalPath = new ArrayList<>();
         WeightedPoint locationAt = path.get(map.getTileTarget());
+        String pathWeight = locationAt == null ? "Target was not found" : "" + locationAt.weight;
 
         while (locationAt != null) {
             goalPath.add(locationAt);
             locationAt = path.getOrDefault(locationAt, null);
         }
         int max_steps = 0;
-        int pathWeight = 0;
         StringBuilder sb = new StringBuilder((map.width() * map.height() * 2) + (map.height() * 2));
 
         // going through each coordinate we compare it to given path and mark how coordinates were processed
@@ -126,7 +126,6 @@ public abstract class AnalysableAlgorithm {
                 } else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
                     if (path.containsKey(coordinate)) {//replan
                         sb.append(NodeHandlingType.TARGET_LOCATION_AND_FOUND.getCharValue());
-                        pathWeight += coordinate.weight;
                     } else {
                         sb.append(NodeHandlingType.TARGET_LOCATION_AND_NOT_FOUND.getCharValue());
                     }
@@ -137,7 +136,6 @@ public abstract class AnalysableAlgorithm {
 
                 } else if (goalPath.contains(coordinate)) {
                     sb.append(NodeHandlingType.PROCESSED_IN_PATH.getCharValue());
-                    pathWeight += coordinate.weight;
 
                 } else if (path.containsKey(coordinate)) {
                     sb.append(NodeHandlingType.PROCESSED_NOT_IN_PATH.getCharValue());

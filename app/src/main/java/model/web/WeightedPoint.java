@@ -38,7 +38,7 @@ public class WeightedPoint extends Point implements Comparable<WeightedPoint> {
      * @return a rough estimate of distance to distanceTo point
      */
     public double calculateDistance(WeightedPoint distanceTo) {
-        return (Math.abs(x - distanceTo.x) + Math.abs(y - distanceTo.y));
+        return (Math.abs(x - distanceTo.x) + Math.abs(y - distanceTo.y)) / 2;
         //return this.distance(distanceTo); too heavy
     }
 
