@@ -5,9 +5,10 @@ public enum NodeHandlingType {
     START_LOCATION('S'),
     TARGET_LOCATION_AND_NOT_FOUND('N'),
     TARGET_LOCATION_AND_FOUND('F'),
-    NOT_PROCESSED('.'), PROCESSED_NOT_IN_PATH('v'),
+    NOT_PROCESSED('.'),
+    PROCESSED_NOT_IN_PATH('!'),
     PROCESSED_IN_PATH('X'),
-    WALL('#');
+    WALL('@');
 
     private final char charValue;
 

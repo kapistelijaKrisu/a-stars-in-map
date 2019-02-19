@@ -27,13 +27,13 @@ For easier navigation prefix env, map, al, test (up to bottom order) show where 
 Markups for processed map that is formed at the end on {test_processed_map}
 
 * . not visited
-* v = visited but not walked
+* ! = visited but not in path
 * X = walked path
 * S start node
 * F target node if it was found and not same as start node
 * N target node if it was not found and not same as start node
 * O start and target node if are same
-* \# wall
+* @ wall
 
 ## Validation
 Values are passed during "SearchAlorithm.runSearch()"  in a map to "AnalysisWriter". ReportValidator validates it first. If any of listed values in ReportValidator are missing then report is not written.

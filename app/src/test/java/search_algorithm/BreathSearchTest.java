@@ -62,7 +62,7 @@ public class BreathSearchTest {
         assertEquals("0", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = ". # \r\n# O ";
+        String expectedProcessedMap = ". @ \r\n@ O ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -82,12 +82,12 @@ public class BreathSearchTest {
         assertEquals("27", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X # v v . \r\n" +
-                "S # X X X v v \r\n" +
-                "v # v # X v . \r\n" +
-                "v # v # F . . \r\n" +
-                "v v v # v . . \r\n" +
-                "v v v v v v . ";
+                "X X X @ ! ! . \r\n" +
+                "S @ X X X ! ! \r\n" +
+                "! @ ! @ X ! . \r\n" +
+                "! @ ! @ F . . \r\n" +
+                "! ! ! @ ! . . \r\n" +
+                "! ! ! ! ! ! . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 }

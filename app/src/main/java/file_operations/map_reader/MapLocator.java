@@ -6,26 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Loads list of .map files from maps folder that is on same lever as the app.
+ * Loads list of .map files from maps folder recursively.
  */
 public class MapLocator {
 
     /**
-     *
      * @return List of files inside maps folder that are of .map type
      * @throws IOException if maps directory is not found in same lever as program
      */
     public List<File> findMaps() throws IOException {
-        File folder = new File(new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent() + "/maps");
-        if (!folder.exists() || !folder.isDirectory()) throw new IOException("Error. \"maps\" folder not found at root of the project!");
-        File[] listOfFiles = folder.listFiles();
+        File mainMapFolder = new File(new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent() + "/maps");
+        if (!mainMapFolder.exists() || !mainMapFolder.isDirectory())
+            throw new IOException("Error. \"maps\" folder not found at root of the project!");
 
         List<File> locatedMaps = new ArrayList<>();
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile() && listOfFiles[i].getName().endsWith(".map")) {
-                locatedMaps.add(listOfFiles[i]);
-            }
-        }
+        recursiveMapAdding(mainMapFolder, locatedMaps);
         return locatedMaps;
+    }
+
+    private void recursiveMapAdding(File root, List<File> foundfiles) {
+        if (root.isDirectory()) {
+            for (File child : root.listFiles()) {
+                recursiveMapAdding(child, foundfiles);
+            }
+        } else if (root.getName().endsWith(".map")) {
+            foundfiles.add(root);
+        }
     }
 }

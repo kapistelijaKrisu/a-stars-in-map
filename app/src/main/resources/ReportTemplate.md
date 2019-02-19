@@ -33,12 +33,12 @@
 
 Intepretation of processed map
 * . not visited
-* v = visited but not walked
-* x = walked path
+* ! = visited but not walked
+* X = walked path
 * S start node
 * T target node
 * O start and target node if same
-* w wall 
+* @ wall 
 
 ```
 {test_processed_map}

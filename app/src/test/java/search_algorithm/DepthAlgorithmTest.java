@@ -65,7 +65,7 @@ public class DepthAlgorithmTest {
         assertEquals("0", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = ". # \r\n# O ";
+        String expectedProcessedMap = ". @ \r\n@ O ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -84,11 +84,11 @@ public class DepthAlgorithmTest {
         assertEquals("28", mockWriter.receivedTestPathWeight());
         assertEquals("21", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = "X X X # v v v \r\n" +
-                "S # X X X X X \r\n" +
-                "v # v # v v X \r\n" +
-                ". # . # F X X \r\n" +
-                ". . . # . v v \r\n" +
+        String expectedProcessedMap = "X X X @ ! ! ! \r\n" +
+                "S @ X X X X X \r\n" +
+                "! @ ! @ ! ! X \r\n" +
+                ". @ . @ F X X \r\n" +
+                ". . . @ . ! ! \r\n" +
                 ". . . . . . . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }

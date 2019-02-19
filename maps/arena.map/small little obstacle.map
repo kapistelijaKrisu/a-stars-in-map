@@ -1,9 +1,9 @@
 decode-begin
-T 2147483647
+T 0
 . 1
 decode-end
-start 1 1
-target 1 0
+start 4 5
+target 44 45
 
 height 49
 width 49

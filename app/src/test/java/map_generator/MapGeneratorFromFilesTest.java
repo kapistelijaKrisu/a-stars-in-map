@@ -74,7 +74,7 @@ public class MapGeneratorFromFilesTest {
     @Test
     public void errorInNoMapsFoundTest() throws IOException {
         when(mockLocator.findMaps()).thenReturn(new ArrayList<>());
-        String input = "1\n";
+        String input = "1\nq\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
@@ -85,7 +85,7 @@ public class MapGeneratorFromFilesTest {
 
     @Test
     public void errorInCreationReturnsNullMapTest() {
-        String input = "1\n";
+        String input = "1\nq\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));

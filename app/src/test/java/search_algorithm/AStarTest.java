@@ -11,7 +11,8 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AStarTest {private AStar aStar;
+public class AStarTest {
+    private AStar aStar;
     private MockAnalysisWriter mockWriter;
 
     @BeforeEach
@@ -31,7 +32,7 @@ public class AStarTest {private AStar aStar;
     @Test
     public void doesThrowErrorsWithInvalidMapTest() throws IOException {
         var invalidMap = WebMapMock.getMinimumValidMap();
-        invalidMap.setTileTarget(-1,22);
+        invalidMap.setTileTarget(-1, 22);
         aStar.setMapClean(invalidMap);
         try {
             aStar.runSearch();
@@ -43,6 +44,7 @@ public class AStarTest {private AStar aStar;
 
     /**
      * tests all hardware related untestable values
+     *
      * @throws IOException shouldnt happen because writer is mocked
      */
     @Test
@@ -62,7 +64,7 @@ public class AStarTest {private AStar aStar;
         assertEquals("0", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = ". # \r\n# O ";
+        String expectedProcessedMap = ". @ \r\n@ O ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -82,11 +84,11 @@ public class AStarTest {private AStar aStar;
         assertEquals("13", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X # v v . \r\n" +
-                        "S # X X X v . \r\n" +
-                        "v # v # X . . \r\n" +
-                        ". # . # F . . \r\n" +
-                        ". . . # . . . \r\n" +
+                "X X X @ ! ! . \r\n" +
+                        "S @ X X X ! . \r\n" +
+                        "! @ ! @ X . . \r\n" +
+                        ". @ . @ F . . \r\n" +
+                        ". . . @ . . . \r\n" +
                         ". . . . . . . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }

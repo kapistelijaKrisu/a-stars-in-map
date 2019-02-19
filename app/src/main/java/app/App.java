@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- *  Main program that consists of two parts.
- *  Generating map instance of WebMap class for an algorithm.
- *  Running an algorithm of choice from list with set map and writes results on a file.
+ * Main program that consists of two parts.
+ * Generating map instance of WebMap class for an algorithm.
+ * Running an algorithm of choice from list with set map and writes results on a file.
  */
 
 public class App {
@@ -33,7 +33,8 @@ public class App {
 
     /**
      * Sets up app to be ready to run.
-     * @param scanner scanner for user input to be used and shared with rest of the app.
+     *
+     * @param scanner        scanner for user input to be used and shared with rest of the app.
      * @param analysisWriter writer to write down search analysis results.
      */
     public App(Scanner scanner, AnalysisWriter analysisWriter) {
@@ -53,10 +54,10 @@ public class App {
     }
 
     /**
-     *  Launches main program if not running already.
-     *  User is asked for interaction.
-     *  User is guided through options.
-     *  Test results will be on same level as program in a path /doc/reports/
+     * Launches main program if not running already.
+     * User is asked for interaction.
+     * User is guided through options.
+     * Test results will be on same level as program in a path /doc/reports/
      */
 
     public void run() {
@@ -89,8 +90,13 @@ public class App {
                 System.out.println("press " + pair.getKey() + " for using: " + pair.getValue().toString());
             }
             System.out.println("Press anything else to return to analysis program.");
-            this.currentMap = mapGenerators.get(scanner.nextLine()).createMap();
-            System.out.println("Map has been set!");
+            var generatedMap = mapGenerators.get(scanner.nextLine()).createMap();
+            if (generatedMap == null || !generatedMap.isValid()) {
+                System.out.println("Errors in generated map. Map was not set!");
+            } else {
+                this.currentMap = generatedMap;
+                System.out.println("Map has been set!");
+            }
             return;
         } catch (Exception e) {
             System.out.println("Errors in input try again");
@@ -121,9 +127,9 @@ public class App {
     }
 
     // for testing
-   public void setAlgorithmMap(Map<String, AnalysableAlgorithm> algorithmMap) {
+    public void setAlgorithmMap(Map<String, AnalysableAlgorithm> algorithmMap) {
         this.algorithmMap = algorithmMap;
-   }
+    }
 
     public void setMapGenerators(Map<String, MapGenerator> mapGenerators) {
         this.mapGenerators = mapGenerators;
