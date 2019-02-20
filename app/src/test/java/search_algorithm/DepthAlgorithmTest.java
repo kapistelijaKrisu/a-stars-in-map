@@ -62,7 +62,7 @@ public class DepthAlgorithmTest {
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
-        assertEquals("0", mockWriter.receivedTestPathWeight());
+        assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap = ". @ \r\n@ O ";
@@ -84,7 +84,8 @@ public class DepthAlgorithmTest {
         assertEquals("28", mockWriter.receivedTestPathWeight());
         assertEquals("21", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = "X X X @ ! ! ! \r\n" +
+        String expectedProcessedMap =
+                "X X X @ ! ! ! \r\n" +
                 "S @ X X X X X \r\n" +
                 "! @ ! @ ! ! X \r\n" +
                 ". @ . @ F X X \r\n" +

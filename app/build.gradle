@@ -40,6 +40,7 @@ jacocoTestReport {
                     'app/Main.class',
                     'system_tools/SystemSpecReader.class',
                     'file_operations/map_reader/MapLocator.class',
+                    'file_operations/RootFolderFinder.class',
                     'file_operations/analysis_writer/AnalysisWriter.class'
             ])
         })

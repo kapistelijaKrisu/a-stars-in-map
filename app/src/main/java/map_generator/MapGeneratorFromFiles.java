@@ -1,5 +1,6 @@
 package map_generator;
 
+import file_operations.RootFolderFinder;
 import file_operations.map_reader.MapLoader;
 import file_operations.map_reader.MapLocator;
 import model.web.WebMap;
@@ -34,9 +35,8 @@ public class MapGeneratorFromFiles implements MapGenerator {
     public WebMap createMap() {
         while (true) {
             try {
-                System.out.println("Choose map by typing its number");
-                System.out.println("Found maploaderdirectory:");
                 var foundMaps = listMaps();
+                System.out.println("Choose map by typing its number");
                 for (int i = 0; i < foundMaps.size(); i++) {
                     System.out.println(i + ": " + foundMaps.get(i).getName());
                 }
@@ -59,7 +59,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
     private List<File> listMaps() throws IOException {
         List<File> foundMaps = mapLocator.findMaps();
         if (foundMaps.size() == 0) {
-            throw new IOException("No maploaderdirectory found in folder");
+            throw new IOException("No maps found in" + RootFolderFinder.getRootFolder() + "maps/. Or folder does not exist!");
         } else {
             return foundMaps;
         }
@@ -67,7 +67,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
 
     @Override
     public String toString() {
-        return "map loader from maploaderdirectory directory";
+        return "map loader from ../maps directory";
     }
 
     //for testing

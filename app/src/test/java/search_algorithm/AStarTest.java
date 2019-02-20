@@ -61,7 +61,7 @@ public class AStarTest {
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
-        assertEquals("0", mockWriter.receivedTestPathWeight());
+        assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap = ". @ \r\n@ O ";
@@ -81,12 +81,12 @@ public class AStarTest {
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("16", mockWriter.receivedTestPathWeight());
-        assertEquals("13", mockWriter.receivedTestUsedSteps());
+        assertEquals("16", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X @ ! ! . \r\n" +
-                        "S @ X X X ! . \r\n" +
-                        "! @ ! @ X . . \r\n" +
+                        "X X X @ ! ! ! \r\n" +
+                        "S @ X X X ! ! \r\n" +
+                        "! @ ! @ X ! . \r\n" +
                         ". @ . @ F . . \r\n" +
                         ". . . @ . . . \r\n" +
                         ". . . . . . . ";

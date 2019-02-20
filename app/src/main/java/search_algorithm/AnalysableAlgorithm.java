@@ -100,8 +100,8 @@ public abstract class AnalysableAlgorithm {
 
     private void analyzeSearch(Map<WeightedPoint, WeightedPoint> path) {
         List<WeightedPoint> goalPath = new ArrayList<>();
-        WeightedPoint locationAt = path.get(map.getTileTarget());
-        String pathWeight = locationAt == null ? "Target was not found" : "" + locationAt.weight;
+        WeightedPoint locationAt = map.getTileTarget();
+        String pathWeight = path.get(locationAt) == null ? "Target was not found" : "" + (int)(locationAt.weight + path.get(locationAt).weight);
 
         while (locationAt != null) {
             goalPath.add(locationAt);

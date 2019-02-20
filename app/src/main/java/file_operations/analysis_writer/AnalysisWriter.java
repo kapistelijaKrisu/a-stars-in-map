@@ -1,5 +1,6 @@
 package file_operations.analysis_writer;
 
+import file_operations.RootFolderFinder;
 import system_tools.DateConverter;
 
 import java.io.*;
@@ -20,7 +21,7 @@ public class AnalysisWriter {
      * A file writer that uses ReportTemplate.md to write an analysis of search algorithm at root level.
      */
     public AnalysisWriter() {
-        root = new File(".").getAbsoluteFile().getParentFile().getAbsoluteFile().getParent();
+        root = RootFolderFinder.getRootFolder();
     }
 
     /**
@@ -63,7 +64,7 @@ public class AnalysisWriter {
     }
 
     private void buildDirectories(String reportFilePath) {
-        File reportDirectory = new File(root + "/" + reportFilePath);
+        File reportDirectory = new File(root + reportFilePath);
         reportDirectory.mkdirs();
     }
 }

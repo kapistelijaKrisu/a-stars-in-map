@@ -56,10 +56,10 @@ public class WeightedPointTest {
 
 
         weightedPoint2 = new WeightedPoint(31,-33,1);
-        assertEquals(64.0, weightedPoint.calculateDistance(weightedPoint2));
+        assertEquals(32.0, weightedPoint.calculateDistance(weightedPoint2));
 
         weightedPoint2 = new WeightedPoint(31,33,1);
-        assertEquals(42.0, weightedPoint.calculateDistance(weightedPoint2));
+        assertEquals(21.0, weightedPoint.calculateDistance(weightedPoint2));
     }
 
     @Test

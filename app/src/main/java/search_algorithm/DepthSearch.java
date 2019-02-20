@@ -26,7 +26,7 @@ public class DepthSearch extends AnalysableAlgorithm {
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
-        WeightedPoint orignalStart = map.getTileStart();
+        WeightedPoint orignalStart = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);
 
         Set<WeightedPoint> visited = new HashSet();
         ArrayDeque<WeightedPoint> queue = new ArrayDeque<>();
@@ -43,9 +43,10 @@ public class DepthSearch extends AnalysableAlgorithm {
             } else {
                 for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
-                        fromToNodeSet.put(neighbour, polled);
-                        visited.add(neighbour);
-                        queue.add(neighbour);
+                        var neighBourWithPathWeight = new WeightedPoint(neighbour.x, neighbour.y, neighbour.weight + polled.weight);
+                        fromToNodeSet.put(neighBourWithPathWeight, polled);
+                        visited.add(neighBourWithPathWeight);
+                        queue.add(neighBourWithPathWeight);
                     }
                 }
             }

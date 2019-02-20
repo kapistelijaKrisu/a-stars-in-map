@@ -22,13 +22,13 @@ public class AStar extends AnalysableAlgorithm {
     /**
      * Runs A* with a heap and uses double[][] for upkeeping current know distances.
      * Heuristic is WeightedPoint's rough estimate result from calculateDistance method.
-     *  @param timeOfStart       time in nanos of when method is called.
-     *  @param availableSpace    space left in jvm heap when method is called.
-     *  @param fromToNodeSet              place to store which step is taken form where.
+     *
+     * @param timeOfStart    time in nanos of when method is called.
+     * @param availableSpace space left in jvm heap when method is called.
+     * @param fromToNodeSet  place to store which step is taken form where.
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
-
         PriorityQueue<WeightedPoint> visited = new PriorityQueue<>();
         double[][] distancesKnownFromStart = new double[map.height()][map.width()];
         for (int y = 0; y < map.height(); y++) {
@@ -37,27 +37,29 @@ public class AStar extends AnalysableAlgorithm {
             }
         }
         distancesKnownFromStart[map.getTileStart().y][map.getTileStart().x] = 0;
-        visited.add(new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0));
 
-        fromToNodeSet.put(map.getTileStart(), null);
+        var startNodeWeight = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);
+        visited.add(startNodeWeight);
+        fromToNodeSet.put(startNodeWeight, null);
 
         while (!visited.isEmpty()) {
             WeightedPoint polled = visited.poll();
-            for (WeightedPoint neighbour : map.getNeighbours(polled)) {
-                if (!visited.contains(neighbour) ) {
-                    double predictedDistance = neighbour.calculateDistance(map.getTileTarget());
-                    double totalDistance = neighbour.weight + distancesKnownFromStart[polled.y][polled.x] + predictedDistance * neighbour.weight;
 
-                    double currentKnownWeight = distancesKnownFromStart[neighbour.y][neighbour.x];
-                    if (currentKnownWeight > totalDistance) {
-                        visited.add(new WeightedPoint(neighbour.x, neighbour.y, totalDistance));
-                        distancesKnownFromStart[neighbour.y][neighbour.x] = neighbour.weight + distancesKnownFromStart[polled.y][polled.x];
-                        fromToNodeSet.put(neighbour, polled);
-                    }
-                    if (neighbour.equals(map.getTileTarget())) {
-                        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
-                        return;
-                    }
+            for (WeightedPoint neighbour : map.getNeighbours(polled)) {
+                double predictedDistance = neighbour.calculateDistance(map.getTileTarget()) + neighbour.weight;
+                double newTotalDistance = distancesKnownFromStart[polled.y][polled.x] + predictedDistance;
+
+                double currentKnownWeight = distancesKnownFromStart[neighbour.y][neighbour.x];
+                if (currentKnownWeight > newTotalDistance) {
+
+                    visited.add(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));
+                    distancesKnownFromStart[neighbour.y][neighbour.x] = neighbour.weight + distancesKnownFromStart[polled.y][polled.x];
+                    var polledPathWeight = new WeightedPoint(polled.x, polled.y, distancesKnownFromStart[polled.y][polled.x]);
+                    fromToNodeSet.put(neighbour, polledPathWeight);
+                }
+                if (neighbour.equals(map.getTileTarget())) {
+                    super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
+                    return;
                 }
             }
         }
@@ -65,15 +67,14 @@ public class AStar extends AnalysableAlgorithm {
     }
 
     /**
-     *
      * @return known theoretical time complecity.
      */
     @Override
     public String getTheoreticalTime() {
         return "O( | V + E | log | V |)";
     }
+
     /**
-     *
      * @return known theoretical space complecity.
      */
     @Override

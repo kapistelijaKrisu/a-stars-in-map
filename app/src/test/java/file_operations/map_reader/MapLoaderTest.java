@@ -3,7 +3,7 @@ package file_operations.map_reader;
 import map_generator.MapGeneratorFromFilesTest;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
+
 
 import java.awt.*;
 import java.io.File;

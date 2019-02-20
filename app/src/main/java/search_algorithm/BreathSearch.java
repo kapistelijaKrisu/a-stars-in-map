@@ -26,25 +26,27 @@ public class BreathSearch extends AnalysableAlgorithm {
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
-        WeightedPoint originalStart = map.getTileStart();
+        WeightedPoint orignalStart = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);
+
         Set<WeightedPoint> visited = new HashSet();
         ArrayDeque<WeightedPoint> queue = new ArrayDeque<>();
 
-        visited.add(originalStart);
-        queue.add(originalStart);
-        fromToNodeSet.put(originalStart, null);
+        visited.add(orignalStart);
+        queue.add(orignalStart);
+        fromToNodeSet.put(orignalStart, null);
 
         while (!queue.isEmpty()) {
-            WeightedPoint polled = queue.poll();
+            WeightedPoint polled = queue.pollFirst();
             if (polled.equals(map.getTileTarget())) {
                 super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
                 return;
             } else {
                 for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
-                        fromToNodeSet.put(neighbour, polled);
-                        visited.add(neighbour);
-                        queue.add(neighbour);
+                        var neighBourWithPathWeight = new WeightedPoint(neighbour.x, neighbour.y, neighbour.weight + polled.weight);
+                        fromToNodeSet.put(neighBourWithPathWeight, polled);
+                        visited.add(neighBourWithPathWeight);
+                        queue.add(neighBourWithPathWeight);
                     }
                 }
             }

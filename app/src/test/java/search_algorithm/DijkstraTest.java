@@ -60,7 +60,7 @@ public class DijkstraTest {
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
         assertEquals("TBD", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
-        assertEquals("0", mockWriter.receivedTestPathWeight());
+        assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap = ". @ \r\n@ O ";
@@ -83,7 +83,7 @@ public class DijkstraTest {
         assertEquals("22", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X @ ! ! ! \r\n" +
+                        "X X X @ ! ! ! \r\n" +
                         "S @ X X X ! ! \r\n" +
                         "! @ ! @ X ! . \r\n" +
                         "! @ ! @ F . . \r\n" +
