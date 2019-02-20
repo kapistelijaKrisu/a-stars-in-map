@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'jacoco'
     id 'idea'
+    id "io.github.ddimtirov.codacy" version "0.1.0"
 
 }
 

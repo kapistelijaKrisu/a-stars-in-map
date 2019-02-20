@@ -43,10 +43,9 @@ public class BreathSearch extends AnalysableAlgorithm {
             } else {
                 for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                     if (!visited.contains(neighbour)) {
-                        var neighBourWithPathWeight = new WeightedPoint(neighbour.x, neighbour.y, neighbour.weight + polled.weight);
-                        fromToNodeSet.put(neighBourWithPathWeight, polled);
-                        visited.add(neighBourWithPathWeight);
-                        queue.add(neighBourWithPathWeight);
+                        fromToNodeSet.put(neighbour, polled);
+                        visited.add(neighbour);
+                        queue.add(neighbour);
                     }
                 }
             }

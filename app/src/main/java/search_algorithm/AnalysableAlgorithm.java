@@ -6,8 +6,10 @@ import model.web.WebMap;
 import model.web.WeightedPoint;
 import system_tools.SystemSpecReader;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Base class for an algorithm that does all the ground work for preparing and writing analysis file.
@@ -99,14 +101,14 @@ public abstract class AnalysableAlgorithm {
     }
 
     private void analyzeSearch(Map<WeightedPoint, WeightedPoint> path) {
-        List<WeightedPoint> goalPath = new ArrayList<>();
-        WeightedPoint locationAt = map.getTileTarget();
-        String pathWeight = path.get(locationAt) == null ? "Target was not found" : "" + (int)(locationAt.weight + path.get(locationAt).weight);
+        List<Point> goalPath = new ArrayList<>();
+        Point locationAt = map.getTileTarget();
 
         while (locationAt != null) {
             goalPath.add(locationAt);
             locationAt = path.getOrDefault(locationAt, null);
         }
+        int totalPathWeight = 0;
         int max_steps = 0;
         StringBuilder sb = new StringBuilder((map.width() * map.height() * 2) + (map.height() * 2));
 
@@ -126,6 +128,7 @@ public abstract class AnalysableAlgorithm {
                 } else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
                     if (path.containsKey(coordinate)) {//replan
                         sb.append(NodeHandlingType.TARGET_LOCATION_AND_FOUND.getCharValue());
+                        totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);
                     } else {
                         sb.append(NodeHandlingType.TARGET_LOCATION_AND_NOT_FOUND.getCharValue());
                     }
@@ -136,6 +139,7 @@ public abstract class AnalysableAlgorithm {
 
                 } else if (goalPath.contains(coordinate)) {
                     sb.append(NodeHandlingType.PROCESSED_IN_PATH.getCharValue());
+                    totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);
 
                 } else if (path.containsKey(coordinate)) {
                     sb.append(NodeHandlingType.PROCESSED_NOT_IN_PATH.getCharValue());
@@ -151,6 +155,8 @@ public abstract class AnalysableAlgorithm {
         // take off leading whitespace
         sb.setLength(Math.max(sb.length() - 2, 0));
         //fill analysis values
+
+        String pathWeight = path.get(map.getTileTarget()) == null ? "Target was not found" : "" + totalPathWeight;
         templateValueMap.put("{test_processed_map}", sb.toString());
         templateValueMap.put("{test_path_weight}", "" + pathWeight);
         templateValueMap.put("{test_max_steps}", "" + max_steps);

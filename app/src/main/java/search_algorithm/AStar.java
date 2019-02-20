@@ -54,8 +54,7 @@ public class AStar extends AnalysableAlgorithm {
 
                     visited.add(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));
                     distancesKnownFromStart[neighbour.y][neighbour.x] = neighbour.weight + distancesKnownFromStart[polled.y][polled.x];
-                    var polledPathWeight = new WeightedPoint(polled.x, polled.y, distancesKnownFromStart[polled.y][polled.x]);
-                    fromToNodeSet.put(neighbour, polledPathWeight);
+                    fromToNodeSet.put(neighbour, polled);
                 }
                 if (neighbour.equals(map.getTileTarget())) {
                     super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
