@@ -7,6 +7,7 @@
 * Edelliset hajotti vähän asioita, korjaus 3h~
 * Järkevät kartat lisätty, karttalatauksen logiikka uista erotettu. Kontrasti suurennttu raportin karttaan v -> ! ja # -> @ ~2h
 * jar luonti ja dynaaminen juurikansion löytö ~1h
+* Oikeellisuuden testaus dokumentti "TestDoc.md" viimeistely ~0h
 ### Päiväkirja skipattu sama kuin tehty
 ### TODO list priority order
 * 1 kopy pastaa hakualgoritmit ja pistä ne käyttämään käsin tehdyt tietorakenteet, jos myönnetään lupa ja kokeile eri apurakenteita/heurestiikkoja
