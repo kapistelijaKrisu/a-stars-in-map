@@ -71,17 +71,7 @@ T.T
 
 ### 3 ??????
 Tässä taika-askeleessa algoritmi käy haunsa läpi ja kirjoittaa tuloksensa juurikansion viereen muodossa 
-doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md.   
-#### Muistilista raportin suunnitteluun
-* Tilan käytön selvitys?
-#### Raportin suunnitelma tähän mennessä
-* md tyyppinen tiedosto 
+doc/reports/kartan_nimi/algoritmin_nimi/aika_leima.md.
 
 ### 4 Profit
 Palataan päävalikkoon. Voit ihailla tai analysoida tuloksia.
-
-## Testaus 
-[testaus dokumentti](https://github.com/kapistelijaKrisu/searching-comparison-with-map-gen/blob/master/doc/TestDoc.md)
-
-## Javadoc
-Kaikki public ja protected. Löytyy javadoc kansiosta.

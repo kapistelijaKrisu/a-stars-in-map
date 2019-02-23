@@ -2,6 +2,8 @@
 
 ## Structure
 
+#### OUTDATED was done before variants of algorithms were made.
+
 **Here is shown structure of app and file directories it uses with their purpose**
 ```
 searching-comparison-with-map-gen
@@ -125,3 +127,10 @@ TODO find method name with received parameters. This uses system_tools/DateConve
 
 TODO add urls for javadoc
 TODO add pick
+
+
+## Testing 
+[testaus dokumentti](https://github.com/kapistelijaKrisu/searching-comparison-with-map-gen/blob/master/doc/TestDoc.md)
+
+## Javadoc
+Kaikki public ja protected. Löytyy javadoc kansiosta.

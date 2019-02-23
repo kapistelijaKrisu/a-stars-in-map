@@ -14,6 +14,7 @@
 * lisätty iso läjä algoritmeja sis. enumit ja rakenteen muutokset ~2h
 * korjattu rikkoutuneet testit (uudet menee ensi viikolle) ~1h
 * järkevät sisällöt TBD kohtiin raportteihin ~0h
+* vertaispalaute ~2h
 
 ### Päiväkirja skipattu sama kuin tehty
 ### TODO list priority order
