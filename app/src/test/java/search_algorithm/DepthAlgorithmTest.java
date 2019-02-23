@@ -6,6 +6,8 @@ import mock.WebMapMock;
 import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import search_algorithm.structure_type.StackType;
+import search_algorithm.structure_type.UniqueSetType;
 
 import java.io.IOException;
 
@@ -19,7 +21,7 @@ public class DepthAlgorithmTest {
     @BeforeEach
     public void setUp() {
         mockWriter = new MockAnalysisWriter();
-        depthSearch = new DepthSearch(mockWriter);
+        depthSearch = new DepthSearch(mockWriter, StackType.CUSTOM_STACK, UniqueSetType.CUSTOM_DYNAMIC_SIZE_HASH_SET);
     }
 
     @Test
@@ -27,7 +29,7 @@ public class DepthAlgorithmTest {
         depthSearch.setMapClean(WebMapMock.getMinimumValidMap());
         depthSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
-        assertEquals("/doc/reports/nameless map/depth search", mockWriter.getReceivedPath());
+        assertEquals("/doc/reports/nameless map/Depth first", mockWriter.getReceivedPath());
     }
 
     @Test
@@ -55,12 +57,12 @@ public class DepthAlgorithmTest {
         depthSearch.setMapClean(map);
         depthSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
-        assertEquals("/doc/reports/nameless map/depth search", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
-        assertEquals("depth search", mockWriter.receivedAlgorithm());
+        assertEquals("/doc/reports/nameless map/Depth first", mockWriter.getReceivedPath());
+        assertEquals("Depth first with CUSTOM_DYNAMIC_SIZE_HASH_SET to keep track of visited edges and CUSTOM_STACK as an implementation of stack.", mockWriter.receivedAlDoc());
+        assertEquals("Depth first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 2 Height: 2\r\nStart location: 1,1\r\nTarget location: 1,1", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
@@ -74,12 +76,12 @@ public class DepthAlgorithmTest {
         depthSearch.setMapClean(WebMapMock.getValid6x7Map());
         depthSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
-        assertEquals("/doc/reports/nameless map/depth search", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
-        assertEquals("depth search", mockWriter.receivedAlgorithm());
+        assertEquals("/doc/reports/nameless map/Depth first", mockWriter.getReceivedPath());
+        assertEquals("Depth first with CUSTOM_DYNAMIC_SIZE_HASH_SET to keep track of visited edges and CUSTOM_STACK as an implementation of stack.", mockWriter.receivedAlDoc());
+        assertEquals("Depth first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("28", mockWriter.receivedTestPathWeight());
         assertEquals("21", mockWriter.receivedTestUsedSteps());

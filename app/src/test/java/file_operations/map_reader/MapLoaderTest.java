@@ -4,7 +4,6 @@ import map_generator.MapGeneratorFromFilesTest;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

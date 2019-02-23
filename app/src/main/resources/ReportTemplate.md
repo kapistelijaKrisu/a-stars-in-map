@@ -1,6 +1,6 @@
 # Analysis on {algorithm}
 
-## Envirement specs
+## Environment specs
 
 | Name | Value |
 |------|-------|
@@ -10,7 +10,7 @@
 | java runtime version | {env_runtime} |
 | java vm mapName | {env_vm_name} |
 | java vm version | {env_vm_version} |
-| available heap before runnin algorithm | {env_heap} |
+| available heap before running algorithm | {env_heap} |
 
 
 ## Map details
@@ -18,20 +18,20 @@
 
 ## {algorithm}
 
-####Basic knowledge
+#### Basic knowledge
 * Theoretical time {al_time}
 * Theoretical space {al_space}
-<p>
+
+#### Algorithm implementation information
 {al_doc}
-</p>
 
 #### Test statistics
 * Time elapsed: {test_time}
-* Space taken max: (doesn't seem to work?) {test_space}
+* Space taken max: {test_space} (due to how JVM works might not be accurate)
 * Steps taken: {test_used_steps} / max steps {test_max_steps}
 * weight of path: {test_path_weight}
 
-Intepretation of processed map
+Interpretation of processed map
 * . not visited
 * ! = visited but not walked
 * X = walked path

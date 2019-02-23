@@ -1,27 +1,39 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
+import model.structure.Heap;
+import model.structure.custom_structure.MinHeap;
+import model.structure.premade_structure.PremadeHeap;
+import model.web.DistanceMap;
+import model.web.DistanceMapAsA2dTable;
+import model.web.DistanceMapAsASingleTable;
 import model.web.WeightedPoint;
+import search_algorithm.structure_type.DistanceMapType;
+import search_algorithm.structure_type.HeapType;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * classic A*
  */
 public class AStar extends AnalysableAlgorithm {
+    private HeapType heapType;
+    private DistanceMapType distanceMapType;
 
     /**
      * classic A* that extends AnalysableAlgorithm so it handles report writing.
      *
      * @param analysisWriter writer that writes the analysis report files.
      */
-    public AStar(AnalysisWriter analysisWriter) {
+    public AStar(AnalysisWriter analysisWriter, HeapType heapType, DistanceMapType distanceMapType) {
         super(analysisWriter);
+        this.heapType = heapType;
+        this.distanceMapType = distanceMapType;
     }
 
     /**
      * Runs A* with a heap and uses double[][] for upkeeping current know distances.
-     * Heuristic is WeightedPoint's rough estimate result from calculateDistance method.
+     * Heuristic is WeightedPoint's rough estimate result from calculateRoughDistance method.
      *
      * @param timeOfStart    time in nanos of when method is called.
      * @param availableSpace space left in jvm heap when method is called.
@@ -29,31 +41,26 @@ public class AStar extends AnalysableAlgorithm {
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
-        PriorityQueue<WeightedPoint> visited = new PriorityQueue<>();
-        double[][] distancesKnownFromStart = new double[map.height()][map.width()];
-        for (int y = 0; y < map.height(); y++) {
-            for (int x = 0; x < map.width(); x++) {
-                distancesKnownFromStart[y][x] = Integer.MAX_VALUE;
-            }
-        }
-        distancesKnownFromStart[map.getTileStart().y][map.getTileStart().x] = 0;
+        var heap = initHeap();
+        var distanceMap = initDistanceMap();
+        distanceMap.setDistance(map.getTileStart(), 0);
 
         var startNodeWeight = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);
-        visited.add(startNodeWeight);
+        heap.insert(startNodeWeight);
         fromToNodeSet.put(startNodeWeight, null);
 
-        while (!visited.isEmpty()) {
-            WeightedPoint polled = visited.poll();
+        while (!heap.isEmpty()) {
+            WeightedPoint polled = heap.next();
 
             for (WeightedPoint neighbour : map.getNeighbours(polled)) {
-                double predictedDistance = neighbour.calculateDistance(map.getTileTarget()) + neighbour.weight;
-                double newTotalDistance = distancesKnownFromStart[polled.y][polled.x] + predictedDistance;
+                double predictedDistance = neighbour.calculateRoughDistance(map.getTileTarget()) + neighbour.weight;
+                double newTotalDistance = distanceMap.getDistance(polled) + predictedDistance;
 
-                double currentKnownWeight = distancesKnownFromStart[neighbour.y][neighbour.x];
+                double currentKnownWeight = distanceMap.getDistance(neighbour);
                 if (currentKnownWeight > newTotalDistance) {
 
-                    visited.add(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));
-                    distancesKnownFromStart[neighbour.y][neighbour.x] = neighbour.weight + distancesKnownFromStart[polled.y][polled.x];
+                    heap.insert(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));
+                    distanceMap.setDistance(neighbour, neighbour.weight + distanceMap.getDistance(polled));
                     fromToNodeSet.put(neighbour, polled);
                 }
                 if (neighbour.equals(map.getTileTarget())) {
@@ -63,6 +70,28 @@ public class AStar extends AnalysableAlgorithm {
             }
         }
         super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
+    }
+
+    private Heap<WeightedPoint> initHeap() {
+        switch (heapType) {
+            case CUSTOM_MIN_HEAP:
+                return new MinHeap<>();
+            case PRE_MADE_MIN_HEAP:
+                return new PremadeHeap<>();
+            default:
+                return null;
+        }
+    }
+
+    private DistanceMap initDistanceMap() {
+        switch (distanceMapType) {
+            case ARRAY_2D:
+                return new DistanceMapAsA2dTable(map.height(), map.width());
+            case ARRAY_1D:
+                return new DistanceMapAsASingleTable(map.height(), map.width());
+            default:
+                return null;
+        }
     }
 
     /**
@@ -82,8 +111,8 @@ public class AStar extends AnalysableAlgorithm {
     }
 
     @Override
-    public String getAdditionalDocumentation() {
-        return "TBD";
+    public String getDescription() {
+        return toString() + " with " + distanceMapType + " to keep track of known distances and " + heapType + " as an implementation of min heap.";
     }
 
     @Override

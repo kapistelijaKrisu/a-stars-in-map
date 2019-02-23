@@ -1,4 +1,4 @@
-package model.structure;
+package search_algorithm;
 
 public enum NodeHandlingType {
     IS_START_AND_TARGET('O'),

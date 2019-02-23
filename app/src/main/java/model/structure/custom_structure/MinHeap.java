@@ -1,4 +1,6 @@
-package model.structure;
+package model.structure.custom_structure;
+
+import model.structure.Heap;
 
 import java.util.Arrays;
 
@@ -6,7 +8,7 @@ import java.util.Arrays;
  * Classic min-heap implementation. Holds values in a heaped array.
  * @param <T> type of objects to hold in ascending order.
  */
-public class MinHeap<T extends Comparable<T>> {
+public class MinHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Comparable[] heap;
     private int size;
@@ -19,13 +21,19 @@ public class MinHeap<T extends Comparable<T>> {
         heap = new Comparable[16];
     }
 
+    @Override
+    public boolean isEmpty() {
+        return size == 1;
+    }
+
     /**
      * Deletes the smallest object by compareTo method. if array size drops below half while half is over 16 it will create new array half the size of previous one.
      * @return the deleted object
      */
-    public Comparable<T> next() {
+    @Override
+    public T next() {
         if (size == 1) return null;
-        Comparable<T> popped = heap[1];
+        T popped = (T) heap[1];
         heap[1] = heap[size - 1];
         size--;
         minheapify(1);
@@ -38,7 +46,9 @@ public class MinHeap<T extends Comparable<T>> {
      * If it won't fit in array then creates new array double the size of previous one.
      * @param element object to store that implements Comparable to itself
      */
-    public void add(T element) {
+
+    @Override
+    public void insert(T element) {
         if (size == maxSize()) heap = Arrays.copyOf(heap, heap.length * 2);
         heap[size] = element;
         int current = size;
@@ -55,6 +65,8 @@ public class MinHeap<T extends Comparable<T>> {
      * @param element searched element
      * @return true if equals method of objects return true. false if such object not found in store.
      */
+
+    @Override
     public boolean contains(T element) {
         for (int i = 1; i < size; i++) {
             if (heap[i].equals(element)) return true;

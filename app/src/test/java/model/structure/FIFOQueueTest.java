@@ -1,5 +1,6 @@
 package model.structure;
 
+import model.structure.custom_structure.FIFOQueue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

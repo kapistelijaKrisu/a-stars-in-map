@@ -1,9 +1,8 @@
 package model.web;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeightedPointTest {
 
@@ -52,14 +51,14 @@ public class WeightedPointTest {
     public void distanceTestTest() {
         WeightedPoint weightedPoint = new WeightedPoint(11,11,11);
         WeightedPoint weightedPoint2 = new WeightedPoint(11,11,1);
-        assertEquals(0.0, weightedPoint.calculateDistance(weightedPoint2));
+        assertEquals(0.0, weightedPoint.calculateRoughDistance(weightedPoint2));
 
 
         weightedPoint2 = new WeightedPoint(31,-33,1);
-        assertEquals(32.0, weightedPoint.calculateDistance(weightedPoint2));
+        assertEquals(45.07042253521127, weightedPoint.calculateRoughDistance(weightedPoint2));
 
         weightedPoint2 = new WeightedPoint(31,33,1);
-        assertEquals(21.0, weightedPoint.calculateDistance(weightedPoint2));
+        assertEquals(29.577464788732396, weightedPoint.calculateRoughDistance(weightedPoint2));
     }
 
     @Test

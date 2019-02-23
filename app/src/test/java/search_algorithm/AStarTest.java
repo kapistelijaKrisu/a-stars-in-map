@@ -5,11 +5,12 @@ import mock.WebMapMock;
 import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import search_algorithm.structure_type.DistanceMapType;
+import search_algorithm.structure_type.HeapType;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AStarTest {
     private AStar aStar;
@@ -18,7 +19,7 @@ public class AStarTest {
     @BeforeEach
     public void setUp() {
         mockWriter = new MockAnalysisWriter();
-        aStar = new AStar(mockWriter);
+        aStar = new AStar(mockWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_1D);
     }
 
     @Test
@@ -55,11 +56,11 @@ public class AStarTest {
         aStar.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/A Star", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
+        assertEquals("A Star with ARRAY_1D to keep track of known distances and CUSTOM_MIN_HEAP as an implementation of min heap.", mockWriter.receivedAlDoc());
         assertEquals("A Star", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 2 Height: 2\r\nStart location: 1,1\r\nTarget location: 1,1", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
@@ -74,20 +75,20 @@ public class AStarTest {
         aStar.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/A Star", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
+        assertEquals("A Star with ARRAY_1D to keep track of known distances and CUSTOM_MIN_HEAP as an implementation of min heap.", mockWriter.receivedAlDoc());
         assertEquals("A Star", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("16", mockWriter.receivedTestPathWeight());
-        assertEquals("16", mockWriter.receivedTestUsedSteps());
+        assertEquals("13", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                        "X X X @ ! ! ! \r\n" +
-                        "S @ X X X ! ! \r\n" +
-                        "! @ ! @ X ! . \r\n" +
-                        ". @ . @ F . . \r\n" +
+                "X X X @ ! . . \r\n" +
+                        "S @ X X X ! . \r\n" +
+                        "! @ ! @ X . . \r\n" +
+                        "! @ . @ F . . \r\n" +
                         ". . . @ . . . \r\n" +
                         ". . . . . . . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());

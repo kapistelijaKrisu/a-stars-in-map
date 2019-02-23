@@ -1,15 +1,14 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.structure.NodeHandlingType;
 import model.web.WebMap;
 import model.web.WeightedPoint;
 import system_tools.SystemSpecReader;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Base class for an algorithm that does all the ground work for preparing and writing analysis file.
@@ -67,37 +66,38 @@ public abstract class AnalysableAlgorithm {
         templateValueMap = new HashMap<>();
     }
 
-    private void fillDefaultTemplateValues(Map<String, String> map) {
-        map.put("{algorithm}", toString());
-        map.put("{env_cpu}", systemSpecReader.getCpu());
-        map.put("{env_os}", systemSpecReader.getOperatingSystem());
-        map.put("{env_compiler}", systemSpecReader.getCompiler());
-        map.put("{env_runtime}", systemSpecReader.getRuntime());
-        map.put("{env_vm_name}", systemSpecReader.getVirtualMachineName());
-        map.put("{env_vm_version}", systemSpecReader.getVirtualMachineVersion());
-        map.put("{env_heap}", systemSpecReader.getAvailableHeapSizeReadable());
-        map.put("{map_info}", "TBD");
+    private void fillDefaultTemplateValues(Map<String, String> templateFillingMap) {
+        templateFillingMap.put("{algorithm}", toString());
+        templateFillingMap.put("{env_cpu}", systemSpecReader.getCpu());
+        templateFillingMap.put("{env_os}", systemSpecReader.getOperatingSystem());
+        templateFillingMap.put("{env_compiler}", systemSpecReader.getCompiler());
+        templateFillingMap.put("{env_runtime}", systemSpecReader.getRuntime());
+        templateFillingMap.put("{env_vm_name}", systemSpecReader.getVirtualMachineName());
+        templateFillingMap.put("{env_vm_version}", systemSpecReader.getVirtualMachineVersion());
+        templateFillingMap.put("{env_heap}", systemSpecReader.getAvailableHeapSizeReadable());
+        templateFillingMap.put("{map_info}", map.getTextualView());
 
-        map.put("{al_time}", getTheoreticalTime());
-        map.put("{al_space}", getTheoreticalSpace());
-        map.put("{al_doc}", getAdditionalDocumentation());
+        templateFillingMap.put("{al_time}", getTheoreticalTime());
+        templateFillingMap.put("{al_space}", getTheoreticalSpace());
+        templateFillingMap.put("{al_doc}", getDescription());
 
     }
 
     /**
-     * When search is completed add the resulting path and passed parameters in searchAlgorithm to fill the rest of analyze values
+     * When search is completed insert the resulting path and passed parameters in searchAlgorithm to fill the rest of analyze values
      * TODO a bit more description how process works
      * @param path
      * @param startTime
      * @param spaceLeftAtStart
      */
     protected void handleReportWriting(Map<WeightedPoint, WeightedPoint> path, long startTime, long spaceLeftAtStart) {
+        setTimeElapsed(startTime); //important to do instantly
+        long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart; // important to do before app's memory changes
         System.out.println("Search completed! Beginning to analyze search results...");
-        long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart;
         templateValueMap.put("{test_space}", "" + spaceDifference);
         templateValueMap.put("{test_used_steps}", "" + (path.size() - 1));
         analyzeSearch(path);
-        setTimeElapsed(startTime);
+
     }
 
     private void analyzeSearch(Map<WeightedPoint, WeightedPoint> path) {
@@ -168,11 +168,7 @@ public abstract class AnalysableAlgorithm {
         long nanos = elapsedTime % 1000;
         long milliseconds = (elapsedTime / 1000) % 1000;
         long seconds = (milliseconds / 1000) % 60;
-        long minutes = ((milliseconds / (1000 * 60)) % 60);
-        long hours = ((milliseconds / (1000 * 60 * 60)) % 24);
         String timeReport = "";
-        if (hours > 0) timeReport += "hours " + hours;
-        if (minutes > 0) timeReport += " minutes " + minutes;
         if (seconds > 0) timeReport += " seconds " + seconds;
         if (milliseconds > 0) timeReport += " millis " + milliseconds + " ";
         timeReport += "nanos " + nanos;
@@ -198,7 +194,7 @@ public abstract class AnalysableAlgorithm {
      *
      * @return additional documentation of implementation
      */
-    public abstract String getAdditionalDocumentation();
+    public abstract String getDescription();
 
     /**
      * Directory is based on map name as well and gets cleaned when a map is set

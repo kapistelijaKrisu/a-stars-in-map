@@ -1,13 +1,12 @@
 package model.web;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WebMapTest {
 
@@ -48,30 +47,30 @@ public class WebMapTest {
     @Test
     public void printTest() {
         map.setMap(null);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setName(null);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setTileTarget(2, 2);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setTileStart(1, 2);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setMap(data);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
 
         map.setName("now all values are valid");
-        assertEquals("width: 3 height: 3\nStart location: 1,2\nTarget location: 2,2", map.getTextualView());
+        assertEquals("Width: 3 Height: 3\r\nStart location: 1,2\r\nTarget location: 2,2", map.getTextualView());
 
         map.setTileTarget(1, -1);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setTileTarget(-1, 1);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setTileTarget(-1, 1);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
         map.setTileTarget(1, -1);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
 
         map.setTileTarget(0, 0);
-        assertEquals("invalid map. Set map, tileStart, tileTarget", map.getTextualView());
+        assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
 
     }
 

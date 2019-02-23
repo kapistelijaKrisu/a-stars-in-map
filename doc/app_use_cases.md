@@ -38,9 +38,10 @@
 * kerrottu alkupiste x y "start 2 3"
 * kerrottu määränpää x y "target 43 2"
 * # toimii kommenttin merkistä seuraen välilyönti
-* älä laita määränpäätä seinään
+* älä laita määränpäätä tai alkua seinään
 * kerrottu milloin kartta alkaa "map" ja sen jälkeen merkki per arvo luetaan ignooraen välilyöntejä
 * tiedoston luku päättyy kun ollaan luettu korkeuden verran karttaa
+* Painoarvot merkeille asetetaan decode-begin ja decode-end välissä mallin mukaisesti
 
 ```
 # esimerkki sisällöstä

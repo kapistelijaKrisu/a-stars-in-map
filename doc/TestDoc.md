@@ -5,7 +5,6 @@
 * mockito
 * jacoco
 * codacy
-* travis
 
 ## JUnit
 Tests are written in unit tests, each root folder with own goal in mind. Tests expect WebMap neighbours are picked in the following order : down, up, right, left.
@@ -28,7 +27,7 @@ Tests are written in unit tests, each root folder with own goal in mind. Tests e
 1. run ``` gradle test ``` 
 2. Test results will be in  /app/build/reports/tests/test/
 3. Test coverage will be in /app/build/reports/jacoco/test/html/
-4. Some setters and getters are made for testing only, They are commented in code.
+4. Some setters and getters are made for testing only, They have a comment in code.
 
 * Code quality
 1. Push commit

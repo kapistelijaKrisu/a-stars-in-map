@@ -2,14 +2,17 @@ package search_algorithm;
 
 import mock.MockAnalysisWriter;
 import mock.WebMapMock;
+import model.structure.custom_structure.MinHeap;
+import model.web.DistanceMapAsASingleTable;
 import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import search_algorithm.structure_type.DistanceMapType;
+import search_algorithm.structure_type.HeapType;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DijkstraTest {
     private Dijkstra dijkstra;
@@ -18,7 +21,7 @@ public class DijkstraTest {
     @BeforeEach
     public void setUp() {
         mockWriter = new MockAnalysisWriter();
-        dijkstra = new Dijkstra(mockWriter);
+        dijkstra = new Dijkstra(mockWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_2D);
     }
 
     @Test
@@ -54,11 +57,11 @@ public class DijkstraTest {
         dijkstra.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Dijkstra", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
+        assertEquals("Dijkstra with ARRAY_2D to keep track of known distances and CUSTOM_MIN_HEAP as an implementation of min heap.", mockWriter.receivedAlDoc());
         assertEquals("Dijkstra", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 2 Height: 2\r\nStart location: 1,1\r\nTarget location: 1,1", mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
@@ -73,22 +76,22 @@ public class DijkstraTest {
         dijkstra.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Dijkstra", mockWriter.getReceivedPath());
-        assertEquals("TBD", mockWriter.receivedAlDoc());
+        assertEquals("Dijkstra with ARRAY_2D to keep track of known distances and CUSTOM_MIN_HEAP as an implementation of min heap.", mockWriter.receivedAlDoc());
         assertEquals("Dijkstra", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
-        assertEquals("TBD", mockWriter.receivedMapInfo());
+        assertEquals("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3", mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("16", mockWriter.receivedTestPathWeight());
-        assertEquals("22", mockWriter.receivedTestUsedSteps());
+        assertEquals("19", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
                         "X X X @ ! ! ! \r\n" +
                         "S @ X X X ! ! \r\n" +
                         "! @ ! @ X ! . \r\n" +
                         "! @ ! @ F . . \r\n" +
-                        "! ! ! @ . . . \r\n" +
-                        "! . . . . . . ";
+                        "! . . @ . . . \r\n" +
+                        ". . . . . . . ";
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 }

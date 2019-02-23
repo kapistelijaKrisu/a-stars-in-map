@@ -1,9 +1,6 @@
 package app;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.web.WebMap;
-import search_algorithm.AStar;
-import search_algorithm.Dijkstra;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,7 +19,7 @@ public class Main {
 /* test data...
         AnalysisWriter analysisWriter = new AnalysisWriter();
         var app = new App(new Scanner(System.in), analysisWriter);
-        var aaa = new Dijkstra(analysisWriter);
+        var aaa = new CustomDijkstra(analysisWriter);
         var aa = new AStar(analysisWriter);
 
         var mockMap = new WebMap();

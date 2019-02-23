@@ -14,14 +14,13 @@ public class WebMap {
     private int startX, startY, targetX, targetY;
     private String name;
     private static final int WALL = 0;
-    private static final char[] ILLEGAL_CHARACTERS = { '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':' };
+    private static final char[] ILLEGAL_CHARACTERS = {'/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':'};
 
     public WebMap() {
         name = "nameless map";
     }
 
     /**
-     *
      * @param location coordinate of where neighbours are picked from
      * @return list of neigbours from left, right, up and down.
      * Considers of being at the edge of map or being next to a wall which is a cell with value of 0.
@@ -29,16 +28,16 @@ public class WebMap {
     public Collection<WeightedPoint> getNeighbours(WeightedPoint location) {
         var neighbours = new ArrayDeque<WeightedPoint>();
 
-        if (isAvailableLocation(location.x, location.y + 1)){
+        if (isAvailableLocation(location.x, location.y + 1)) {
             neighbours.add(new WeightedPoint(location.x, location.y + 1, map[location.y + 1][location.x]));
         }
-        if (isAvailableLocation(location.x, location.y - 1)){
+        if (isAvailableLocation(location.x, location.y - 1)) {
             neighbours.add(new WeightedPoint(location.x, location.y - 1, map[location.y - 1][location.x]));
         }
         if (isAvailableLocation(location.x + 1, location.y)) {
             neighbours.add(new WeightedPoint(location.x + 1, location.y, map[location.y][location.x + 1]));
         }
-        if (isAvailableLocation(location.x - 1, location.y)){
+        if (isAvailableLocation(location.x - 1, location.y)) {
             neighbours.add(new WeightedPoint(location.x - 1, location.y, map[location.y][location.x - 1]));
         }
 
@@ -46,7 +45,6 @@ public class WebMap {
     }
 
     /**
-     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @return WeightedPoint object representing asked coordinate
@@ -73,13 +71,14 @@ public class WebMap {
         if (!valid) return false;
         valid = targetX >= 0 && targetX < map[0].length && targetY >= 0 && targetY < map.length;
         if (!valid) return false;
-        for (int i = 0; i < ILLEGAL_CHARACTERS.length ; i++) {
-            for (char charAt: name.toCharArray()) {
+        for (int i = 0; i < ILLEGAL_CHARACTERS.length; i++) {
+            for (char charAt : name.toCharArray()) {
                 if (charAt == ILLEGAL_CHARACTERS[i]) return false;
             }
         }
         return true;
     }
+
     private boolean isAvailableLocation(int x, int y) {
         if (x < 0 || y < 0) return false;
         else if (x >= map[0].length || y >= map.length) return false;
@@ -91,9 +90,9 @@ public class WebMap {
      * TODO improve to get  better idea of map. but a full visual view can be more confusing.
      */
     public String getTextualView() {
-        if (!isValid()) return "invalid map. Set map, tileStart, tileTarget";
-        String mapInString = "width: " + map[0].length + " height: " + map.length + "\n";
-        mapInString += "Start location: " + startX + "," + startY + "\n";
+        if (!isValid()) return "Invalid map. Set map, tileStart, tileTarget correctly.";
+        String mapInString = "Width: " + map[0].length + " Height: " + map.length + System.lineSeparator();
+        mapInString += "Start location: " + startX + "," + startY + System.lineSeparator();
         mapInString += "Target location: " + targetX + "," + targetY;
 
         return mapInString;
@@ -101,7 +100,6 @@ public class WebMap {
 
 
     /**
-     *
      * @return current starting location
      * @throws IndexOutOfBoundsException if coordinates are out of map
      */
@@ -110,7 +108,6 @@ public class WebMap {
     }
 
     /**
-     *
      * @return current target location
      * @throws IndexOutOfBoundsException if coordinates are out of map
      */
@@ -121,6 +118,7 @@ public class WebMap {
     /**
      * Sets starting coordinates.
      * get will throw exception if given coordinates don't exist
+     *
      * @param x start x-coordinate
      * @param y start y-coordinate
      */
@@ -128,9 +126,11 @@ public class WebMap {
         this.startX = x;
         this.startY = y;
     }
+
     /**
      * Sets target coordinates.
      * get will throw exception if given coordinates don't exist
+     *
      * @param x target x-coordinate
      * @param y target y-coordinate
      */
@@ -144,6 +144,7 @@ public class WebMap {
     public int width() throws IndexOutOfBoundsException {
         return map[0].length;
     }
+
     public int height() throws NullPointerException {
         return map.length;
     }
@@ -154,6 +155,7 @@ public class WebMap {
 
     /**
      * Should be used for testing only
+     *
      * @return internal map
      */
     public int[][] getMap() {

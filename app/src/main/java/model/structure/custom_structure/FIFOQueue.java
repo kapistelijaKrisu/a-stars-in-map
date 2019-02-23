@@ -1,14 +1,16 @@
-package model.structure;
+package model.structure.custom_structure;
+
+import model.structure.Queue;
 
 /**
  * First-in-forst-out queue
  * Classis queue implementation. Only head and tail is known and nodes are connected by reference.
  * @param <T> Type of object to contain
  */
-public class FIFOQueue<T> {
+public class FIFOQueue<T> implements Queue<T> {
 
-    private Node<T> first;
-    private Node<T> last;
+    private Node<T> head;
+    private Node<T> tail;
 
     //container for held value
     private static class Node<T> {
@@ -29,48 +31,43 @@ public class FIFOQueue<T> {
         }
 
         private void setAfter(Node<T> next) {
-            this.before = next;
+            this.after = next;
         }
 
         private Node<T> getAfter() {
-            return before;
+            return after;
         }
-    }
-
-    /**
-     * Creates an empty queue where head and tail are null.
-     */
-    public FIFOQueue() {
-        first = null;
-        last = null;
     }
 
     /**
      *
      * @param value object to enqueue to the tail of the queue
      */
+    @Override
     public void enqueue(T value) {
-        Node<T> oldlast = last;
-        last = new Node<>(value);
-        if (isEmpty()) first = last;
-        else oldlast.setAfter(last);
+        Node<T> oldLast = tail;
+        tail = new Node<>(value);
+        if (isEmpty()) head = tail;
+        else oldLast.setAfter(tail);
     }
 
     /**
      * Deletes head (oldest) object
      * @return deleted head (oldest object in list)
      */
+    @Override
     public T dequeue() {
         if (isEmpty()) return null;
-        T next = first.getValue();
+        T next = head.getValue();
 
-        first = first.getAfter();
+        head = head.getAfter();
 
-        if (isEmpty()) last = null;
+        if (isEmpty()) tail = null;
         return next;
     }
 
+    @Override
     public boolean isEmpty() {
-        return first == null;
+        return head == null;
     }
 }
