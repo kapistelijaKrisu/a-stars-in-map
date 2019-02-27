@@ -86,12 +86,12 @@ public class BreathSearchTest {
         assertEquals("Breath first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
-        assertEquals("Width: 2 Height: 2\r\nStart location: 1,1\r\nTarget location: 1,1", mockWriter.receivedMapInfo());
+        assertEquals(SystemLine.breakLine("Width: 2 Height: 2\r\nStart location: 1,1\r\nTarget location: 1,1"), mockWriter.receivedMapInfo());
         assertEquals("1", mockWriter.receivedTestMaxSteps());
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = SystemLine.breakLine(". @ \r\n@ O ");
+        String expectedProcessedMap = SystemLine.breakLine(". @ \r\n@ O");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -106,7 +106,7 @@ public class BreathSearchTest {
         assertEquals("Breath first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
-        assertEquals("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3", mockWriter.receivedMapInfo());
+        assertEquals(SystemLine.breakLine("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3"), mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("16", mockWriter.receivedTestPathWeight());
         assertEquals("27", mockWriter.receivedTestUsedSteps());
@@ -117,7 +117,7 @@ public class BreathSearchTest {
                         "! @ ! @ X ! . \r\n" +
                         "! @ ! @ F . . \r\n" +
                         "! ! ! @ ! . . \r\n" +
-                        "! ! ! ! ! ! . ");
+                        "! ! ! ! ! ! .");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 }
