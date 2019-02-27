@@ -36,7 +36,8 @@ Interpretation of processed map
 * ! = visited but not walked
 * X = walked path
 * S start node
-* T target node
+* F target node if found
+* N target node if not found
 * O start and target node if same
 * @ wall 
 
