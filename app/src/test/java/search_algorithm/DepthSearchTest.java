@@ -1,5 +1,6 @@
 package search_algorithm;
 
+import mock.SystemLine;
 import mock.MockAnalysisWriter;
 import mock.WebMapMock;
 import model.web.WebMap;
@@ -89,7 +90,7 @@ public class DepthSearchTest {
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = ". @ \r\n@ O ";
+        String expectedProcessedMap = SystemLine.breakLine(". @ \r\n@ O ");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -110,12 +111,12 @@ public class DepthSearchTest {
         assertEquals("21", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X @ ! ! ! \r\n" +
+                SystemLine.breakLine("X X X @ ! ! ! \r\n" +
                         "S @ X X X X X \r\n" +
                         "! @ ! @ ! ! X \r\n" +
                         ". @ . @ F X X \r\n" +
                         ". . . @ . ! ! \r\n" +
-                        ". . . . . . . ";
+                        ". . . . . . . ");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 }

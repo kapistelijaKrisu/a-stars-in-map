@@ -1,5 +1,6 @@
 package model.web;
 
+import mock.SystemLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,7 +59,7 @@ public class WebMapTest {
         assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());
 
         map.setName("now all values are valid");
-        assertEquals("Width: 3 Height: 3\r\nStart location: 1,2\r\nTarget location: 2,2", map.getTextualView());
+        assertEquals(SystemLine.breakLine("Width: 3 Height: 3\r\nStart location: 1,2\r\nTarget location: 2,2"), map.getTextualView());
 
         map.setTileTarget(1, -1);
         assertEquals("Invalid map. Set map, tileStart, tileTarget correctly.", map.getTextualView());

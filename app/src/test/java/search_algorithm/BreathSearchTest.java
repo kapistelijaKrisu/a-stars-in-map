@@ -1,5 +1,6 @@
 package search_algorithm;
 
+import mock.SystemLine;
 import mock.MockAnalysisWriter;
 import mock.WebMapMock;
 import model.web.WebMap;
@@ -90,7 +91,7 @@ public class BreathSearchTest {
         assertEquals("Target was not found", mockWriter.receivedTestPathWeight());
         assertEquals("0", mockWriter.receivedTestUsedSteps());
 
-        String expectedProcessedMap = ". @ \r\n@ O ";
+        String expectedProcessedMap = SystemLine.breakLine(". @ \r\n@ O ");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 
@@ -111,12 +112,12 @@ public class BreathSearchTest {
         assertEquals("27", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                "X X X @ ! ! . \r\n" +
+                SystemLine.breakLine("X X X @ ! ! . \r\n" +
                         "S @ X X X ! ! \r\n" +
                         "! @ ! @ X ! . \r\n" +
                         "! @ ! @ F . . \r\n" +
                         "! ! ! @ ! . . \r\n" +
-                        "! ! ! ! ! ! . ";
+                        "! ! ! ! ! ! . ");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
 }
