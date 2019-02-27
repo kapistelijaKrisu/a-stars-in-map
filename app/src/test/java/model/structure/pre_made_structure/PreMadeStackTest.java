@@ -1,15 +1,15 @@
-package model.structure;
+package model.structure.pre_made_structure;
 
-import model.structure.custom_structure.LIFOStack;
+import model.structure.Stack;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LIFOStackTest {
+public class PreMadeStackTest {
 
     @Test
     public void nullTest() {
-        LIFOStack<String> queue = new LIFOStack<>();
+        Stack<String> queue = new PreMadeStack<>();
         assertNull(queue.pop());
         queue.push("plop");
         queue.pop();
@@ -18,7 +18,7 @@ public class LIFOStackTest {
 
     @Test
     public void isEmptyTest() {
-        LIFOStack<String> queue = new LIFOStack<>();
+        Stack<String> queue = new PreMadeStack<>();
         assertTrue(queue.isEmpty());
         queue.push("plop");
         assertFalse(queue.isEmpty());
@@ -31,7 +31,7 @@ public class LIFOStackTest {
 
     @Test
     public void stackTest() {
-        LIFOStack<String> queue = new LIFOStack<>();
+        Stack<String> queue = new PreMadeStack<>();
         assertNull(queue.pop());
 
         queue.push("plop");

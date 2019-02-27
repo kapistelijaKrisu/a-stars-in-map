@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  Creates a WebMap instance by reading a file
+ */
 public class MapLoader {
     private static final int BASIC = 0, DECODING = 1, READING_MAP = 2;
     private int state = BASIC;
@@ -20,6 +23,13 @@ public class MapLoader {
     private int mapStartLocationX, mapStartLocationY, mapTargetLocationX, mapTargetLocationY;
     private Map<Character, Integer> decodeValues = new HashMap<>();
 
+    /**
+     * Creates a WebMap instance by reading a file. It allows invalid webMaps as long as it can read it from file.
+     * @param mapFile filepath to the file
+     * @return loaded WebMap instance representing file contents or map. It allows invalid webMaps as long as it can read it from file.
+     * @throws IOException if fails to open or read values from file to create webMap instance
+     * @throws NullPointerException if if to open or is missing values from file to create webMap instance
+     */
     public WebMap loadMapFromFile(File mapFile) throws IOException, NullPointerException {
         clean();
         var reader = new BufferedReader(new FileReader(mapFile));

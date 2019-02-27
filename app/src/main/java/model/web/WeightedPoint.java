@@ -36,6 +36,7 @@ public class WeightedPoint extends Point implements Comparable<WeightedPoint> {
     /**
      * Calculates a rough estimation of distance by |this.x - other.x| + |this.y - other.y| / 1.42
      * side can be at most 1.414x bigger at sides being 45 degrees so we use 1.42 to keep estimated distance less or equal to actual distance.
+     *
      * @param distanceTo where to distance is calculated
      * @return a rough estimate of distance to distanceTo point
      */

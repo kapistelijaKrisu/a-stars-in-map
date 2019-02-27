@@ -5,6 +5,7 @@ import model.structure.Stack;
 /**
  * Last-in-first-out classic Stack implementation.
  * Only head is known and nodes are connected by reference.
+ *
  * @param <T> object type to hold.
  */
 public class LIFOStack<T> implements Stack<T> {
@@ -36,6 +37,7 @@ public class LIFOStack<T> implements Stack<T> {
 
     /**
      * Adds given object as a head to stack and connects it with previous head by reference.
+     *
      * @param value object to hold (new head of the stack)
      */
     @Override
@@ -47,6 +49,7 @@ public class LIFOStack<T> implements Stack<T> {
 
     /**
      * Removes current head of the stack and returns it.
+     *
      * @return deleted head
      */
     @Override
@@ -59,13 +62,13 @@ public class LIFOStack<T> implements Stack<T> {
 
     /**
      * Returns whether the stack contains any nodes or not
+     *
      * @return if head is null true else false
      */
     @Override
     public boolean isEmpty() {
         return head == null;
     }
-
 
 
 }

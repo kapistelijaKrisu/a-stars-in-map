@@ -27,9 +27,9 @@ public class MapGeneratorFromFiles implements MapGenerator {
     }
 
     /**
-     * if maploaderdirectory folder exists and has files then asks user which map to load
+     * if mapl folder exists and has files then asks user which map to load
      *
-     * @return read map from file, if file has mistakes or map is not valid returns null. refer to app_definition.md for a valid map file.
+     * @return WebMap from file, if file has mistakes or map is not valid returns null. If map folder at app level directory is empty returns null. refer to app_definition.md for a valid map file.
      */
     @Override
     public WebMap createMap() {
@@ -45,7 +45,10 @@ public class MapGeneratorFromFiles implements MapGenerator {
                 if (userChoice.equals(USER_WANTS_TO_EXIT)) {
                     return null;
                 } else {
-                    return mapLoader.loadMapFromFile(foundMaps.get(Integer.parseInt(userChoice)));
+                    WebMap map = mapLoader.loadMapFromFile(foundMaps.get(Integer.parseInt(userChoice)));
+                    if (map != null && map.isValid()) return map;
+                    System.out.println("Map is not valid. Please check the map file");
+                    return null;
                 }
             } catch (IndexOutOfBoundsException | NullPointerException | NumberFormatException e) {
                 System.out.println("Illegal input!");

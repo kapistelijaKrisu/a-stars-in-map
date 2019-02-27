@@ -2,6 +2,13 @@ package model.structure.custom_structure;
 
 import model.structure.UniqueSet;
 
+/**
+ * Set implementation. Only methods needed by search algorithms are implemented.
+ * Classic set implementation. Holds an array of lists that holds objects.
+ * Size of array will adjust with amount of objects it holds
+ *
+ * @param <T> Type of object to contain
+ */
 public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
 
     private static final Integer INITIAL_CAPACITY = 16;
@@ -24,6 +31,10 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
         }
     }
 
+    /**
+     *
+     * @param capacity percentage between to aim the array size at to handle how big collision chains can get
+     */
     public CustomHashSetDynamicSize(final int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity should be over 0");
@@ -37,6 +48,11 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
         this(INITIAL_CAPACITY);
     }
 
+    /**
+     * Adds param to set if doesn't exist.
+     * If threshold of lists having a non-null object in array hits value that was given in constructor then it will double the array size.
+     * @param t to add to heap
+     */
     public void add(T t) {
         if ((double) cellsInUse / hashCodeQueues.length > maxFillPercentage) {
             expandSetArray();
@@ -78,6 +94,11 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
         this.cellsInUse = newHashSet.cellsInUse;
     }
 
+    /**
+     *
+     * @param t to check if exists in set or not
+     * @return true if t exists in set
+     */
     public boolean contains(T t) {
         int index = t.hashCode() % hashCodeQueues.length;
         Node hashCodeCell = hashCodeQueues[index];

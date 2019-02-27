@@ -36,7 +36,7 @@ public class WebMapTest {
         assertTrue(map.isValid());
         String test = "name";
         assertTrue(map.isValid());
-        char[] illegal_chars = { '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':' };
+        char[] illegal_chars = {'/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':'};
         for (int i = 0; i < illegal_chars.length; i++) {
             map.setName(test + illegal_chars[i]);
             assertFalse(map.isValid());
@@ -84,7 +84,7 @@ public class WebMapTest {
         map.setTileStart(1, 2);
         assertFalse(map.isValid());
         map.setMap(data);
-        map.setTileStart(-1,-1);
+        map.setTileStart(-1, -1);
         assertFalse(map.isValid());
         map.setTileStart(2, 2);
         assertTrue(map.isValid());
@@ -97,10 +97,10 @@ public class WebMapTest {
 
         var neighbours = map.getNeighbours(map.getTileStart());
 
-        expectedNeighbours.add(new WeightedPoint(0,1, 3));
-        expectedNeighbours.add(new WeightedPoint(2,1, 5));
-        expectedNeighbours.add(new WeightedPoint(1,0, 1));
-        expectedNeighbours.add(new WeightedPoint(1,2, 7));
+        expectedNeighbours.add(new WeightedPoint(0, 1, 3));
+        expectedNeighbours.add(new WeightedPoint(2, 1, 5));
+        expectedNeighbours.add(new WeightedPoint(1, 0, 1));
+        expectedNeighbours.add(new WeightedPoint(1, 2, 7));
 
         assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
         assertTrue(expectedNeighbours.containsAll(neighbours));
@@ -108,12 +108,12 @@ public class WebMapTest {
 
     @Test // 0,0 is a wall
     public void neighboursLeftTest() {
-        map.setTileStart(0,1);
+        map.setTileStart(0, 1);
 
         var neighbours = map.getNeighbours(map.getTileStart());
 
-        expectedNeighbours.add(new WeightedPoint(1,1, 4));
-        expectedNeighbours.add(new WeightedPoint(0,2, 6));
+        expectedNeighbours.add(new WeightedPoint(1, 1, 4));
+        expectedNeighbours.add(new WeightedPoint(0, 2, 6));
 
         assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
         assertTrue(expectedNeighbours.containsAll(neighbours));
@@ -125,9 +125,9 @@ public class WebMapTest {
 
         var neighbours = map.getNeighbours(map.getTileStart());
 
-        expectedNeighbours.add(new WeightedPoint(1,1, 4));
-        expectedNeighbours.add(new WeightedPoint(2,0, 2));
-        expectedNeighbours.add(new WeightedPoint(2,2, 8));
+        expectedNeighbours.add(new WeightedPoint(1, 1, 4));
+        expectedNeighbours.add(new WeightedPoint(2, 0, 2));
+        expectedNeighbours.add(new WeightedPoint(2, 2, 8));
 
         assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
         assertTrue(expectedNeighbours.containsAll(neighbours));
@@ -139,8 +139,8 @@ public class WebMapTest {
 
         var neighbours = map.getNeighbours(map.getTileStart());
 
-        expectedNeighbours.add(new WeightedPoint(2,0, 2));
-        expectedNeighbours.add(new WeightedPoint(1,1, 4));
+        expectedNeighbours.add(new WeightedPoint(2, 0, 2));
+        expectedNeighbours.add(new WeightedPoint(1, 1, 4));
 
         assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
         assertTrue(expectedNeighbours.containsAll(neighbours));
@@ -152,9 +152,9 @@ public class WebMapTest {
 
         var neighbours = map.getNeighbours(map.getTileStart());
 
-        expectedNeighbours.add(new WeightedPoint(0,2, 6));
-        expectedNeighbours.add(new WeightedPoint(2,2, 8));
-        expectedNeighbours.add(new WeightedPoint(1,1, 4));
+        expectedNeighbours.add(new WeightedPoint(0, 2, 6));
+        expectedNeighbours.add(new WeightedPoint(2, 2, 8));
+        expectedNeighbours.add(new WeightedPoint(1, 1, 4));
 
         assertEquals(expectedNeighbours.size(), neighbours.size(), "should have correct amount of neighbours");
         assertTrue(expectedNeighbours.containsAll(neighbours));

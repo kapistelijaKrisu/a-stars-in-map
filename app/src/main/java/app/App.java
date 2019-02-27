@@ -4,12 +4,15 @@ import file_operations.analysis_writer.AnalysisWriter;
 import map_generator.MapGenerator;
 import map_generator.MapGeneratorFromFiles;
 import map_generator.NoWeightSimpleGenerator;
-import model.web.*;
+import model.web.WebMap;
 import search_algorithm.*;
 import search_algorithm.structure_type.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * Main program that consists of two parts.
@@ -134,7 +137,8 @@ public class App {
                 algorithm.setMapClean(currentMap);
                 algorithm.runSearch();
                 System.out.println("Finished search. Returning to main menu.");
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException | IllegalStateException e) {
+                System.out.println(e.getMessage());
                 System.out.println("Errors. Returning back to main menu.");
             } catch (NullPointerException e) {
                 System.out.println("Error. Input invalid. Returning back to main menu.");
@@ -155,5 +159,9 @@ public class App {
 
     public void setCurrentMap(WebMap currentMap) {
         this.currentMap = currentMap;
+    }
+
+    public WebMap getCurrentMap() {
+        return currentMap;
     }
 }

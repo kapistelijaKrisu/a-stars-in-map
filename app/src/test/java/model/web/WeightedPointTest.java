@@ -8,12 +8,12 @@ public class WeightedPointTest {
 
     @Test
     public void valueTest() {
-        WeightedPoint weightedPoint = new WeightedPoint(1,2,3);
+        WeightedPoint weightedPoint = new WeightedPoint(1, 2, 3);
         assertEquals(1, weightedPoint.x);
         assertEquals(2, weightedPoint.y);
         assertEquals(3, weightedPoint.weight);
 
-        weightedPoint = new WeightedPoint(-4,-5,-6);
+        weightedPoint = new WeightedPoint(-4, -5, -6);
         assertEquals(-4, weightedPoint.x);
         assertEquals(-5, weightedPoint.y);
         assertEquals(-6, weightedPoint.weight);
@@ -21,52 +21,52 @@ public class WeightedPointTest {
 
     @Test
     public void equalsTest() {
-        WeightedPoint weightedPoint = new WeightedPoint(11,11,11);
-        WeightedPoint weightedPoint2 = new WeightedPoint(11,11,1);
+        WeightedPoint weightedPoint = new WeightedPoint(11, 11, 11);
+        WeightedPoint weightedPoint2 = new WeightedPoint(11, 11, 1);
         assertEquals(weightedPoint, weightedPoint2);
 
-        weightedPoint = new WeightedPoint(11,11,11);
-        weightedPoint2 = new WeightedPoint(11,11,11);
+        weightedPoint = new WeightedPoint(11, 11, 11);
+        weightedPoint2 = new WeightedPoint(11, 11, 11);
         assertEquals(weightedPoint, weightedPoint2);
 
-        weightedPoint = new WeightedPoint(1,11,11);
-        weightedPoint2 = new WeightedPoint(11,11,11);
+        weightedPoint = new WeightedPoint(1, 11, 11);
+        weightedPoint2 = new WeightedPoint(11, 11, 11);
         assertNotEquals(weightedPoint, weightedPoint2);
     }
 
     @Test
     public void compareTestTest() {
-        WeightedPoint weightedPoint = new WeightedPoint(11,11,11);
-        WeightedPoint weightedPoint2 = new WeightedPoint(11,11,1);
+        WeightedPoint weightedPoint = new WeightedPoint(11, 11, 11);
+        WeightedPoint weightedPoint2 = new WeightedPoint(11, 11, 1);
         assertTrue(weightedPoint.compareTo(weightedPoint2) > 0);
 
-        weightedPoint2 = new WeightedPoint(11,11,21);
+        weightedPoint2 = new WeightedPoint(11, 11, 21);
         assertTrue(weightedPoint.compareTo(weightedPoint2) < 0);
 
-        weightedPoint2 = new WeightedPoint(11,11,11);
+        weightedPoint2 = new WeightedPoint(11, 11, 11);
         assertTrue(weightedPoint.compareTo(weightedPoint2) == 0);
     }
 
     @Test
     public void distanceTestTest() {
-        WeightedPoint weightedPoint = new WeightedPoint(11,11,11);
-        WeightedPoint weightedPoint2 = new WeightedPoint(11,11,1);
+        WeightedPoint weightedPoint = new WeightedPoint(11, 11, 11);
+        WeightedPoint weightedPoint2 = new WeightedPoint(11, 11, 1);
         assertEquals(0.0, weightedPoint.calculateRoughDistance(weightedPoint2));
 
 
-        weightedPoint2 = new WeightedPoint(31,-33,1);
+        weightedPoint2 = new WeightedPoint(31, -33, 1);
         assertEquals(45.07042253521127, weightedPoint.calculateRoughDistance(weightedPoint2));
 
-        weightedPoint2 = new WeightedPoint(31,33,1);
+        weightedPoint2 = new WeightedPoint(31, 33, 1);
         assertEquals(29.577464788732396, weightedPoint.calculateRoughDistance(weightedPoint2));
     }
 
     @Test
     public void toStringTest() {
-        WeightedPoint weightedPoint = new WeightedPoint(11,11,11);
+        WeightedPoint weightedPoint = new WeightedPoint(11, 11, 11);
         assertEquals("x: 11 y: 11 w: 11.0", weightedPoint.toString());
 
-        weightedPoint = new WeightedPoint(-11,-11,12);
+        weightedPoint = new WeightedPoint(-11, -11, 12);
         assertEquals("x: -11 y: -11 w: 12.0", weightedPoint.toString());
     }
 }

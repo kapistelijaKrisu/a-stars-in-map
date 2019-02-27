@@ -1,4 +1,4 @@
-# Viikkoraportti 6  on going
+# Viikkoraportti 6
 
 ### Tehty
 * codecov vaatimusten mukaiseksi koodin muuttaminen 30min~

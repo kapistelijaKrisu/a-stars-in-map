@@ -2,6 +2,12 @@ package model.structure.custom_structure;
 
 import model.structure.UniqueSet;
 
+/**
+ * Set implementation. Only methods needed by search algorithms are implemented.
+ * Classic set implementation. Holds an array of lists that holds objects.
+ *
+ * @param <T> Type of object to contain
+ */
 public class CustomHashSet<T> implements UniqueSet<T> {
 
     private Node<T>[] hashCodeQueues;
@@ -26,6 +32,11 @@ public class CustomHashSet<T> implements UniqueSet<T> {
         this.hashCodeQueues = new Node[capacity];
     }
 
+    /**
+     * Adds param to set if doesn't exist.
+     *
+     * @param t to add to heap
+     */
     public void add(T t) {
         int index = t.hashCode() % hashCodeQueues.length;
 
@@ -48,6 +59,10 @@ public class CustomHashSet<T> implements UniqueSet<T> {
         }
     }
 
+    /**
+     * @param t to check if exists in set or not
+     * @return true if t exists in set
+     */
     public boolean contains(T t) {
         int index = t.hashCode() % hashCodeQueues.length;
         Node hashCodeCell = hashCodeQueues[index];

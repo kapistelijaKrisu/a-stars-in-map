@@ -22,10 +22,12 @@ public abstract class AnalysableAlgorithm {
 
     /**
      * sets given analysis writer instantiates itself
+     *
      * @param analysisWriter writer to write analyses on a file
      */
     public AnalysableAlgorithm(AnalysisWriter analysisWriter) {
         this.analysisWriter = analysisWriter;
+        if (analysisWriter == null) throw new IllegalArgumentException("analysis writer cannot be null");
         templateValueMap = new TreeMap<>();
         systemSpecReader = new SystemSpecReader();
     }
@@ -47,23 +49,20 @@ public abstract class AnalysableAlgorithm {
      * @throws IllegalStateException when algorithm or map does not have name
      * @throws IOException           failing to write on designated report file
      */
-    public void runSearch() throws IllegalStateException, IOException {
+    public void runSearch() throws IllegalStateException, IOException, IllegalArgumentException {
         if (reportFilePath == null) {
             if (map == null || !map.isValid())
-                throw new IllegalStateException("Requires valid map and name, and name for algorithm");
+                throw new IllegalStateException("Requires valid map, and name for algorithm");
             reportFilePath = "/doc/reports/" + map.getName() + "/" + toString();
         }
+        templateValueMap = new HashMap<>();
         Map<WeightedPoint, WeightedPoint> path = new HashMap<>();
         System.out.println("Starting search...");
         searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize(), path);
         fillDefaultTemplateValues(templateValueMap);
-        try {
-            System.out.println("Analyze completed! Beginning to write report...");
-            analysisWriter.writeReport(templateValueMap, reportFilePath);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Something went with writing the report");
-        }
-        templateValueMap = new HashMap<>();
+        System.out.println("Analyze completed! Beginning to write report...");
+        analysisWriter.writeReport(templateValueMap, reportFilePath);
+
     }
 
     private void fillDefaultTemplateValues(Map<String, String> templateFillingMap) {
@@ -86,9 +85,10 @@ public abstract class AnalysableAlgorithm {
     /**
      * When search is completed insert the resulting path and passed parameters in searchAlgorithm to fill the rest of analyze values
      * TODO a bit more description how process works
-     * @param path
-     * @param startTime
-     * @param spaceLeftAtStart
+     *
+     * @param path all steps from point a to point b that accumulated during searchAlgorithm call
+     * @param startTime time that was given when calling searchAlgorithm
+     * @param spaceLeftAtStart space left in jvm that was given when calling searchAlgorithm
      */
     protected void handleReportWriting(Map<WeightedPoint, WeightedPoint> path, long startTime, long spaceLeftAtStart) {
         setTimeElapsed(startTime); //important to do instantly

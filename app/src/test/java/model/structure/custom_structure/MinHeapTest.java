@@ -1,6 +1,5 @@
-package model.structure;
+package model.structure.custom_structure;
 
-import model.structure.custom_structure.MinHeap;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,6 +46,7 @@ public class MinHeapTest {
         MinHeap<Integer> heap = new MinHeap<>();
         for (int i = 0; i < 4; i++) {
             heap.insert(i * 2);
+            assertFalse(heap.isEmpty());
         }
 
         assertEquals(0, heap.next().intValue());
@@ -54,6 +54,19 @@ public class MinHeapTest {
         assertEquals(4, heap.next().intValue());
         heap.insert(2);
         assertEquals(2, heap.next().intValue());
+    }
+
+    @Test
+    public void heapLargeTest() {
+        MinHeap<Integer> heap = new MinHeap<>();
+        for (int i = 999; i > 0; i--) {
+            heap.insert(i);
+        }
+
+        for (int i = 1; i < 1000; i++) {
+            assertEquals(i, heap.next().intValue());
+        }
+        assertTrue(heap.isEmpty());
     }
 }
 

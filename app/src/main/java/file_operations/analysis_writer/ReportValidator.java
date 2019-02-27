@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public class ReportValidator {
     private final List<String> mandatoryTemplateKeys;
+
     public ReportValidator() {
         mandatoryTemplateKeys = new ArrayList<>(18);
         mandatoryTemplateKeys.add("{algorithm}");
@@ -56,9 +57,9 @@ public class ReportValidator {
      * {test_processed_map}
      */
     public boolean validateMapper(Map<String, String> mapper) {
-        for (String mandatoryValue: mandatoryTemplateKeys) {
+        for (String mandatoryValue : mandatoryTemplateKeys) {
             if (mapper.get(mandatoryValue) == null) {
-                System.out.println("Missing key: "+ mandatoryValue);
+                System.out.println("Missing key: " + mandatoryValue);
                 return false;
             }
         }
@@ -66,12 +67,11 @@ public class ReportValidator {
     }
 
     /**
-     *
      * @return Condition required for returning true in validateMapper
      */
     public String getValidatorCondition() {
         String validatorCondition = "Following values must exist in mapper and none of existing pairs can be null:\n";
-        for (String value: mandatoryTemplateKeys) {
+        for (String value : mandatoryTemplateKeys) {
             validatorCondition += value + "\n";
         }
         return validatorCondition;

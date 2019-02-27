@@ -3,6 +3,10 @@ package search_algorithm;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Map between easily readable algorithm implementation types and their codes.
+ */
+
 public enum AlgorithmCodeKey {
     WIDTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET("bcp"),
     WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET("bcs"),
@@ -28,6 +32,9 @@ public enum AlgorithmCodeKey {
     A_STAR_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY("ac2"),
     A_STAR_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY("ac1");
 
+    // Reverse-lookup map for getting a code key from an abbreviation
+    private static final Map<String, AlgorithmCodeKey> lookup = new HashMap<>();
+
     private final String stringValue;
 
     AlgorithmCodeKey(String nodeType) {
@@ -38,14 +45,18 @@ public enum AlgorithmCodeKey {
         return stringValue;
     }
 
-    // Reverse-lookup map for getting a day from an abbreviation
-    private static final Map<String, AlgorithmCodeKey> lookup = new HashMap<>();
 
     static {
         for (AlgorithmCodeKey d : AlgorithmCodeKey.values()) {
             lookup.put(d.getStringValue(), d);
         }
     }
+
+    /**
+     * inside-out enum getter, gets the AlgorithmCodeKey of corresponding abbreviation.
+     * @param abbreviation search up parameter
+     * @return AlgorithmCodeKey of the parameter or null if doesn't exist
+     */
     public static AlgorithmCodeKey get(String abbreviation) {
         return lookup.get(abbreviation);
     }

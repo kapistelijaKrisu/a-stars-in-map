@@ -3,10 +3,7 @@ package search_algorithm;
 import file_operations.analysis_writer.AnalysisWriter;
 import model.structure.Heap;
 import model.structure.custom_structure.MinHeap;
-import model.structure.premade_structure.PremadeHeap;
-import model.web.DistanceMap;
-import model.web.DistanceMapAsA2dTable;
-import model.web.DistanceMapAsASingleTable;
+import model.structure.pre_made_structure.PreMadeHeap;
 import model.web.WeightedPoint;
 import search_algorithm.structure_type.DistanceMapType;
 import search_algorithm.structure_type.HeapType;
@@ -17,16 +14,18 @@ import java.util.Map;
  * classic A*
  */
 public class AStar extends AnalysableAlgorithm {
-    private HeapType heapType;
-    private DistanceMapType distanceMapType;
+    private final HeapType heapType;
+    private final DistanceMapType distanceMapType;
 
     /**
      * classic A* that extends AnalysableAlgorithm so it handles report writing.
-     *
      * @param analysisWriter writer that writes the analysis report files.
+     * @param heapType type of heap to construct during searchAlgorithm method
+     * @param distanceMapType type of distance map to construct during searchAlgorithm method
      */
     public AStar(AnalysisWriter analysisWriter, HeapType heapType, DistanceMapType distanceMapType) {
         super(analysisWriter);
+        if (heapType == null || distanceMapType == null) throw new IllegalArgumentException("Arguments cannot be null");
         this.heapType = heapType;
         this.distanceMapType = distanceMapType;
     }
@@ -77,7 +76,7 @@ public class AStar extends AnalysableAlgorithm {
             case CUSTOM_MIN_HEAP:
                 return new MinHeap<>();
             case PRE_MADE_MIN_HEAP:
-                return new PremadeHeap<>();
+                return new PreMadeHeap<>();
             default:
                 return null;
         }
@@ -86,7 +85,7 @@ public class AStar extends AnalysableAlgorithm {
     private DistanceMap initDistanceMap() {
         switch (distanceMapType) {
             case ARRAY_2D:
-                return new DistanceMapAsA2dTable(map.height(), map.width());
+                return new DistanceMapAsA2DTable(map.height(), map.width());
             case ARRAY_1D:
                 return new DistanceMapAsASingleTable(map.height(), map.width());
             default:
@@ -118,5 +117,13 @@ public class AStar extends AnalysableAlgorithm {
     @Override
     public String toString() {
         return "A Star";
+    }
+
+    public DistanceMapType getDistanceMapType() {
+        return distanceMapType;
+    }
+
+    public HeapType getHeapType() {
+        return heapType;
     }
 }

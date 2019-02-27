@@ -6,10 +6,13 @@ import java.util.Arrays;
 
 /**
  * Classic min-heap implementation. Holds values in a heaped array.
+ *
  * @param <T> type of objects to hold in ascending order.
  */
 public class MinHeap<T extends Comparable<T>> implements Heap<T> {
 
+    private static final int MIN_ARRAY_SIZE = 16;
+    private static final int HEAP_ZERO = 1;
     private Comparable[] heap;
     private int size;
 
@@ -17,33 +20,35 @@ public class MinHeap<T extends Comparable<T>> implements Heap<T> {
      * Creates a new Heap with a size of 15. index 0 is not used to be able to get left and right children with multiplication.
      */
     public MinHeap() {
-        size = 1;
-        heap = new Comparable[16];
+        size = HEAP_ZERO;
+        heap = new Comparable[MIN_ARRAY_SIZE];
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 1;
+        return size == HEAP_ZERO;
     }
 
     /**
-     * Deletes the smallest object by compareTo method. if array size drops below half while half is over 16 it will create new array half the size of previous one.
+     * Deletes the smallest object by compareTo method. if array size drops below half while half is over MIN_ARRAY_SIZE it will create new array half the size of previous one.
+     *
      * @return the deleted object
      */
     @Override
     public T next() {
-        if (size == 1) return null;
-        T popped = (T) heap[1];
+        if (size == HEAP_ZERO) return null;
+        T popped = (T) heap[HEAP_ZERO];
         heap[1] = heap[size - 1];
         size--;
-        minheapify(1);
-        if (maxSize() / 2 > Math.max(size, 16)) heap = Arrays.copyOf(heap, heap.length / 2);
+        minheapify(HEAP_ZERO);
+        if (maxSize() / 2 > Math.max(size, MIN_ARRAY_SIZE)) heap = Arrays.copyOf(heap, heap.length / 2);
         return popped;
     }
 
     /**
      * Adds given element.
      * If it won't fit in array then creates new array double the size of previous one.
+     *
      * @param element object to store that implements Comparable to itself
      */
 
@@ -62,13 +67,14 @@ public class MinHeap<T extends Comparable<T>> implements Heap<T> {
 
     /**
      * Loops over array searching for the element.
+     *
      * @param element searched element
      * @return true if equals method of objects return true. false if such object not found in store.
      */
 
     @Override
     public boolean contains(T element) {
-        for (int i = 1; i < size; i++) {
+        for (int i = HEAP_ZERO; i < size; i++) {
             if (heap[i].equals(element)) return true;
         }
         return false;
@@ -81,8 +87,8 @@ public class MinHeap<T extends Comparable<T>> implements Heap<T> {
 
         if (rightPos <= size) {
 
-            var smallestPos = rightPos;
-            if (heap[leftPos].compareTo(heap[rightPos]) < 0) smallestPos = leftPos;
+            var smallestPos = leftPos;
+            if (heap[rightPos].compareTo(heap[leftPos]) < 0) smallestPos = rightPos;
 
             if (heap[pos].compareTo(heap[smallestPos]) > 0) {
                 swap(pos, smallestPos);

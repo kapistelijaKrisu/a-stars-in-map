@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class AppTest {
@@ -40,7 +41,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setMapGenerators(mapGenerators);
@@ -51,20 +52,23 @@ public class AppTest {
     }
 
     @Test
-    public void mapGeneratorIsCalledTest() {
+    public void mapGeneratorSetsValidMapTest() {
         var mapGenerator = new HashMap<String, MapGenerator>();
         var mockGenerator = mock(MapGenerator.class);
+        var generatedMockMap = WebMapMock.getMinimumValidMap();
+        when(mockGenerator.createMap()).thenReturn(generatedMockMap);
         mapGenerator.put("test", mockGenerator);
         String input = "1\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setMapGenerators(mapGenerator);
         app.run();
 
         verify(mockGenerator, times(1)).createMap();
+        assertEquals(generatedMockMap, app.getCurrentMap());
     }
 
     @Test
@@ -77,7 +81,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
@@ -96,7 +100,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
@@ -114,7 +118,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.run();
@@ -132,7 +136,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
@@ -154,7 +158,7 @@ public class AppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        scanner =  new Scanner(System.in);
+        scanner = new Scanner(System.in);
         app = new App(scanner, new AnalysisWriter());
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);

@@ -38,6 +38,7 @@ Tests are written in unit tests, each root folder with own goal in mind. Tests e
 * Passing percentage : 100
 * Coverage: overall 90, branches 80
 * Codacy certification level: A
+* Currently achieved
 
 
 ## Not testing

@@ -16,7 +16,6 @@ public class NoWeightSimpleGenerator implements MapGenerator {
     private static final String USER_WANTS_TO_EXIT = "q";
 
     /**
-     *
      * @param scanner used to interact with user for configuring values.
      */
     public NoWeightSimpleGenerator(Scanner scanner) {
@@ -28,14 +27,14 @@ public class NoWeightSimpleGenerator implements MapGenerator {
      * Asks user input values to create a map. And will loop until valid values are given.
      * Chance for exit is after evaluation.
      * Values required by user:
-     * width over 0
-     * height over 0
+     * width over 0-10000
+     * height over 0-10000
      * tile start x coordinate within 0 and width - 1
      * tile start y coordinate within 0 and height - 1
      * tile target x coordinate within 0 and width - 1
      * tile target y coordinate within 0 and height - 1
-     * @return a valid map
      *
+     * @return a valid map
      */
     @Override
     public WebMap createMap() {
@@ -57,11 +56,12 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         return map;
     }
 
+    //todo hit error message n print it instead
     private boolean setConfigValues() {
         while (true) {
             try {
                 System.out.println("set width: ");
-                mapWidth =Integer.parseInt(scanner.nextLine());
+                mapWidth = Integer.parseInt(scanner.nextLine());
                 System.out.println("set height: ");
                 mapHeight = Integer.parseInt(scanner.nextLine());
                 System.out.println("set starting location x");
@@ -74,11 +74,14 @@ public class NoWeightSimpleGenerator implements MapGenerator {
                 targetY = Integer.parseInt(scanner.nextLine());
 
                 if (startY < 0 || startX < 0 || targetX < 0 || targetY < 0) throw new ArrayIndexOutOfBoundsException();
-                if (startY >= mapHeight || startX >= mapWidth || targetX >= mapWidth || targetY >= mapHeight) throw new ArrayIndexOutOfBoundsException();
-                if (mapHeight <= 0 || mapWidth <= 0) throw new IllegalArgumentException();
+                if (startY >= mapHeight || startX >= mapWidth || targetX >= mapWidth || targetY >= mapHeight)
+                    throw new ArrayIndexOutOfBoundsException();
+                if (mapHeight <= 0 || mapWidth <= 0 || mapHeight > WebMap.MAX_HEIGHT || mapWidth > WebMap.MAX_WIDTH) throw new IllegalArgumentException();
                 return true;
             } catch (Exception e) {
-                System.out.println("width and height should be between 1-" + Integer.MAX_VALUE + ". x,y values should be between 0-" + (Integer.MAX_VALUE - 1));
+                System.out.println("Height should be between 1-" + WebMap.MAX_HEIGHT);
+                System.out.println("Width should be between 1-" + WebMap.MAX_WIDTH);
+                System.out.println(". x,y values should be between 0 - borders minus 1");
                 System.out.println("Press q to quit. Anything else to re-try map creation.");
                 if (scanner.nextLine().equals(USER_WANTS_TO_EXIT)) return false;
             }

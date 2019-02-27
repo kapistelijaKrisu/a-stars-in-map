@@ -18,7 +18,6 @@ public class DateConverter {
     }
 
     /**
-     *
      * @param localDateTime object to be formatted
      * @return String representation of @param
      * @throws NullPointerException if param is null

@@ -3,8 +3,9 @@ package model.structure.custom_structure;
 import model.structure.Queue;
 
 /**
- * First-in-forst-out queue
- * Classis queue implementation. Only head and tail is known and nodes are connected by reference.
+ * First-in-first-out queue
+ * Classic queue implementation. Only head and tail is known and nodes are connected by reference.
+ *
  * @param <T> Type of object to contain
  */
 public class FIFOQueue<T> implements Queue<T> {
@@ -40,7 +41,6 @@ public class FIFOQueue<T> implements Queue<T> {
     }
 
     /**
-     *
      * @param value object to enqueue to the tail of the queue
      */
     @Override
@@ -53,6 +53,7 @@ public class FIFOQueue<T> implements Queue<T> {
 
     /**
      * Deletes head (oldest) object
+     *
      * @return deleted head (oldest object in list)
      */
     @Override

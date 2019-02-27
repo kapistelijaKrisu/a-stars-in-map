@@ -2,12 +2,12 @@ package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
 import model.structure.Stack;
+import model.structure.UniqueSet;
 import model.structure.custom_structure.CustomHashSet;
 import model.structure.custom_structure.CustomHashSetDynamicSize;
 import model.structure.custom_structure.LIFOStack;
-import model.structure.premade_structure.PreMadeStack;
-import model.structure.UniqueSet;
-import model.structure.premade_structure.PremadeUniqueSet;
+import model.structure.pre_made_structure.PreMadeStack;
+import model.structure.pre_made_structure.PreMadeUniqueSet;
 import model.web.WeightedPoint;
 import search_algorithm.structure_type.StackType;
 import search_algorithm.structure_type.UniqueSetType;
@@ -24,11 +24,13 @@ public class DepthSearch extends AnalysableAlgorithm {
 
     /**
      * classic depth-first-search that extends AnalysableAlgorithm so it handles report writing.
-     *
      * @param analysisWriter writer that writes the analysis report files.
+     * @param stackType type of stack to construct during searchAlgorithm method
+     * @param uniqueSetType type of set to construct during searchAlgorithm method
      */
     public DepthSearch(AnalysisWriter analysisWriter, StackType stackType, UniqueSetType uniqueSetType) {
         super(analysisWriter);
+        if (stackType == null || uniqueSetType == null) throw new IllegalArgumentException("Arguments cannot be null");
         this.stackType = stackType;
         this.uniqueSetType = uniqueSetType;
     }
@@ -72,7 +74,7 @@ public class DepthSearch extends AnalysableAlgorithm {
     private UniqueSet<WeightedPoint> initVisitedSet() {
         switch (uniqueSetType) {
             case PRE_MADE_HASH_SET:
-                return new PremadeUniqueSet<>();
+                return new PreMadeUniqueSet<>();
             case CUSTOM_SET_SIZE_HASH_SET:
                 return new CustomHashSetDynamicSize<>();
             case CUSTOM_DYNAMIC_SIZE_HASH_SET:
@@ -112,11 +114,20 @@ public class DepthSearch extends AnalysableAlgorithm {
     @Override
     public String getDescription() {
         return toString() + " with " + uniqueSetType + " to keep track of visited edges and " + stackType + " as an implementation of stack.";
-
     }
 
     @Override
     public String toString() {
         return "Depth first";
+    }
+
+    //testing getters
+
+    public StackType getStackType() {
+        return stackType;
+    }
+
+    public UniqueSetType getUniqueSetType() {
+        return uniqueSetType;
     }
 }

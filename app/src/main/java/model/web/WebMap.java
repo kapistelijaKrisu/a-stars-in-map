@@ -10,6 +10,10 @@ import java.util.Collection;
  * Data model to be searched by a AnalysableAlgorithm.
  */
 public class WebMap {
+    /**
+     * Max values for width and height
+     */
+    public static final int MAX_HEIGHT = 10000, MAX_WIDTH = 10000;
     private int[][] map;
     private int startX, startY, targetX, targetY;
     private String name;
@@ -61,11 +65,14 @@ public class WebMap {
      * target location tileTarget exists within map
      * target or start point is not a wall
      * name is not null and can be used as a file name
+     * width is less or equal to 10000, height is less or equal to 10000
      */
     public boolean isValid() {
         boolean valid = !(map == null || !isAvailableLocation(startX, startY) || !isAvailableLocation(targetX, targetY) || name == null);
         if (!valid) return false;
         valid = map.length > 0 && map[0].length > 0;
+        if (!valid) return false;
+        valid = (map.length <= MAX_HEIGHT && map[0].length <= MAX_WIDTH);
         if (!valid) return false;
         valid = startX >= 0 && startX < map[0].length && startY >= 0 && startY < map.length;
         if (!valid) return false;
@@ -87,7 +94,6 @@ public class WebMap {
 
     /**
      * @return textual representation of map if it is valid.
-     * TODO improve to get  better idea of map. but a full visual view can be more confusing.
      */
     public String getTextualView() {
         if (!isValid()) return "Invalid map. Set map, tileStart, tileTarget correctly.";

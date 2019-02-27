@@ -15,6 +15,7 @@ public class SystemSpecReader {
     private final HardwareAbstractionLayer hardwareAbstractionLayer;
     private final Runtime runtime = Runtime.getRuntime();
     private final Properties properties;
+
     /**
      * Initializes few internal helpers
      * Not really testable since results vary by hardware / os / java
@@ -28,6 +29,7 @@ public class SystemSpecReader {
 
     /**
      * gets cpu name
+     *
      * @return cpu name
      */
 
@@ -36,7 +38,6 @@ public class SystemSpecReader {
     }
 
     /**
-     *
      * @return compiler defined in properties
      */
     public String getCompiler() {
@@ -44,7 +45,6 @@ public class SystemSpecReader {
     }
 
     /**
-     *
      * @return runtime defined in properties
      */
     public String getRuntime() {
@@ -52,7 +52,6 @@ public class SystemSpecReader {
     }
 
     /**
-     *
      * @return virtual machine name defined in properties
      */
     public String getVirtualMachineName() {
@@ -60,7 +59,6 @@ public class SystemSpecReader {
     }
 
     /**
-     *
      * @return virtual machine verions defined in properties
      */
     public String getVirtualMachineVersion() {

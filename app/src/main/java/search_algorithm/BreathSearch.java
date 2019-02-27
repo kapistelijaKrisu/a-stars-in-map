@@ -2,46 +2,44 @@ package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
 import model.structure.Queue;
-import model.structure.Stack;
 import model.structure.UniqueSet;
 import model.structure.custom_structure.CustomHashSet;
 import model.structure.custom_structure.CustomHashSetDynamicSize;
 import model.structure.custom_structure.FIFOQueue;
-import model.structure.custom_structure.LIFOStack;
-import model.structure.premade_structure.PreMadeStack;
-import model.structure.premade_structure.PremadeQueue;
-import model.structure.premade_structure.PremadeUniqueSet;
+import model.structure.pre_made_structure.PreMadeQueue;
+import model.structure.pre_made_structure.PreMadeUniqueSet;
 import model.web.WeightedPoint;
 import search_algorithm.structure_type.QueueType;
-import search_algorithm.structure_type.StackType;
 import search_algorithm.structure_type.UniqueSetType;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * classic breath-first-search
  */
 public class BreathSearch extends AnalysableAlgorithm {
-    private QueueType queueType;
-    private UniqueSetType uniqueSetType;
+    private final QueueType queueType;
+    private final UniqueSetType uniqueSetType;
+
     /**
      * classic breath-first-search that extends AnalysableAlgorithm so it handles report writing.
      * @param analysisWriter writer that writes the analysis report files.
+     * @param queueType type of queue to construct during searchAlgorithm method
+     * @param uniqueSetType type of set to construct during searchAlgorithm method
      */
     public BreathSearch(AnalysisWriter analysisWriter, QueueType queueType, UniqueSetType uniqueSetType) {
-            super(analysisWriter);
-            this.queueType = queueType;
-            this.uniqueSetType = uniqueSetType;
+        super(analysisWriter);
+        if (queueType == null || uniqueSetType == null) throw new IllegalArgumentException("Arguments cannot be null");
+        this.queueType = queueType;
+        this.uniqueSetType = uniqueSetType;
     }
 
     /**
      * Runs breath search by adding neighbours of start to que and comparing them to target node in order.
-     * @param timeOfStart       time in nanos of when method is called.
-     * @param availableSpace    space left in jvm heap when method is called.
-     * @param fromToNodeSet              place to store which step is taken form where.
+     *
+     * @param timeOfStart    time in nanos of when method is called.
+     * @param availableSpace space left in jvm heap when method is called.
+     * @param fromToNodeSet  place to store which step is taken form where.
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
@@ -75,7 +73,7 @@ public class BreathSearch extends AnalysableAlgorithm {
     private UniqueSet<WeightedPoint> initVisitedSet() {
         switch (uniqueSetType) {
             case PRE_MADE_HASH_SET:
-                return new PremadeUniqueSet<>();
+                return new PreMadeUniqueSet<>();
             case CUSTOM_SET_SIZE_HASH_SET:
                 return new CustomHashSetDynamicSize<>();
             case CUSTOM_DYNAMIC_SIZE_HASH_SET:
@@ -90,23 +88,21 @@ public class BreathSearch extends AnalysableAlgorithm {
             case CUSTOM_QUEUE:
                 return new FIFOQueue<>();
             case PRE_MADE_QUEUE:
-                return new PremadeQueue<>();
+                return new PreMadeQueue<>();
             default:
                 return null;
         }
     }
 
-            /**
-             *
-             * @return known time complexity
-             */
+    /**
+     * @return known time complexity
+     */
     @Override
     public String getTheoreticalTime() {
         return "O( | V + E | )";
     }
 
     /**
-     *
      * @return known space complexity
      */
     @Override
@@ -122,5 +118,15 @@ public class BreathSearch extends AnalysableAlgorithm {
     @Override
     public String toString() {
         return "Breath first";
+    }
+
+    //testing getters
+
+    public QueueType getQueueType() {
+        return queueType;
+    }
+
+    public UniqueSetType getUniqueSetType() {
+        return uniqueSetType;
     }
 }
