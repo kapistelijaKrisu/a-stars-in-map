@@ -153,11 +153,13 @@ public abstract class AnalysableAlgorithm {
             sb.append(System.lineSeparator());
         }
         // take off leading whitespace
-        sb.setLength(Math.max(sb.length() - 2, 0));
+        sb.setLength(Math.max(sb.length() - (1 + System.lineSeparator().length()), 0));
+        String platformDependantResultMap = sb.toString();
+        platformDependantResultMap = platformDependantResultMap.replaceAll("\\n|\\r\\n", System.lineSeparator());
         //fill analysis values
 
         String pathWeight = path.get(map.getTileTarget()) == null ? "Target was not found" : "" + totalPathWeight;
-        templateValueMap.put("{test_processed_map}", sb.toString());
+        templateValueMap.put("{test_processed_map}", platformDependantResultMap);
         templateValueMap.put("{test_path_weight}", "" + pathWeight);
         templateValueMap.put("{test_max_steps}", "" + max_steps);
     }
