@@ -10,13 +10,13 @@
 * ryhmitelty io pakkaus uudelleen ja aloitettu automaattinen vertailija 2h~
 * kaikki algoritmi pyöritykset ~2h
 * lisää enumisointia ja vertailu toteutus valmis 7h~
+* 8h javadoc + testipäivitys
+* 2h vielä pientä refaktorointia ja todo alta pois
 
 ### Päiväkirja skipattu sama kuin tehty
 ### TODO list priority order
-* 7 todo kohdat pois
 * 8 vertaa ohjelmaa määrittelydokkariin ja korjaa (odottaa vastauksia epäselvyys kohtiin)
 
-* testit dokkarit, typot
 * 6 virhe käsittely yli integer max arvoille, dokkarii maininta
 * 9 viimeinen refaktoirointikierros, algo name, map valid
 
