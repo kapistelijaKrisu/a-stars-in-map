@@ -1,25 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LegalFileName.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">system_tools</a> &gt; <span class="el_source">LegalFileName.java</span></div><h1>LegalFileName.java</h1><pre class="source lang-java linenums">package system_tools;
 
-<span class="nc" id="L3">public class LegalFileName {</span>
+/**
+ * Checks if file name is legal is various operating systems
+ */
+<span class="nc" id="L6">public class LegalFileName {</span>
 
-<span class="fc" id="L5">    public static final char[] ILLEGAL_CHARACTERS = {'/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '&lt;', '&gt;', '|', '\&quot;', ':'};</span>
+    /**
+     * Characters known for being illegal in a filename
+     */
+<span class="fc" id="L11">    public static final char[] ILLEGAL_CHARACTERS = {'/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '&lt;', '&gt;', '|', '\&quot;', ':'};</span>
 
+    /**
+     * @param name to be validated
+     * @return true if none of ILLEGAL_CHARACTERS is found in name and it's not null or empty
+     */
     public static boolean isValidFileName(String name) {
-<span class="fc bfc" id="L8" title="All 4 branches covered.">        if (name == null || name.isBlank()) return false;</span>
-<span class="fc bfc" id="L9" title="All 2 branches covered.">        for (char illegalCharacter : ILLEGAL_CHARACTERS) {</span>
-<span class="fc bfc" id="L10" title="All 2 branches covered.">            for (char charAt : name.toCharArray()) {</span>
-<span class="fc bfc" id="L11" title="All 2 branches covered.">                if (charAt == illegalCharacter) return false;</span>
+<span class="fc bfc" id="L18" title="All 4 branches covered.">        if (name == null || name.isBlank()) return false;</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        for (char illegalCharacter : ILLEGAL_CHARACTERS) {</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            for (char charAt : name.toCharArray()) {</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">                if (charAt == illegalCharacter) return false;</span>
             }
         }
-<span class="fc" id="L14">        return true;</span>
+<span class="fc" id="L24">        return true;</span>
     }
 
+    /**
+     * @param names to be validated
+     * @return true if none of ILLEGAL_CHARACTERS is found in names and it's not null or empty
+     */
     public static boolean areValidFileNames(String[] names) {
-<span class="fc bfc" id="L18" title="All 4 branches covered.">        if (names == null || names.length == 0) return false;</span>
-<span class="fc bfc" id="L19" title="All 2 branches covered.">        for (String name : names) {</span>
-<span class="fc bfc" id="L20" title="All 2 branches covered.">            if (!isValidFileName(name)) return false;</span>
+<span class="fc bfc" id="L32" title="All 4 branches covered.">        if (names == null || names.length == 0) return false;</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (String name : names) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            if (!isValidFileName(name)) return false;</span>
         }
-<span class="fc" id="L22">        return true;</span>
+<span class="fc" id="L36">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

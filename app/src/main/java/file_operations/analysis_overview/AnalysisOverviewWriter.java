@@ -3,6 +3,7 @@ package file_operations.analysis_overview;
 import file_operations.common.*;
 import file_operations.root_file_operations.RootFileWriter;
 import model.report.ReportMeta;
+import system_tools.NanoSecondPrettified;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -46,14 +47,7 @@ public class AnalysisOverviewWriter {
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_PATH_WEIGHT.getStringValue(), reportMeta.getTestPathWeight() + "");
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_SPACE_USED.getStringValue(), reportMeta.getTestSpace() + "");
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_STEPS_USED.getStringValue(), reportMeta.getTestUsedSteps() + "");
-        long elapsedTime = reportMeta.getTestTime().longValue();
-        long nanos = elapsedTime % 1000000;
-        long milliseconds = (elapsedTime / 1000000) % 1000000;
-        long seconds = (elapsedTime / 1000000000);
-        String timeReport = "";
-        if (seconds > 0) timeReport += seconds + "sec ";
-        if (milliseconds > 0) timeReport += milliseconds + "ms ";
-        timeReport += nanos + "ns";
+        String timeReport = NanoSecondPrettified.prettifyNanoSeconds(reportMeta.getTestTime().longValue());
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_TIME_USED.getStringValue(), timeReport + "");
         return analysisRow;
     }

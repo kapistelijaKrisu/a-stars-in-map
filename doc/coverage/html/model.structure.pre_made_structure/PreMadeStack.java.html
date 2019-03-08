@@ -6,6 +6,7 @@ import java.util.ArrayDeque;
 
 /**
  * Encapsulates ArrayDeque of java exposing only stack methods needed by search algorithms
+ *
  * @param &lt;T&gt; Type of element to hold
  */
 
@@ -15,35 +16,36 @@ public class PreMadeStack&lt;T&gt; implements Stack&lt;T&gt; {
     /**
      * Creates ArrayDeque
      */
-<span class="fc" id="L18">    public PreMadeStack() {</span>
-<span class="fc" id="L19">        stack = new ArrayDeque&lt;&gt;();</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L19">    public PreMadeStack() {</span>
+<span class="fc" id="L20">        stack = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L21">    }</span>
 
     /**
      * Calls ArrayDeque.add
+     *
      * @param element to add
      */
     @Override
     public void push(T element) {
-<span class="fc" id="L28">        stack.add(element);</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L30">        stack.add(element);</span>
+<span class="fc" id="L31">    }</span>
 
     /**
      * ArrayDeque.pollLast or null if empty
+     *
      * @return polled element
      */
     @Override
     public T pop() {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        return stack.isEmpty() ? null : stack.pollLast();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        return stack.isEmpty() ? null : stack.pollLast();</span>
     }
 
     /**
-     *
      * @return ArrayDeque.isEmpty
      */
     @Override
     public boolean isEmpty() {
-<span class="fc" id="L46">        return stack.isEmpty();</span>
+<span class="fc" id="L48">        return stack.isEmpty();</span>
     }
 }
 

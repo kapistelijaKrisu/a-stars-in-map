@@ -5,60 +5,65 @@ import java.util.Map;
 
 /**
  * Map between easily readable algorithm implementation types and their codes.
+ * Used to make cmd usage a bit more user friendly
  */
 
-<span class="fc" id="L10">public enum AlgorithmCodeKey {</span>
-<span class="fc" id="L11">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;bcp&quot;),</span>
-<span class="fc" id="L12">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bcs&quot;),</span>
-<span class="fc" id="L13">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bcd&quot;),</span>
-<span class="fc" id="L14">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;bsp&quot;),</span>
-<span class="fc" id="L15">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bss&quot;),</span>
-<span class="fc" id="L16">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bsd&quot;),</span>
+<span class="fc" id="L11">public enum AlgorithmCodeKey {</span>
+<span class="fc" id="L12">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;bcp&quot;),</span>
+<span class="fc" id="L13">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bcs&quot;),</span>
+<span class="fc" id="L14">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bcd&quot;),</span>
+<span class="fc" id="L15">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;bsp&quot;),</span>
+<span class="fc" id="L16">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bss&quot;),</span>
+<span class="fc" id="L17">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bsd&quot;),</span>
 
-<span class="fc" id="L18">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;scp&quot;),</span>
-<span class="fc" id="L19">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;scs&quot;),</span>
-<span class="fc" id="L20">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;scd&quot;),</span>
-<span class="fc" id="L21">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;ssp&quot;),</span>
-<span class="fc" id="L22">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;sss&quot;),</span>
-<span class="fc" id="L23">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;ssd&quot;),</span>
+<span class="fc" id="L19">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;scp&quot;),</span>
+<span class="fc" id="L20">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;scs&quot;),</span>
+<span class="fc" id="L21">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;scd&quot;),</span>
+<span class="fc" id="L22">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;ssp&quot;),</span>
+<span class="fc" id="L23">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;sss&quot;),</span>
+<span class="fc" id="L24">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;ssd&quot;),</span>
 
-<span class="fc" id="L25">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dh2&quot;),</span>
-<span class="fc" id="L26">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dh1&quot;),</span>
-<span class="fc" id="L27">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dc2&quot;),</span>
-<span class="fc" id="L28">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dc1&quot;),</span>
+<span class="fc" id="L26">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dh2&quot;),</span>
+<span class="fc" id="L27">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dh1&quot;),</span>
+<span class="fc" id="L28">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dc2&quot;),</span>
+<span class="fc" id="L29">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dc1&quot;),</span>
 
-<span class="fc" id="L30">    A_STAR_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ah2&quot;),</span>
-<span class="fc" id="L31">    A_STAR_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ah1&quot;),</span>
-<span class="fc" id="L32">    A_STAR_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ac2&quot;),</span>
-<span class="fc" id="L33">    A_STAR_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ac1&quot;);</span>
+<span class="fc" id="L31">    A_STAR_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ah2&quot;),</span>
+<span class="fc" id="L32">    A_STAR_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ah1&quot;),</span>
+<span class="fc" id="L33">    A_STAR_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ac2&quot;),</span>
+<span class="fc" id="L34">    A_STAR_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ac1&quot;);</span>
 
     // Reverse-lookup map for getting a code key from an abbreviation
-<span class="fc" id="L36">    private static final Map&lt;String, AlgorithmCodeKey&gt; lookup = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L37">    private static final Map&lt;String, AlgorithmCodeKey&gt; lookup = new HashMap&lt;&gt;();</span>
 
     private final String stringValue;
 
-<span class="fc" id="L40">    AlgorithmCodeKey(String stringValue) {</span>
-<span class="fc" id="L41">        this.stringValue = stringValue;</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L41">    AlgorithmCodeKey(String stringValue) {</span>
+<span class="fc" id="L42">        this.stringValue = stringValue;</span>
+<span class="fc" id="L43">    }</span>
 
+    /**
+     * @return abbreviation of AlgorithmCodeKey
+     */
     public String getStringValue() {
-<span class="fc" id="L45">        return stringValue;</span>
+<span class="fc" id="L49">        return stringValue;</span>
     }
 
 
     static {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (AlgorithmCodeKey d : AlgorithmCodeKey.values()) {</span>
-<span class="fc" id="L51">            lookup.put(d.getStringValue(), d);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (AlgorithmCodeKey d : AlgorithmCodeKey.values()) {</span>
+<span class="fc" id="L55">            lookup.put(d.getStringValue(), d);</span>
         }
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L57">    }</span>
 
     /**
      * inside-out enum getter, gets the AlgorithmCodeKey of corresponding abbreviation.
+     *
      * @param abbreviation search up parameter
      * @return AlgorithmCodeKey of the parameter or null if doesn't exist
      */
     public static AlgorithmCodeKey get(String abbreviation) {
-<span class="fc" id="L61">        return lookup.get(abbreviation);</span>
+<span class="fc" id="L66">        return lookup.get(abbreviation);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

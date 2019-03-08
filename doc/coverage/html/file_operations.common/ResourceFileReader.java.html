@@ -7,17 +7,23 @@ import java.util.stream.Collectors;
 
 <span class="nc" id="L8">public class ResourceFileReader {</span>
 
+    /**
+     * Reads resource from resource file.
+     *
+     * @param resourceName file path where main/resources is the root.
+     * @return read file as a string. or null if failed to read. e.g file doesn't exist
+     */
     public static String readResourceFile(String resourceName) {
         try {
-<span class="fc" id="L12">            InputStream in = ResourceFileReader.class.getResourceAsStream(resourceName);</span>
-<span class="fc" id="L13">            BufferedReader reader = new BufferedReader(new InputStreamReader(in));</span>
-<span class="fc" id="L14">            return reader.lines().collect(Collectors.joining(System.lineSeparator()));</span>
-<span class="fc" id="L15">        } catch (NullPointerException e) {</span>
-<span class="fc" id="L16">            System.out.println(&quot;File not found&quot;);</span>
-<span class="nc" id="L17">        } catch (Exception e) { //might be security or space related</span>
-<span class="nc" id="L18">            System.out.println(e.getMessage());</span>
-<span class="fc" id="L19">        }</span>
-<span class="fc" id="L20">        return null;</span>
+<span class="fc" id="L18">            InputStream in = ResourceFileReader.class.getResourceAsStream(resourceName);</span>
+<span class="fc" id="L19">            BufferedReader reader = new BufferedReader(new InputStreamReader(in));</span>
+<span class="fc" id="L20">            return reader.lines().collect(Collectors.joining(System.lineSeparator()));</span>
+<span class="fc" id="L21">        } catch (NullPointerException e) {</span>
+<span class="fc" id="L22">            System.out.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L23">        } catch (Exception e) { //might be security or space related</span>
+<span class="nc" id="L24">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L25">        }</span>
+<span class="fc" id="L26">        return null;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -9,6 +9,7 @@ import model.web.WebMap;
 import model.web.WeightedPoint;
 import system_tools.LegalFileName;
 import system_tools.SystemSpecReader;
+import system_tools.NanoSecondPrettified;
 
 import java.awt.*;
 import java.io.IOException;
@@ -202,13 +203,7 @@ public abstract class AnalysableAlgorithm {
 
     private void setTimeElapsed(long startTime) {
         long elapsedTime = System.nanoTime() - startTime;
-        long nanos = elapsedTime % 1000000;
-        long milliseconds = (elapsedTime / 1000000) % 1000000;
-        long seconds = (elapsedTime / 1000000000);
-        String timeReport = "";
-        if (seconds > 0) timeReport += seconds + "sec ";
-        if (milliseconds > 0) timeReport += milliseconds + "ms ";
-        timeReport += nanos + "ns";
+        String timeReport = NanoSecondPrettified.prettifyNanoSeconds(elapsedTime);
         report.setValueOf(ReportCodeKey.TIME_USED, timeReport);
         reportMeta.setTestTime((double) elapsedTime);
     }

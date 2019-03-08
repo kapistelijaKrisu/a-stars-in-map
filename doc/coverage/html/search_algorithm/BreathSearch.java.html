@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BreathSearch.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">search_algorithm</a> &gt; <span class="el_source">BreathSearch.java</span></div><h1>BreathSearch.java</h1><pre class="source lang-java linenums">package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.structure.structure_interface.Queue;
-import model.structure.structure_interface.UniqueSet;
 import model.structure.custom_structure.CustomHashSet;
 import model.structure.custom_structure.CustomHashSetDynamicSize;
 import model.structure.custom_structure.FIFOQueue;
 import model.structure.pre_made_structure.PreMadeQueue;
 import model.structure.pre_made_structure.PreMadeUniqueSet;
-import model.web.WeightedPoint;
+import model.structure.structure_interface.Queue;
+import model.structure.structure_interface.UniqueSet;
 import model.structure.structure_type_enum.QueueType;
 import model.structure.structure_type_enum.UniqueSetType;
+import model.web.WeightedPoint;
 
 import java.util.Map;
 
@@ -23,16 +23,17 @@ public class BreathSearch extends AnalysableAlgorithm {
 
     /**
      * classic breath-first-search that extends AnalysableAlgorithm so it handles report writing.
+     *
      * @param analysisWriter writer that writes the analysis report files.
-     * @param queueType type of queue to construct during searchAlgorithm method
-     * @param uniqueSetType type of set to construct during searchAlgorithm method
+     * @param queueType      type of queue to construct during searchAlgorithm method
+     * @param uniqueSetType  type of set to construct during searchAlgorithm method
      */
     public BreathSearch(AnalysisWriter analysisWriter, QueueType queueType, UniqueSetType uniqueSetType) {
-<span class="fc" id="L31">        super(analysisWriter, &quot;Breath first&quot;);</span>
-<span class="fc bfc" id="L32" title="All 4 branches covered.">        if (queueType == null || uniqueSetType == null) throw new IllegalArgumentException(&quot;Arguments cannot be null&quot;);</span>
-<span class="fc" id="L33">        this.queueType = queueType;</span>
-<span class="fc" id="L34">        this.uniqueSetType = uniqueSetType;</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L32">        super(analysisWriter, &quot;Breath first&quot;);</span>
+<span class="fc bfc" id="L33" title="All 4 branches covered.">        if (queueType == null || uniqueSetType == null) throw new IllegalArgumentException(&quot;Arguments cannot be null&quot;);</span>
+<span class="fc" id="L34">        this.queueType = queueType;</span>
+<span class="fc" id="L35">        this.uniqueSetType = uniqueSetType;</span>
+<span class="fc" id="L36">    }</span>
 
     /**
      * Runs breath search by adding neighbours of start to que and comparing them to target node in order.
@@ -43,54 +44,54 @@ public class BreathSearch extends AnalysableAlgorithm {
      */
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map&lt;WeightedPoint, WeightedPoint&gt; fromToNodeSet) {
-<span class="fc" id="L46">        WeightedPoint orignalStart = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);</span>
+<span class="fc" id="L47">        WeightedPoint orignalStart = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);</span>
 
-<span class="fc" id="L48">        UniqueSet&lt;WeightedPoint&gt; visited = initVisitedSet();</span>
-<span class="fc" id="L49">        Queue&lt;WeightedPoint&gt; queue = initProcessingQueue();</span>
+<span class="fc" id="L49">        UniqueSet&lt;WeightedPoint&gt; visited = initVisitedSet();</span>
+<span class="fc" id="L50">        Queue&lt;WeightedPoint&gt; queue = initProcessingQueue();</span>
 
-<span class="fc" id="L51">        visited.add(orignalStart);</span>
-<span class="fc" id="L52">        queue.enqueue(orignalStart);</span>
-<span class="fc" id="L53">        fromToNodeSet.put(orignalStart, null);</span>
+<span class="fc" id="L52">        visited.add(orignalStart);</span>
+<span class="fc" id="L53">        queue.enqueue(orignalStart);</span>
+<span class="fc" id="L54">        fromToNodeSet.put(orignalStart, null);</span>
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        while (!queue.isEmpty()) {</span>
-<span class="fc" id="L56">            WeightedPoint polled = queue.dequeue();</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (polled.equals(map.getTileTarget())) {</span>
-<span class="fc" id="L58">                super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
-<span class="fc" id="L59">                return;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        while (!queue.isEmpty()) {</span>
+<span class="fc" id="L57">            WeightedPoint polled = queue.dequeue();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (polled.equals(map.getTileTarget())) {</span>
+<span class="fc" id="L59">                super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
+<span class="fc" id="L60">                return;</span>
             } else {
-<span class="fc bfc" id="L61" title="All 2 branches covered.">                for (WeightedPoint neighbour : map.getNeighbours(polled)) {</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">                    if (!visited.contains(neighbour)) {</span>
-<span class="fc" id="L63">                        fromToNodeSet.put(neighbour, polled);</span>
-<span class="fc" id="L64">                        visited.add(neighbour);</span>
-<span class="fc" id="L65">                        queue.enqueue(neighbour);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                for (WeightedPoint neighbour : map.getNeighbours(polled)) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                    if (!visited.contains(neighbour)) {</span>
+<span class="fc" id="L64">                        fromToNodeSet.put(neighbour, polled);</span>
+<span class="fc" id="L65">                        visited.add(neighbour);</span>
+<span class="fc" id="L66">                        queue.enqueue(neighbour);</span>
                     }
-<span class="fc" id="L67">                }</span>
+<span class="fc" id="L68">                }</span>
             }
-<span class="fc" id="L69">        }</span>
-<span class="fc" id="L70">        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
+<span class="fc" id="L72">    }</span>
 
     private UniqueSet&lt;WeightedPoint&gt; initVisitedSet() {
-<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        switch (uniqueSetType) {</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">        switch (uniqueSetType) {</span>
             case PRE_MADE_HASH_SET:
-<span class="fc" id="L76">                return new PreMadeUniqueSet&lt;&gt;();</span>
+<span class="fc" id="L77">                return new PreMadeUniqueSet&lt;&gt;();</span>
             case CUSTOM_SET_SIZE_HASH_SET:
-<span class="fc" id="L78">                return new CustomHashSetDynamicSize&lt;&gt;();</span>
+<span class="fc" id="L79">                return new CustomHashSetDynamicSize&lt;&gt;();</span>
             case CUSTOM_DYNAMIC_SIZE_HASH_SET:
-<span class="fc" id="L80">                return new CustomHashSet&lt;&gt;(map.height() * map.width());</span>
+<span class="fc" id="L81">                return new CustomHashSet&lt;&gt;(map.height() * map.width());</span>
             default:
-<span class="nc" id="L82">                return null;</span>
+<span class="nc" id="L83">                return null;</span>
         }
     }
 
     private Queue&lt;WeightedPoint&gt; initProcessingQueue() {
-<span class="pc bpc" id="L87" title="1 of 3 branches missed.">        switch (queueType) {</span>
+<span class="pc bpc" id="L88" title="1 of 3 branches missed.">        switch (queueType) {</span>
             case CUSTOM_QUEUE:
-<span class="fc" id="L89">                return new FIFOQueue&lt;&gt;();</span>
+<span class="fc" id="L90">                return new FIFOQueue&lt;&gt;();</span>
             case PRE_MADE_QUEUE:
-<span class="fc" id="L91">                return new PreMadeQueue&lt;&gt;();</span>
+<span class="fc" id="L92">                return new PreMadeQueue&lt;&gt;();</span>
             default:
-<span class="nc" id="L93">                return null;</span>
+<span class="nc" id="L94">                return null;</span>
         }
     }
 
@@ -99,7 +100,7 @@ public class BreathSearch extends AnalysableAlgorithm {
      */
     @Override
     public String getTheoreticalTime() {
-<span class="fc" id="L102">        return &quot;O( | V + E | )&quot;;</span>
+<span class="fc" id="L103">        return &quot;O( | V + E | )&quot;;</span>
     }
 
     /**
@@ -107,16 +108,15 @@ public class BreathSearch extends AnalysableAlgorithm {
      */
     @Override
     public String getTheoreticalSpace() {
-<span class="fc" id="L110">        return &quot;| V |&quot;;</span>
+<span class="fc" id="L111">        return &quot;| V |&quot;;</span>
     }
 
     @Override
     public String getDescription() {
-<span class="fc" id="L115">        return getName() + &quot; with &quot; + uniqueSetType.getTextValue() + &quot; as visited nodes tracker and &quot; + queueType.getTextValue() + &quot; as queue.&quot;;</span>
+<span class="fc" id="L116">        return getName() + &quot; with &quot; + uniqueSetType.getTextValue() + &quot; as visited nodes tracker and &quot; + queueType.getTextValue() + &quot; as queue.&quot;;</span>
     }
 
     /**
-     *
      * @return additional documentation of implementation as metadata for sorting reports by category of implementation
      */
     @Override
@@ -126,12 +126,20 @@ public class BreathSearch extends AnalysableAlgorithm {
 
     //testing getters
 
+    /**
+     * for testing
+     *
+     * @return what type of queue is used
+     */
     public QueueType getQueueType() {
-<span class="fc" id="L130">        return queueType;</span>
+<span class="fc" id="L135">        return queueType;</span>
     }
 
+    /**
+     * @return what type of visited node tracker is used
+     */
     public UniqueSetType getUniqueSetType() {
-<span class="fc" id="L134">        return uniqueSetType;</span>
+<span class="fc" id="L142">        return uniqueSetType;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

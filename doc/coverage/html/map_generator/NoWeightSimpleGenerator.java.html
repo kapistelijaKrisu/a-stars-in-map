@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Simple weightless map generator that asks user for parameters for generating a map.
  */
 public class NoWeightSimpleGenerator implements MapGenerator {
-    protected final Scanner scanner;
+    private final Scanner scanner;
     private int mapWidth, mapHeight;
     private int startX, startY, targetX, targetY;
     private static final String USER_WANTS_TO_EXIT = &quot;q&quot;;
@@ -56,27 +56,27 @@ public class NoWeightSimpleGenerator implements MapGenerator {
 <span class="fc" id="L56">        return map;</span>
     }
 
-    //todo hit error message n print it instead
     private boolean setConfigValues() {
         while (true) {
             try {
-<span class="fc" id="L63">                System.out.println(&quot;set width: &quot;);</span>
-<span class="fc" id="L64">                mapWidth = Integer.parseInt(scanner.nextLine());</span>
-<span class="fc" id="L65">                System.out.println(&quot;set height: &quot;);</span>
-<span class="fc" id="L66">                mapHeight = Integer.parseInt(scanner.nextLine());</span>
-<span class="fc" id="L67">                System.out.println(&quot;set starting location x&quot;);</span>
-<span class="fc" id="L68">                startX = Integer.parseInt(scanner.nextLine());</span>
-<span class="fc" id="L69">                System.out.println(&quot;set starting location y&quot;);</span>
-<span class="fc" id="L70">                startY = Integer.parseInt(scanner.nextLine());</span>
-<span class="fc" id="L71">                System.out.println(&quot;set target location x&quot;);</span>
-<span class="fc" id="L72">                targetX = Integer.parseInt(scanner.nextLine());</span>
-<span class="fc" id="L73">                System.out.println(&quot;set target location y&quot;);</span>
-<span class="fc" id="L74">                targetY = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L62">                System.out.println(&quot;set width: &quot;);</span>
+<span class="fc" id="L63">                mapWidth = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L64">                System.out.println(&quot;set height: &quot;);</span>
+<span class="fc" id="L65">                mapHeight = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L66">                System.out.println(&quot;set starting location x&quot;);</span>
+<span class="fc" id="L67">                startX = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L68">                System.out.println(&quot;set starting location y&quot;);</span>
+<span class="fc" id="L69">                startY = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L70">                System.out.println(&quot;set target location x&quot;);</span>
+<span class="fc" id="L71">                targetX = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L72">                System.out.println(&quot;set target location y&quot;);</span>
+<span class="fc" id="L73">                targetY = Integer.parseInt(scanner.nextLine());</span>
 
-<span class="pc bpc" id="L76" title="3 of 8 branches missed.">                if (startY &lt; 0 || startX &lt; 0 || targetX &lt; 0 || targetY &lt; 0) throw new ArrayIndexOutOfBoundsException();</span>
-<span class="fc bfc" id="L77" title="All 8 branches covered.">                if (startY &gt;= mapHeight || startX &gt;= mapWidth || targetX &gt;= mapWidth || targetY &gt;= mapHeight)</span>
-<span class="fc" id="L78">                    throw new ArrayIndexOutOfBoundsException();</span>
-<span class="pc bpc" id="L79" title="4 of 8 branches missed.">                if (mapHeight &lt;= 0 || mapWidth &lt;= 0 || mapHeight &gt; WebMap.MAX_HEIGHT || mapWidth &gt; WebMap.MAX_WIDTH) throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L75" title="3 of 8 branches missed.">                if (startY &lt; 0 || startX &lt; 0 || targetX &lt; 0 || targetY &lt; 0) throw new ArrayIndexOutOfBoundsException();</span>
+<span class="fc bfc" id="L76" title="All 8 branches covered.">                if (startY &gt;= mapHeight || startX &gt;= mapWidth || targetX &gt;= mapWidth || targetY &gt;= mapHeight)</span>
+<span class="fc" id="L77">                    throw new ArrayIndexOutOfBoundsException();</span>
+<span class="pc bpc" id="L78" title="4 of 8 branches missed.">                if (mapHeight &lt;= 0 || mapWidth &lt;= 0 || mapHeight &gt; WebMap.MAX_HEIGHT || mapWidth &gt; WebMap.MAX_WIDTH)</span>
+<span class="nc" id="L79">                    throw new IllegalArgumentException();</span>
 <span class="fc" id="L80">                return true;</span>
 <span class="fc" id="L81">            } catch (Exception e) {</span>
 <span class="fc" id="L82">                System.out.println(&quot;Height should be between 1-&quot; + WebMap.MAX_HEIGHT);</span>
@@ -88,9 +88,13 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         }
     }
 
+    /**
+     *
+     * @return description of this generator
+     */
     @Override
     public String toString() {
-<span class="nc" id="L93">        return &quot;simple weightless and open map generator&quot;;</span>
+<span class="nc" id="L97">        return &quot;simple weightless and open map generator&quot;;</span>
     }
 
 }

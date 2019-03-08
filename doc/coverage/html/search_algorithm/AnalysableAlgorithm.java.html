@@ -9,6 +9,7 @@ import model.web.WebMap;
 import model.web.WeightedPoint;
 import system_tools.LegalFileName;
 import system_tools.SystemSpecReader;
+import system_tools.NanoSecondPrettified;
 
 import java.awt.*;
 import java.io.IOException;
@@ -33,17 +34,18 @@ public abstract class AnalysableAlgorithm {
      * sets given analysis writer instantiates itself
      *
      * @param analysisWriter writer to write analyses on a file
+     * @param name           name of the algorithm
      */
-<span class="fc" id="L37">    public AnalysableAlgorithm(AnalysisWriter analysisWriter, String name) {</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (analysisWriter == null) throw new IllegalArgumentException(&quot;analysis writer cannot be null&quot;);</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (!LegalFileName.isValidFileName(name))</span>
-<span class="fc" id="L40">            throw new IllegalArgumentException(&quot;name needs to be a valid filename&quot;);</span>
-<span class="fc" id="L41">        this.analysisWriter = analysisWriter;</span>
-<span class="fc" id="L42">        report = new Report();</span>
-<span class="fc" id="L43">        reportMeta = new ReportMeta();</span>
-<span class="fc" id="L44">        systemSpecReader = new SystemSpecReader();</span>
-<span class="fc" id="L45">        this.name = name;</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L39">    public AnalysableAlgorithm(AnalysisWriter analysisWriter, String name) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (analysisWriter == null) throw new IllegalArgumentException(&quot;analysis writer cannot be null&quot;);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (!LegalFileName.isValidFileName(name))</span>
+<span class="fc" id="L42">            throw new IllegalArgumentException(&quot;name needs to be a valid filename&quot;);</span>
+<span class="fc" id="L43">        this.analysisWriter = analysisWriter;</span>
+<span class="fc" id="L44">        report = new Report();</span>
+<span class="fc" id="L45">        reportMeta = new ReportMeta();</span>
+<span class="fc" id="L46">        systemSpecReader = new SystemSpecReader();</span>
+<span class="fc" id="L47">        this.name = name;</span>
+<span class="fc" id="L48">    }</span>
 
     /**
      * Implementation of the search algorithm
@@ -57,161 +59,154 @@ public abstract class AnalysableAlgorithm {
 
     /**
      * Runs implemented algorithm and writes report based on it
-     * todo announce completion details...where results written etc
      *
      * @throws IllegalStateException when algorithm or map does not have name
      * @throws IOException           failing to write on designated report file
      */
     public void runSearch() throws IllegalStateException, IOException, IllegalArgumentException {
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (reportFilePath == null) {</span>
-<span class="pc bpc" id="L67" title="1 of 4 branches missed.">            if (map == null || !map.isValid())</span>
-<span class="fc" id="L68">                throw new IllegalStateException(&quot;Requires valid map, and name for algorithm&quot;);</span>
-<span class="fc" id="L69">            reportFilePath = DocumentPath.REPORTS.getFilePath() + map.getName() + &quot;/&quot; + name;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (reportFilePath == null) {</span>
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">            if (map == null || !map.isValid())</span>
+<span class="fc" id="L69">                throw new IllegalStateException(&quot;Requires valid map, and name for algorithm&quot;);</span>
+<span class="fc" id="L70">            reportFilePath = DocumentPath.REPORTS.getFilePath() + map.getName() + &quot;/&quot; + name;</span>
         }
-<span class="fc" id="L71">        report = new Report();</span>
-<span class="fc" id="L72">        Map&lt;WeightedPoint, WeightedPoint&gt; path = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L73">        System.out.println(&quot;Starting search of &quot; + name + &quot; - &quot; + getShortImpl() + &quot;...&quot;);</span>
-<span class="fc" id="L74">        searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize(), path);</span>
-<span class="fc" id="L75">        fillDefaultTemplateValues(report);</span>
-<span class="fc" id="L76">        System.out.println(&quot;Analyze completed! Beginning to write report...&quot;);</span>
-<span class="fc" id="L77">        analysisWriter.writeReport(report, reportMeta, reportFilePath);</span>
-<span class="fc" id="L78">        System.out.println(&quot;Finished!&quot;);</span>
-<span class="fc" id="L79">        printConclusion(report);</span>
+<span class="fc" id="L72">        report = new Report();</span>
+<span class="fc" id="L73">        Map&lt;WeightedPoint, WeightedPoint&gt; path = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L74">        System.out.println(&quot;Starting search of &quot; + name + &quot; - &quot; + getShortImpl() + &quot;...&quot;);</span>
+<span class="fc" id="L75">        searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize(), path);</span>
+<span class="fc" id="L76">        fillDefaultTemplateValues(report);</span>
+<span class="fc" id="L77">        System.out.println(&quot;Analyze completed! Beginning to write report...&quot;);</span>
+<span class="fc" id="L78">        analysisWriter.writeReport(report, reportMeta, reportFilePath);</span>
+<span class="fc" id="L79">        System.out.println(&quot;Finished!&quot;);</span>
+<span class="fc" id="L80">        printConclusion(report);</span>
 
-<span class="fc" id="L81">    }</span>
+<span class="fc" id="L82">    }</span>
 
     private void printConclusion(Report report) {
-<span class="fc" id="L84">        System.out.println(&quot;Space used: &quot; + report.getValueOf(ReportCodeKey.SPACE_USED));</span>
-<span class="fc" id="L85">        System.out.println(&quot;Steps taken: &quot; + report.getValueOf(ReportCodeKey.STEPS_USED) + &quot;/&quot; + report.getValueOf(ReportCodeKey.MAX_STEPS));</span>
-<span class="fc" id="L86">        System.out.println(&quot;Time: &quot; + report.getValueOf(ReportCodeKey.TIME_USED));</span>
-<span class="fc" id="L87">        System.out.println(&quot;Path weight: &quot; + report.getValueOf(ReportCodeKey.PATH_WEIGHT));</span>
-<span class="fc" id="L88">        System.out.println();</span>
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L85">        System.out.println(&quot;Space used: &quot; + report.getValueOf(ReportCodeKey.SPACE_USED));</span>
+<span class="fc" id="L86">        System.out.println(&quot;Steps taken: &quot; + report.getValueOf(ReportCodeKey.STEPS_USED) + &quot;/&quot; + report.getValueOf(ReportCodeKey.MAX_STEPS));</span>
+<span class="fc" id="L87">        System.out.println(&quot;Time: &quot; + report.getValueOf(ReportCodeKey.TIME_USED));</span>
+<span class="fc" id="L88">        System.out.println(&quot;Path weight: &quot; + report.getValueOf(ReportCodeKey.PATH_WEIGHT));</span>
+<span class="fc" id="L89">        System.out.println();</span>
+<span class="fc" id="L90">    }</span>
 
     private void fillDefaultTemplateValues(Report report) {
-<span class="fc" id="L92">        report.setValueOf(ReportCodeKey.ALGORITHM_NAME, name);</span>
-<span class="fc" id="L93">        report.setValueOf(ReportCodeKey.CPU, systemSpecReader.getCpu());</span>
-<span class="fc" id="L94">        report.setValueOf(ReportCodeKey.OS, systemSpecReader.getOperatingSystem());</span>
-<span class="fc" id="L95">        report.setValueOf(ReportCodeKey.COMPILER, systemSpecReader.getCompiler());</span>
-<span class="fc" id="L96">        report.setValueOf(ReportCodeKey.RUNTIME, systemSpecReader.getRuntime());</span>
-<span class="fc" id="L97">        report.setValueOf(ReportCodeKey.VM_NAME, systemSpecReader.getVirtualMachineName());</span>
-<span class="fc" id="L98">        report.setValueOf(ReportCodeKey.VM_VERSION, systemSpecReader.getVirtualMachineVersion());</span>
-<span class="fc" id="L99">        report.setValueOf(ReportCodeKey.ENV_HEAP, systemSpecReader.getAvailableHeapSizeReadable());</span>
-<span class="fc" id="L100">        report.setValueOf(ReportCodeKey.MAP_INFO, map.getTextualView());</span>
+<span class="fc" id="L93">        report.setValueOf(ReportCodeKey.ALGORITHM_NAME, name);</span>
+<span class="fc" id="L94">        report.setValueOf(ReportCodeKey.CPU, systemSpecReader.getCpu());</span>
+<span class="fc" id="L95">        report.setValueOf(ReportCodeKey.OS, systemSpecReader.getOperatingSystem());</span>
+<span class="fc" id="L96">        report.setValueOf(ReportCodeKey.COMPILER, systemSpecReader.getCompiler());</span>
+<span class="fc" id="L97">        report.setValueOf(ReportCodeKey.RUNTIME, systemSpecReader.getRuntime());</span>
+<span class="fc" id="L98">        report.setValueOf(ReportCodeKey.VM_NAME, systemSpecReader.getVirtualMachineName());</span>
+<span class="fc" id="L99">        report.setValueOf(ReportCodeKey.VM_VERSION, systemSpecReader.getVirtualMachineVersion());</span>
+<span class="fc" id="L100">        report.setValueOf(ReportCodeKey.ENV_HEAP, systemSpecReader.getAvailableHeapSizeReadable());</span>
+<span class="fc" id="L101">        report.setValueOf(ReportCodeKey.MAP_INFO, map.getTextualView());</span>
 
-<span class="fc" id="L102">        report.setValueOf(ReportCodeKey.THEORY_TIME_COMPLEXITY, getTheoreticalTime());</span>
-<span class="fc" id="L103">        report.setValueOf(ReportCodeKey.THEORY_SPACE_COMPLEXITY, getTheoreticalSpace());</span>
-<span class="fc" id="L104">        report.setValueOf(ReportCodeKey.IMPLEMENTATION_INFO, getDescription());</span>
+<span class="fc" id="L103">        report.setValueOf(ReportCodeKey.THEORY_TIME_COMPLEXITY, getTheoreticalTime());</span>
+<span class="fc" id="L104">        report.setValueOf(ReportCodeKey.THEORY_SPACE_COMPLEXITY, getTheoreticalSpace());</span>
+<span class="fc" id="L105">        report.setValueOf(ReportCodeKey.IMPLEMENTATION_INFO, getDescription());</span>
 
-<span class="fc" id="L106">        reportMeta.setAlgorithmName(name);</span>
-<span class="fc" id="L107">        reportMeta.setAlgorithmImplementationType(getShortImpl());</span>
+<span class="fc" id="L107">        reportMeta.setAlgorithmName(name);</span>
+<span class="fc" id="L108">        reportMeta.setAlgorithmImplementationType(getShortImpl());</span>
 
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L110">    }</span>
 
     /**
      * When search is completed insert the resulting path and passed parameters in searchAlgorithm to fill the rest of analyze values
-     * TODO a bit more description how process works
+     * Calculates time and space used. Calculates path weight and writes a visual representation of algorithms flow.
      *
      * @param path             all steps from point a to point b that accumulated during searchAlgorithm call
      * @param startTime        time that was given when calling searchAlgorithm
      * @param spaceLeftAtStart space left in jvm that was given when calling searchAlgorithm
      */
     protected void handleReportWriting(Map&lt;WeightedPoint, WeightedPoint&gt; path, long startTime, long spaceLeftAtStart) {
-<span class="fc" id="L120">        setTimeElapsed(startTime); //important to do instantly</span>
-<span class="fc" id="L121">        long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart; // important to do before app's memory changes</span>
-<span class="fc" id="L122">        String prettySpaceDifference = (spaceDifference / 1024) + &quot;kb &quot; + spaceDifference % 1024 + &quot;b&quot;;</span>
+<span class="fc" id="L121">        setTimeElapsed(startTime); //important to do instantly</span>
+<span class="fc" id="L122">        long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart; // important to do before app's memory changes</span>
+<span class="fc" id="L123">        String prettySpaceDifference = (spaceDifference / 1024) + &quot;kb &quot; + spaceDifference % 1024 + &quot;b&quot;;</span>
 
-<span class="fc" id="L124">        System.out.println(&quot;Search completed! Beginning to analyze search results...&quot;);</span>
-<span class="fc" id="L125">        report.setValueOf(ReportCodeKey.SPACE_USED, prettySpaceDifference);</span>
-<span class="fc" id="L126">        reportMeta.setTestSpace((double) spaceDifference);</span>
-<span class="fc" id="L127">        analyzeSearch(path);</span>
+<span class="fc" id="L125">        System.out.println(&quot;Search completed! Beginning to analyze search results...&quot;);</span>
+<span class="fc" id="L126">        report.setValueOf(ReportCodeKey.SPACE_USED, prettySpaceDifference);</span>
+<span class="fc" id="L127">        reportMeta.setTestSpace((double) spaceDifference);</span>
+<span class="fc" id="L128">        analyzeSearch(path);</span>
 
-<span class="fc" id="L129">    }</span>
+<span class="fc" id="L130">    }</span>
 
     private void analyzeSearch(Map&lt;WeightedPoint, WeightedPoint&gt; path) {
-<span class="fc" id="L132">        List&lt;Point&gt; goalPath = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L133">        Point locationAt = map.getTileTarget();</span>
+<span class="fc" id="L133">        List&lt;Point&gt; goalPath = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L134">        Point locationAt = map.getTileTarget();</span>
 
-<span class="fc bfc" id="L135" title="All 2 branches covered.">        while (locationAt != null) {</span>
-<span class="fc" id="L136">            goalPath.add(locationAt);</span>
-<span class="fc" id="L137">            locationAt = path.getOrDefault(locationAt, null);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        while (locationAt != null) {</span>
+<span class="fc" id="L137">            goalPath.add(locationAt);</span>
+<span class="fc" id="L138">            locationAt = path.getOrDefault(locationAt, null);</span>
         }
-<span class="fc" id="L139">        double totalPathWeight = 0;</span>
-<span class="fc" id="L140">        long max_steps = 0;</span>
-        // include space between tiles and lineseparator
-<span class="fc" id="L142">        int bufferAmountNeeded = map.width() * map.height() * 2 + map.height() * (System.lineSeparator().length());</span>
-<span class="fc" id="L143">        StringBuilder sb = new StringBuilder(bufferAmountNeeded);</span>
+<span class="fc" id="L140">        double totalPathWeight = 0;</span>
+<span class="fc" id="L141">        long max_steps = 0;</span>
+        // include space between tiles and line separator
+<span class="fc" id="L143">        int bufferAmountNeeded = map.width() * map.height() * 2 + map.height() * (System.lineSeparator().length());</span>
+<span class="fc" id="L144">        StringBuilder sb = new StringBuilder(bufferAmountNeeded);</span>
 
         // going through each coordinate we compare it to given path and mark how coordinates were processed
-<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (int y = 0; y &lt; map.height(); y++) {</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">            for (int x = 0; x &lt; map.width(); x++) {</span>
-<span class="fc" id="L148">                WeightedPoint coordinate = new WeightedPoint(x, y, map.getLocationWeight(x, y));</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (int y = 0; y &lt; map.height(); y++) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            for (int x = 0; x &lt; map.width(); x++) {</span>
+<span class="fc" id="L149">                WeightedPoint coordinate = new WeightedPoint(x, y, map.getLocationWeight(x, y));</span>
 
-<span class="fc bfc" id="L150" title="All 6 branches covered.">                if (map.getTileStart().x == x &amp;&amp; map.getTileStart().y == y &amp;&amp; map.getTileStart().equals(map.getTileTarget())) {</span>
-<span class="fc" id="L151">                    sb.append(NodeHandlingType.IS_START_AND_TARGET.getCharValue());</span>
-<span class="fc" id="L152">                    max_steps--;</span>
+<span class="fc bfc" id="L151" title="All 6 branches covered.">                if (map.getTileStart().x == x &amp;&amp; map.getTileStart().y == y &amp;&amp; map.getTileStart().equals(map.getTileTarget())) {</span>
+<span class="fc" id="L152">                    sb.append(NodeHandlingType.IS_START_AND_TARGET.getCharValue());</span>
+<span class="fc" id="L153">                    max_steps--;</span>
 
-<span class="fc bfc" id="L154" title="All 4 branches covered.">                } else if (map.getTileStart().x == x &amp;&amp; map.getTileStart().y == y) {</span>
-<span class="fc" id="L155">                    sb.append(NodeHandlingType.START_LOCATION.getCharValue());</span>
-<span class="fc" id="L156">                    max_steps--;</span>
+<span class="fc bfc" id="L155" title="All 4 branches covered.">                } else if (map.getTileStart().x == x &amp;&amp; map.getTileStart().y == y) {</span>
+<span class="fc" id="L156">                    sb.append(NodeHandlingType.START_LOCATION.getCharValue());</span>
+<span class="fc" id="L157">                    max_steps--;</span>
 
-<span class="fc bfc" id="L158" title="All 4 branches covered.">                } else if (map.getTileTarget().x == x &amp;&amp; map.getTileTarget().y == y) {</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">                    if (path.containsKey(coordinate)) {</span>
-<span class="fc" id="L160">                        sb.append(NodeHandlingType.TARGET_LOCATION_AND_FOUND.getCharValue());</span>
-<span class="fc" id="L161">                        totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);</span>
+<span class="fc bfc" id="L159" title="All 4 branches covered.">                } else if (map.getTileTarget().x == x &amp;&amp; map.getTileTarget().y == y) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                    if (path.containsKey(coordinate)) {</span>
+<span class="fc" id="L161">                        sb.append(NodeHandlingType.TARGET_LOCATION_AND_FOUND.getCharValue());</span>
+<span class="fc" id="L162">                        totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);</span>
                     } else {
-<span class="fc" id="L163">                        sb.append(NodeHandlingType.TARGET_LOCATION_AND_NOT_FOUND.getCharValue());</span>
+<span class="fc" id="L164">                        sb.append(NodeHandlingType.TARGET_LOCATION_AND_NOT_FOUND.getCharValue());</span>
                     }
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">                } else if (coordinate.weight == 0) {</span>
-<span class="fc" id="L167">                    sb.append(NodeHandlingType.WALL.getCharValue());</span>
-<span class="fc" id="L168">                    max_steps--;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                } else if (coordinate.weight == 0) {</span>
+<span class="fc" id="L168">                    sb.append(NodeHandlingType.WALL.getCharValue());</span>
+<span class="fc" id="L169">                    max_steps--;</span>
 
-<span class="fc bfc" id="L170" title="All 2 branches covered.">                } else if (goalPath.contains(coordinate)) {</span>
-<span class="fc" id="L171">                    sb.append(NodeHandlingType.PROCESSED_IN_PATH.getCharValue());</span>
-<span class="fc" id="L172">                    totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">                } else if (goalPath.contains(coordinate)) {</span>
+<span class="fc" id="L172">                    sb.append(NodeHandlingType.PROCESSED_IN_PATH.getCharValue());</span>
+<span class="fc" id="L173">                    totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);</span>
 
-<span class="fc bfc" id="L174" title="All 2 branches covered.">                } else if (path.containsKey(coordinate)) {</span>
-<span class="fc" id="L175">                    sb.append(NodeHandlingType.PROCESSED_NOT_IN_PATH.getCharValue());</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                } else if (path.containsKey(coordinate)) {</span>
+<span class="fc" id="L176">                    sb.append(NodeHandlingType.PROCESSED_NOT_IN_PATH.getCharValue());</span>
 
                 } else {
-<span class="fc" id="L178">                    sb.append(NodeHandlingType.NOT_PROCESSED.getCharValue());</span>
+<span class="fc" id="L179">                    sb.append(NodeHandlingType.NOT_PROCESSED.getCharValue());</span>
                 }
-<span class="fc" id="L180">                sb.append(' ');</span>
-<span class="fc" id="L181">                max_steps++;</span>
+<span class="fc" id="L181">                sb.append(' ');</span>
+<span class="fc" id="L182">                max_steps++;</span>
             }
-<span class="fc" id="L183">            sb.append(System.lineSeparator());</span>
+<span class="fc" id="L184">            sb.append(System.lineSeparator());</span>
         }
-        // take off leading whitespace, todo calculate properly
-<span class="fc" id="L186">        sb.setLength(Math.max(sb.length() - (1 + System.lineSeparator().length()), 0));</span>
-<span class="fc" id="L187">        String platformDependantResultMap = sb.toString();</span>
-<span class="fc" id="L188">        platformDependantResultMap = platformDependantResultMap.replaceAll(&quot;\\n|\\r\\n&quot;, System.lineSeparator());</span>
+
+<span class="fc" id="L187">        sb.setLength(Math.max(sb.length() - (1 + System.lineSeparator().length()), 0));</span>
+<span class="fc" id="L188">        String platformDependantResultMap = sb.toString();</span>
+<span class="fc" id="L189">        platformDependantResultMap = platformDependantResultMap.replaceAll(&quot;\\n|\\r\\n&quot;, System.lineSeparator());</span>
         //fill analysis values
 
-<span class="fc bfc" id="L191" title="All 2 branches covered.">        String pathWeight = path.get(map.getTileTarget()) == null ? &quot;Target was not found&quot; : &quot;&quot; + (int)totalPathWeight;</span>
-<span class="fc" id="L192">        report.setValueOf(ReportCodeKey.PROCESSED_MAP, platformDependantResultMap);</span>
-<span class="fc" id="L193">        report.setValueOf(ReportCodeKey.PATH_WEIGHT, &quot;&quot; + pathWeight);</span>
-<span class="fc" id="L194">        report.setValueOf(ReportCodeKey.MAX_STEPS, &quot;&quot; + max_steps);</span>
-<span class="fc" id="L195">        report.setValueOf(ReportCodeKey.STEPS_USED, &quot;&quot; + (path.size() - 1)); //start node doesn't count</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        String pathWeight = path.get(map.getTileTarget()) == null ? &quot;Target was not found&quot; : &quot;&quot; + (int) totalPathWeight;</span>
+<span class="fc" id="L193">        report.setValueOf(ReportCodeKey.PROCESSED_MAP, platformDependantResultMap);</span>
+<span class="fc" id="L194">        report.setValueOf(ReportCodeKey.PATH_WEIGHT, &quot;&quot; + pathWeight);</span>
+<span class="fc" id="L195">        report.setValueOf(ReportCodeKey.MAX_STEPS, &quot;&quot; + max_steps);</span>
+<span class="fc" id="L196">        report.setValueOf(ReportCodeKey.STEPS_USED, &quot;&quot; + (path.size() - 1)); //start node doesn't count</span>
 
-<span class="fc" id="L197">        reportMeta.setTestMaxSteps(max_steps);</span>
-<span class="fc" id="L198">        reportMeta.setTestPathWeight(totalPathWeight);</span>
-<span class="fc" id="L199">        reportMeta.setTestUsedSteps((double) path.size() - 1);</span>
-<span class="fc" id="L200">    }</span>
+<span class="fc" id="L198">        reportMeta.setTestMaxSteps(max_steps);</span>
+<span class="fc" id="L199">        reportMeta.setTestPathWeight(totalPathWeight);</span>
+<span class="fc" id="L200">        reportMeta.setTestUsedSteps((double) path.size() - 1);</span>
+<span class="fc" id="L201">    }</span>
 
 
     private void setTimeElapsed(long startTime) {
-<span class="fc" id="L204">        long elapsedTime = System.nanoTime() - startTime;</span>
-<span class="fc" id="L205">        long nanos = elapsedTime % 1000000;</span>
-<span class="fc" id="L206">        long milliseconds = (elapsedTime / 1000000) % 1000000;</span>
-<span class="fc" id="L207">        long seconds = (elapsedTime / 1000000000);</span>
-<span class="fc" id="L208">        String timeReport = &quot;&quot;;</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if (seconds &gt; 0) timeReport += seconds + &quot;sec &quot;;</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        if (milliseconds &gt; 0) timeReport += milliseconds + &quot;ms &quot;;</span>
-<span class="fc" id="L211">        timeReport += nanos + &quot;ns&quot;;</span>
-<span class="fc" id="L212">        report.setValueOf(ReportCodeKey.TIME_USED, timeReport);</span>
-<span class="fc" id="L213">        reportMeta.setTestTime((double) elapsedTime);</span>
-<span class="fc" id="L214">    }</span>
+<span class="fc" id="L205">        long elapsedTime = System.nanoTime() - startTime;</span>
+<span class="fc" id="L206">        String timeReport = NanoSecondPrettified.prettifyNanoSeconds(elapsedTime);</span>
+<span class="fc" id="L207">        report.setValueOf(ReportCodeKey.TIME_USED, timeReport);</span>
+<span class="fc" id="L208">        reportMeta.setTestTime((double) elapsedTime);</span>
+<span class="fc" id="L209">    }</span>
 
     /**
      * Used to fill {al_time} of analysis report
@@ -235,7 +230,7 @@ public abstract class AnalysableAlgorithm {
     public abstract String getDescription();
 
     /**
-     * Used to fill todo of analysis report
+     * Used to fill metaData column for description. Basically description but shorter.
      *
      * @return additional documentation of implementation as metadata for sorting reports by category of implementation
      */
@@ -245,7 +240,7 @@ public abstract class AnalysableAlgorithm {
      * @return Name of algorithm
      */
     public String getName() {
-<span class="fc" id="L248">        return name;</span>
+<span class="fc" id="L243">        return name;</span>
     }
 
     /**
@@ -256,21 +251,37 @@ public abstract class AnalysableAlgorithm {
      * @param map map to be set
      */
     public void setMapClean(WebMap map) {
-<span class="fc" id="L259">        this.map = map;</span>
-<span class="fc" id="L260">        this.reportFilePath = null;</span>
-<span class="fc" id="L261">    }</span>
+<span class="fc" id="L254">        this.map = map;</span>
+<span class="fc" id="L255">        this.reportFilePath = null;</span>
+<span class="fc" id="L256">    }</span>
 
     // for testing
+
+    /**
+     * for testing
+     *
+     * @return set map for testing
+     */
     public WebMap getMap() {
-<span class="fc" id="L265">        return map;</span>
+<span class="fc" id="L266">        return map;</span>
     }
 
+    /**
+     * for testing
+     *
+     * @return path for testing
+     */
     public String getReportFilePath() {
-<span class="fc" id="L269">        return reportFilePath;</span>
+<span class="fc" id="L275">        return reportFilePath;</span>
     }
 
+    /**
+     * for testing
+     *
+     * @param reportFilePath setter
+     */
     public void setReportFilePath(String reportFilePath) {
-<span class="fc" id="L273">        this.reportFilePath = reportFilePath;</span>
-<span class="fc" id="L274">    }</span>
+<span class="fc" id="L284">        this.reportFilePath = reportFilePath;</span>
+<span class="fc" id="L285">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

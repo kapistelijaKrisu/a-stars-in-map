@@ -10,126 +10,128 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  Creates a WebMap instance by reading a file
+ * Creates a WebMap instance by reading a file
  */
 <span class="fc" id="L15">public class MapLoader {</span>
 <span class="fc" id="L16">    private enum PROCESS_STATE {BASIC, DECODING, READING_MAP}</span>
-<span class="fc" id="L17">    private PROCESS_STATE state = PROCESS_STATE.BASIC;</span>
+
+<span class="fc" id="L18">    private PROCESS_STATE state = PROCESS_STATE.BASIC;</span>
     private int[][] mapArea;
     private int mapHeight;
     private int mapWidth;
     private int mapLine;
     private String mapName;
     private int mapStartLocationX, mapStartLocationY, mapTargetLocationX, mapTargetLocationY;
-<span class="fc" id="L24">    private Map&lt;Character, Integer&gt; decodeValues = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L25">    private Map&lt;Character, Integer&gt; decodeValues = new HashMap&lt;&gt;();</span>
 
     /**
      * Creates a WebMap instance by reading a file. It allows invalid webMaps as long as it can read it from file.
+     *
      * @param mapFile filepath to the file
      * @return loaded WebMap instance representing file contents or map. It allows invalid webMaps as long as it can read it from file.
-     * @throws IOException if fails to open or read values from file to create webMap instance
+     * @throws IOException          if fails to open or read values from file to create webMap instance
      * @throws NullPointerException if if to open or is missing values from file to create webMap instance
      */
     public WebMap loadMapFromFile(File mapFile) throws IOException, NullPointerException {
-<span class="fc" id="L34">        clean();</span>
-<span class="fc" id="L35">        var reader = new BufferedReader(new FileReader(mapFile));</span>
-<span class="fc" id="L36">        mapName = mapFile.getName().substring(0, mapFile.getName().length() - 4);</span>
+<span class="fc" id="L36">        clean();</span>
+<span class="fc" id="L37">        var reader = new BufferedReader(new FileReader(mapFile));</span>
+<span class="fc" id="L38">        mapName = mapFile.getName().substring(0, mapFile.getName().length() - 4);</span>
         while (true) {
-<span class="fc" id="L38">            String line = reader.readLine();</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">            if (line == null) break;</span>
-<span class="fc" id="L40">            process(line);</span>
-<span class="fc" id="L41">        }</span>
-<span class="fc" id="L42">        reader.close();</span>
-<span class="fc" id="L43">        return loadValues();</span>
+<span class="fc" id="L40">            String line = reader.readLine();</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (line == null) break;</span>
+<span class="fc" id="L42">            process(line);</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">        reader.close();</span>
+<span class="fc" id="L45">        return loadValues();</span>
     }
 
     private WebMap loadValues() {
-<span class="fc" id="L47">        WebMap map = new WebMap();</span>
-<span class="fc" id="L48">        map.setName(mapName);</span>
-<span class="fc" id="L49">        map.setTileStart(mapStartLocationX, mapStartLocationY);</span>
-<span class="fc" id="L50">        map.setTileTarget(mapTargetLocationX, mapTargetLocationY);</span>
-<span class="fc" id="L51">        map.setMap(mapArea);</span>
-<span class="fc" id="L52">        return map;</span>
+<span class="fc" id="L49">        WebMap map = new WebMap();</span>
+<span class="fc" id="L50">        map.setName(mapName);</span>
+<span class="fc" id="L51">        map.setTileStart(mapStartLocationX, mapStartLocationY);</span>
+<span class="fc" id="L52">        map.setTileTarget(mapTargetLocationX, mapTargetLocationY);</span>
+<span class="fc" id="L53">        map.setMap(mapArea);</span>
+<span class="fc" id="L54">        return map;</span>
     }
 
     private void process(String input) throws IOException, NullPointerException, IllegalStateException {
-<span class="fc" id="L56">        String[] tokens = input.split(&quot; &quot;);</span>
-<span class="fc bfc" id="L57" title="All 4 branches covered.">        if (tokens[0].equals(&quot;#&quot;) || tokens[0].equals(&quot;&quot;)) return;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (state == null) throw new IllegalStateException(&quot;State cannot be null&quot;);</span>
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        switch (state) {</span>
+<span class="fc" id="L58">        String[] tokens = input.split(&quot; &quot;);</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">        if (tokens[0].equals(&quot;#&quot;) || tokens[0].equals(&quot;&quot;)) return;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (state == null) throw new IllegalStateException(&quot;State cannot be null&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 4 branches missed.">        switch (state) {</span>
             case BASIC:
-<span class="fc" id="L61">                processInBasicState(tokens);</span>
-<span class="fc" id="L62">                break;</span>
+<span class="fc" id="L63">                processInBasicState(tokens);</span>
+<span class="fc" id="L64">                break;</span>
             case DECODING:
-<span class="fc" id="L64">                processInDecodingState(tokens);</span>
-<span class="fc" id="L65">                break;</span>
+<span class="fc" id="L66">                processInDecodingState(tokens);</span>
+<span class="fc" id="L67">                break;</span>
             case READING_MAP:
-<span class="fc" id="L67">                processInMapReadingState(tokens[0]);</span>
+<span class="fc" id="L69">                processInMapReadingState(tokens[0]);</span>
                 break;
         }
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L72">    }</span>
 
     private void processInBasicState(String[] tokens) throws IOException {
-<span class="pc bpc" id="L73" title="2 of 8 branches missed.">        switch (tokens[0]) {</span>
+<span class="pc bpc" id="L75" title="2 of 8 branches missed.">        switch (tokens[0]) {</span>
             case &quot;decode-begin&quot;:
-<span class="fc" id="L75">                state = PROCESS_STATE.DECODING;</span>
-<span class="fc" id="L76">                break;</span>
+<span class="fc" id="L77">                state = PROCESS_STATE.DECODING;</span>
+<span class="fc" id="L78">                break;</span>
             case &quot;decode-end&quot;:
-<span class="nc" id="L78">                state = PROCESS_STATE.BASIC;</span>
-<span class="nc" id="L79">                break;</span>
+<span class="nc" id="L80">                state = PROCESS_STATE.BASIC;</span>
+<span class="nc" id="L81">                break;</span>
             case &quot;start&quot;:
-<span class="fc" id="L81">                mapStartLocationX = Integer.parseInt(tokens[1]);</span>
-<span class="fc" id="L82">                mapStartLocationY = Integer.parseInt(tokens[2]);</span>
-<span class="fc" id="L83">                break;</span>
+<span class="fc" id="L83">                mapStartLocationX = Integer.parseInt(tokens[1]);</span>
+<span class="fc" id="L84">                mapStartLocationY = Integer.parseInt(tokens[2]);</span>
+<span class="fc" id="L85">                break;</span>
             case &quot;target&quot;:
-<span class="fc" id="L85">                mapTargetLocationX = Integer.parseInt(tokens[1]);</span>
-<span class="fc" id="L86">                mapTargetLocationY = Integer.parseInt(tokens[2]);</span>
-<span class="fc" id="L87">                break;</span>
+<span class="fc" id="L87">                mapTargetLocationX = Integer.parseInt(tokens[1]);</span>
+<span class="fc" id="L88">                mapTargetLocationY = Integer.parseInt(tokens[2]);</span>
+<span class="fc" id="L89">                break;</span>
             case &quot;width&quot;:
-<span class="fc" id="L89">                mapWidth = Integer.parseInt(tokens[1]);</span>
-<span class="fc" id="L90">                break;</span>
+<span class="fc" id="L91">                mapWidth = Integer.parseInt(tokens[1]);</span>
+<span class="fc" id="L92">                break;</span>
             case &quot;height&quot;:
-<span class="fc" id="L92">                mapHeight = Integer.parseInt(tokens[1]);</span>
-<span class="fc" id="L93">                break;</span>
+<span class="fc" id="L94">                mapHeight = Integer.parseInt(tokens[1]);</span>
+<span class="fc" id="L95">                break;</span>
             case &quot;map&quot;:
-<span class="fc" id="L95">                mapArea = new int[mapHeight][mapWidth];</span>
-<span class="fc" id="L96">                state = PROCESS_STATE.READING_MAP;</span>
-<span class="fc" id="L97">                break;</span>
+<span class="fc" id="L97">                mapArea = new int[mapHeight][mapWidth];</span>
+<span class="fc" id="L98">                state = PROCESS_STATE.READING_MAP;</span>
+<span class="fc" id="L99">                break;</span>
             default:
-<span class="nc" id="L99">                throw new IOException(&quot;invalid format&quot;);</span>
+<span class="nc" id="L101">                throw new IOException(&quot;invalid format&quot;);</span>
         }
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L103">    }</span>
 
     private void processInDecodingState(String[] tokens) {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (tokens[0].equals(&quot;decode-end&quot;)) {</span>
-<span class="fc" id="L105">            state = PROCESS_STATE.BASIC;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (tokens[0].equals(&quot;decode-end&quot;)) {</span>
+<span class="fc" id="L107">            state = PROCESS_STATE.BASIC;</span>
         } else {
-<span class="fc" id="L107">            decodeValues.put(tokens[0].charAt(0), Integer.parseInt(tokens[1]));</span>
+<span class="fc" id="L109">            decodeValues.put(tokens[0].charAt(0), Integer.parseInt(tokens[1]));</span>
         }
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L111">    }</span>
 
     private void processInMapReadingState(String tokens) {
-<span class="fc bfc" id="L112" title="All 2 branches covered.">        for (int i = 0; i &lt; tokens.length(); i++) {</span>
-<span class="fc" id="L113">            char token = tokens.charAt(i);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (token != ' ') {</span>
-<span class="fc" id="L115">                mapArea[mapLine][i] = decodeValues.get(token);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (int i = 0; i &lt; tokens.length(); i++) {</span>
+<span class="fc" id="L115">            char token = tokens.charAt(i);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (token != ' ') {</span>
+<span class="fc" id="L117">                mapArea[mapLine][i] = decodeValues.get(token);</span>
             }
         }
-<span class="fc" id="L118">        mapLine++;</span>
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L120">        mapLine++;</span>
+<span class="fc" id="L121">    }</span>
 
     private void clean() {
-<span class="fc" id="L122">        state = PROCESS_STATE.BASIC;</span>
-<span class="fc" id="L123">        decodeValues = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L124">        mapStartLocationX = -1;</span>
-<span class="fc" id="L125">        mapTargetLocationX = -1;</span>
-<span class="fc" id="L126">        mapStartLocationY = -1;</span>
-<span class="fc" id="L127">        mapTargetLocationY = -1;</span>
-<span class="fc" id="L128">        mapArea = null;</span>
-<span class="fc" id="L129">        mapHeight = 0;</span>
-<span class="fc" id="L130">        mapWidth = 0;</span>
-<span class="fc" id="L131">        mapName = null;</span>
-<span class="fc" id="L132">        mapLine = 0;</span>
-<span class="fc" id="L133">    }</span>
+<span class="fc" id="L124">        state = PROCESS_STATE.BASIC;</span>
+<span class="fc" id="L125">        decodeValues = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L126">        mapStartLocationX = -1;</span>
+<span class="fc" id="L127">        mapTargetLocationX = -1;</span>
+<span class="fc" id="L128">        mapStartLocationY = -1;</span>
+<span class="fc" id="L129">        mapTargetLocationY = -1;</span>
+<span class="fc" id="L130">        mapArea = null;</span>
+<span class="fc" id="L131">        mapHeight = 0;</span>
+<span class="fc" id="L132">        mapWidth = 0;</span>
+<span class="fc" id="L133">        mapName = null;</span>
+<span class="fc" id="L134">        mapLine = 0;</span>
+<span class="fc" id="L135">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

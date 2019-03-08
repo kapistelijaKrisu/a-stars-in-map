@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileClassification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.common</a> &gt; <span class="el_source">FileClassification.java</span></div><h1>FileClassification.java</h1><pre class="source lang-java linenums">package file_operations.common;
 
-<span class="fc" id="L3">public enum FileClassification {</span>
-<span class="fc" id="L4">    MAP(&quot;.map&quot;),</span>
-<span class="fc" id="L5">    REPORT(&quot;.report.md&quot;),</span>
-<span class="fc" id="L6">    STATISTICS(&quot;.statistics.md&quot;);</span>
+/**
+ * App uses limited amount of file endings and recognizes certain type of files by them.
+ * MAP for a .map file which represents a WebMap as a file.
+ * REPORT for .report.md ending file which represents an overview a single search algorithm run.
+ * STATISTIC for .statistics.md ending files represents an overview of all search runs done on a single map.
+ */
+<span class="fc" id="L9">public enum FileClassification {</span>
+<span class="fc" id="L10">    MAP(&quot;.map&quot;),</span>
+<span class="fc" id="L11">    REPORT(&quot;.report.md&quot;),</span>
+<span class="fc" id="L12">    STATISTICS(&quot;.statistics.md&quot;);</span>
 
     private final String fileType;
 
-<span class="fc" id="L10">    FileClassification(String fileType) {</span>
-<span class="fc" id="L11">        this.fileType = fileType;</span>
-<span class="fc" id="L12">    }</span>
+<span class="fc" id="L16">    FileClassification(String fileType) {</span>
+<span class="fc" id="L17">        this.fileType = fileType;</span>
+<span class="fc" id="L18">    }</span>
 
+    /**
+     * @return file's ending
+     */
     public String getFileType() {
-<span class="fc" id="L15">        return fileType;</span>
+<span class="fc" id="L24">        return fileType;</span>
     }
 }
 

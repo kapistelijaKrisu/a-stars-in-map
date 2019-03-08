@@ -6,37 +6,38 @@ import java.util.ArrayDeque;
 
 /**
  * Encapsulates ArrayDeque of java exposing only queue methods needed by search algorithms
+ *
  * @param &lt;T&gt; Type of element to hold
  */
 
 public class PreMadeQueue&lt;T&gt; implements Queue&lt;T&gt; {
     private ArrayDeque&lt;T&gt; queue;
 
-<span class="fc" id="L15">    public PreMadeQueue() {</span>
-<span class="fc" id="L16">        queue = new ArrayDeque&lt;&gt;();</span>
-<span class="fc" id="L17">    }</span>
+<span class="fc" id="L16">    public PreMadeQueue() {</span>
+<span class="fc" id="L17">        queue = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L18">    }</span>
 
     @Override
     public void enqueue(T element) {
-<span class="fc" id="L21">        queue.add(element);</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L22">        queue.add(element);</span>
+<span class="fc" id="L23">    }</span>
 
     /**
      * ArrayDeque.pollFirst or null if empty
+     *
      * @return polled element
      */
     @Override
     public T dequeue() {
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        return queue.isEmpty() ? null : queue.pollFirst();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        return queue.isEmpty() ? null : queue.pollFirst();</span>
     }
 
     /**
-     *
      * @return ArrayDeque.isEmpty
      */
     @Override
     public boolean isEmpty() {
-<span class="fc" id="L39">        return queue.isEmpty();</span>
+<span class="fc" id="L40">        return queue.isEmpty();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

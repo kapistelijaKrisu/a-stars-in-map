@@ -4,47 +4,71 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * In app memory representation of report of a search algorithm run.
+ * These values will be directly mapped in report file creation which is why it's important to have understandable String values.
+ */
 public class Report {
 
     private Map&lt;ReportCodeKey, String&gt; valueMap;
 
-<span class="fc" id="L11">    public Report() {</span>
-<span class="fc" id="L12">        valueMap = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L13" title="All 2 branches covered.">        for (ReportCodeKey key : ReportCodeKey.values()) {</span>
-<span class="fc" id="L14">            valueMap.put(key, null);</span>
+    /**
+     * In app memory representation of report of a search algorithm run.
+     * Upon constructor sets all ReportCodeKey keys with null as value.
+     */
+<span class="fc" id="L19">    public Report() {</span>
+<span class="fc" id="L20">        valueMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        for (ReportCodeKey key : ReportCodeKey.values()) {</span>
+<span class="fc" id="L22">            valueMap.put(key, null);</span>
         }
-<span class="fc" id="L16">    }</span>
+<span class="fc" id="L24">    }</span>
 
+    /**
+     *
+     * @return all values mapped by ReportCodeKey.getStringValue
+     */
     public Map&lt;String, String&gt; valuesToMap() {
-<span class="fc" id="L19">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
-<span class="fc" id="L21">            map.put(entry.getKey().getStringValue(), entry.getValue());</span>
-<span class="fc" id="L22">        }</span>
-<span class="fc" id="L23">        return map;</span>
+<span class="fc" id="L31">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
+<span class="fc" id="L33">            map.put(entry.getKey().getStringValue(), entry.getValue());</span>
+<span class="fc" id="L34">        }</span>
+<span class="fc" id="L35">        return map;</span>
     }
 
-
+    /**
+     *
+     * @param reportCodeKey which key's values is received
+     * @return value of the key
+     */
     public String getValueOf(ReportCodeKey reportCodeKey) {
-<span class="fc" id="L28">        return valueMap.get(reportCodeKey);</span>
+<span class="fc" id="L44">        return valueMap.get(reportCodeKey);</span>
     }
 
+    /**
+     *
+     * @param reportCodeKey which key's values is replaced
+     * @param value key's value replacement
+     */
     public void setValueOf(ReportCodeKey reportCodeKey, String value) {
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (valueMap.containsKey(reportCodeKey)) {</span>
-<span class="fc" id="L33">            valueMap.put(reportCodeKey, value);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (valueMap.containsKey(reportCodeKey)) {</span>
+<span class="fc" id="L54">            valueMap.put(reportCodeKey, value);</span>
         } else {
-<span class="fc" id="L35">            throw new IllegalArgumentException(&quot;No such value in report!&quot;);</span>
+<span class="fc" id="L56">            throw new IllegalArgumentException(&quot;No such value in report!&quot;);</span>
         }
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L58">    }</span>
 
-
+    /**
+     *
+     * @return true if all keys are non-null
+     */
     public boolean isValid() {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (entry.getValue() == null) {</span>
-<span class="fc" id="L43">                System.out.println(&quot;Missing writing key: &quot; + entry.getKey().getStringValue());</span>
-<span class="fc" id="L44">                return false;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (entry.getValue() == null) {</span>
+<span class="fc" id="L67">                System.out.println(&quot;Missing writing key: &quot; + entry.getKey().getStringValue());</span>
+<span class="fc" id="L68">                return false;</span>
             }
-<span class="fc" id="L46">        }</span>
-<span class="fc" id="L47">        return true;</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">        return true;</span>
     }
 
 

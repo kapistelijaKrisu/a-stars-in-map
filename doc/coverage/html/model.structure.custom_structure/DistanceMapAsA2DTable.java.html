@@ -17,38 +17,41 @@ public class DistanceMapAsA2DTable implements DistanceMap {
     /**
      * Creates a double type array and instantiates all their values to integer.maxvalue
      * To keep it lightweight no error checks are done.
+     *
      * @param height height of map
-     * @param width width of map
+     * @param width  width of map
      */
-<span class="fc" id="L23">    public DistanceMapAsA2DTable(int height, int width) {</span>
-<span class="fc" id="L24">        visitedStatusMap = new double[height][width];</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (int y = 0; y &lt; visitedStatusMap.length; y++) {</span>
-<span class="fc bfc" id="L26" title="All 2 branches covered.">            for (int x = 0; x &lt; visitedStatusMap[0].length; x++) {</span>
-<span class="fc" id="L27">                visitedStatusMap[y][x] = Integer.MAX_VALUE;</span>
+<span class="fc" id="L24">    public DistanceMapAsA2DTable(int height, int width) {</span>
+<span class="fc" id="L25">        visitedStatusMap = new double[height][width];</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (int y = 0; y &lt; visitedStatusMap.length; y++) {</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            for (int x = 0; x &lt; visitedStatusMap[0].length; x++) {</span>
+<span class="fc" id="L28">                visitedStatusMap[y][x] = Integer.MAX_VALUE;</span>
             }
         }
 
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L32">    }</span>
 
     /**
      * To keep it lightweight no error checks are done.
+     *
      * @param p point of interest
      * @return distance at that point
      */
     @Override
     public double getDistance(Point p) {
-<span class="fc" id="L40">        return visitedStatusMap[p.y][p.x];</span>
+<span class="fc" id="L42">        return visitedStatusMap[p.y][p.x];</span>
     }
 
     /**
      * To keep it lightweight no error checks are done.
-     * @param p point where distance is set
+     *
+     * @param p      point where distance is set
      * @param weight distance value
      */
     @Override
     public void setDistance(Point p, double weight) {
-<span class="fc" id="L50">        visitedStatusMap[p.y][p.x] = weight;</span>
+<span class="fc" id="L53">        visitedStatusMap[p.y][p.x] = weight;</span>
 
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L55">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
