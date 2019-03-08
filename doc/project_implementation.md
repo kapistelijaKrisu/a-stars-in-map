@@ -3,7 +3,11 @@
 ## Structure
 
 **Here is shown structure of app and file directories it uses with their purpose**
-Due to large amount of classes it's simplified down to package level. package name should already tell its reponsibility.
+Due to large amount of classes it's simplified down to package level. package name should already tell its reponsibility.  
+A few clarifications to be exact. All missing use cases from pic:  
+generate report file path and report and give reports and its meta to be written to file_operations (line a bit misleading)
+generate_map reads from file using file_opeartions
+
 ![app package structure](app_structure.png)
 
 ## Project Documentation 
