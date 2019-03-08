@@ -3,7 +3,7 @@
 ## Structure
 
 **Here is shown structure of app and file directories it uses with their purpose**
-Due to large amount of classes it's simplified down to package level. package name should already tell its reponsibility are.
+Due to large amount of classes it's simplified down to package level. package name should already tell its reponsibility.
 ![app package structure](app_structure.png)
 
 ## Project Documentation 
