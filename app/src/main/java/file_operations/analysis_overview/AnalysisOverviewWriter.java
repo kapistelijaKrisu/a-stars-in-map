@@ -46,7 +46,15 @@ public class AnalysisOverviewWriter {
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_PATH_WEIGHT.getStringValue(), reportMeta.getTestPathWeight() + "");
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_SPACE_USED.getStringValue(), reportMeta.getTestSpace() + "");
         analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_STEPS_USED.getStringValue(), reportMeta.getTestUsedSteps() + "");
-        analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_TIME_USED.getStringValue(), reportMeta.getTestTime() + "");
+        long elapsedTime = reportMeta.getTestTime().longValue();
+        long nanos = elapsedTime % 1000000;
+        long milliseconds = (elapsedTime / 1000000) % 1000000;
+        long seconds = (elapsedTime / 1000000000);
+        String timeReport = "";
+        if (seconds > 0) timeReport += seconds + "sec ";
+        if (milliseconds > 0) timeReport += milliseconds + "ms ";
+        timeReport += nanos + "ns";
+        analysisRow = analysisRow.replace(ReportMetaFileKey.TEST_TIME_USED.getStringValue(), timeReport + "");
         return analysisRow;
     }
 }

@@ -189,7 +189,7 @@ public class App {
 
     private Collection<AnalysableAlgorithm> filterAlgorithmsByAlgorithmCodeKey(Map<AlgorithmCodeKey, AnalysableAlgorithm> filterFrom) {
         for (Map.Entry<AlgorithmCodeKey, AnalysableAlgorithm> pair : filterFrom.entrySet()) {
-            System.out.println("press " + pair.getKey().getStringValue() + " for choosing: " + pair.getKey().getStringValue());
+            System.out.println("press " + pair.getKey().getStringValue() + " for choosing: " + pair.getValue().getShortImpl());
         }
         System.out.println("press " + OPTION_TO_RUN_ALL_SEARCHES + " for choosing All");
 

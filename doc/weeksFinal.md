@@ -15,11 +15,7 @@
 
 ### Päiväkirja skipattu sama kuin tehty
 ### TODO list priority order
-* 8 vertaa ohjelmaa määrittelydokkariin ja korjaa (odottaa vastauksia epäselvyys kohtiin)
-
-* 6 virhe käsittely yli integer max arvoille, dokkarii maininta
-* 9 viimeinen refaktoirointikierros, algo name, map valid
-
+* läppäri demokuntoon
 * bellman ford
 
 ### Mitä opin
