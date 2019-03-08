@@ -42,6 +42,7 @@ Näistä luodaan omat tulos dokumentit. Jossa on mainittu seuraavat:
 * askelten määrä
 * taulukko jota käytettiin vertaamiseen
 * tietokoneen tiedot siis käyttöjärjestelmä, tietokoneen osat.
+* Oma läppäri hajosi niin on vaikeata todentaa, että toimii linuxilla tällä hetkellä
 
 Yhteenvedossa tai toisinsanoen vertailussa vertaillaan algoritmin toteustavan kohden tuloksia. rajaus yhteen koneeseen tässä siltä osalta, ettei sitä huomioida tässä. Erikseen mainitaan halvin tilaa vasten ja nopein, ja listataan järjestyksessä kaikkien kerskiarvo tulokset. Järjestyskriteeri on ensisijaisesti polun paino ja toissijaisesti aika. (jos kohdetta ei löydy paino on 0) ja täten ylin listassa.
 
@@ -50,3 +51,9 @@ Yhteenvedossa tai toisinsanoen vertailussa vertaillaan algoritmin toteustavan ko
 ##### Lähteet
 * https://www.cs.helsinki.fi/u/saska/tira.pdf hakujen vaativuudet, pseudot algoritmeihin ja tietorakenteisiin
 * https://movingai.com/benchmarks/grids.html karttoja lainattu, pienellä modauksella  
+
+##### huomioitavaa
+* bellman-ford tippui ajan puutteen takia
+* ei suositella yrittämään hake overflow erroria. Ei ole tarkoitettu pituusennätyksien laskemiseen vaan suorituksien analysointiin joten tämä checkki jaa double konversion varaan.
+* laajeni viimeisellä viikolla yhteenvedon tekoon
+* läppärin hajotessa ei pysty varmistamaan käyttöä linuksilla
