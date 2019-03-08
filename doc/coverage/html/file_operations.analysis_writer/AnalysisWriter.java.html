@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalysisWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.analysis_writer</a> &gt; <span class="el_source">AnalysisWriter.java</span></div><h1>AnalysisWriter.java</h1><pre class="source lang-java linenums">package file_operations.analysis_writer;
+
+import file_operations.RootFolderFinder;
+import system_tools.DateConverter;
+
+import java.io.*;
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * A file writer that uses ReportTemplate.md to write an analysis at root level.
+ */
+public class AnalysisWriter {
+
+<span class="fc" id="L16">    private static final DateConverter dateConverter = new DateConverter();</span>
+<span class="fc" id="L17">    private static final ReportValidator reportValidator = new ReportValidator();</span>
+    private String root;
+
+    /**
+     * A file writer that uses ReportTemplate.md to write an analysis of search algorithm at root level.
+     */
+<span class="fc" id="L23">    public AnalysisWriter() {</span>
+<span class="fc" id="L24">        root = RootFolderFinder.getRootFolder();</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Reads ReportTemplate.md and replaces keys according to replacingValues. Then writes it to a timestamp by DateConverter .md file at given path directory.
+     *
+     * @param replacingValues Template keys to be replaced with these values
+     * @param path            in what directory structure will the report be having app level as root. Will create folders if  missing.
+     * @throws IOException              when writing doesn't succeed
+     * @throws IllegalArgumentException if path is null or replacingValues is not valid according to ReportValidator class.
+     */
+    public void writeReport(Map&lt;String, String&gt; replacingValues, String path) throws IOException, IllegalArgumentException {
+<span class="nc bnc" id="L36" title="All 4 branches missed.">        if (!AnalysisWriter.reportValidator.validateMapper((replacingValues)) || path == null)</span>
+<span class="nc" id="L37">            throw new IllegalArgumentException(AnalysisWriter.reportValidator.getValidatorCondition());</span>
+<span class="nc" id="L38">        System.out.println(&quot;Phase 1/3. Creating directories..&quot;);</span>
+<span class="nc" id="L39">        buildDirectories(path);</span>
+<span class="nc" id="L40">        String template = readRawReportTemplate();</span>
+<span class="nc" id="L41">        System.out.println(&quot;Phase 2/3. Beginning to parse template..&quot;);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; pair : replacingValues.entrySet()) {</span>
+<span class="nc" id="L43">            template = template.replace(pair.getKey(), pair.getValue());</span>
+<span class="nc" id="L44">        }</span>
+<span class="nc" id="L45">        System.out.println(&quot;Phase 3/3. Parsing done. Proceeding to write into a file..&quot;);</span>
+
+<span class="nc" id="L47">        PrintWriter writer = getAnalysisWriter(path);</span>
+<span class="nc" id="L48">        writer.write(template);</span>
+<span class="nc" id="L49">        writer.close();</span>
+<span class="nc" id="L50">        System.out.println(&quot;Successfully wrote report&quot;);</span>
+
+<span class="nc" id="L52">    }</span>
+
+    private String readRawReportTemplate() {
+<span class="nc" id="L55">        InputStream in = getClass().getResourceAsStream(&quot;/ReportTemplate.md&quot;);</span>
+<span class="nc" id="L56">        BufferedReader reader = new BufferedReader(new InputStreamReader(in));</span>
+<span class="nc" id="L57">        return reader.lines().collect(Collectors.joining(System.lineSeparator()));</span>
+    }
+
+    private PrintWriter getAnalysisWriter(String reportFilePath) throws IOException {
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (reportFilePath == null) throw new IOException(&quot;No file path given&quot;);</span>
+<span class="nc" id="L62">        var reportFileName = AnalysisWriter.dateConverter.getDateAsString(LocalDateTime.now()) + &quot;.md&quot;;</span>
+<span class="nc" id="L63">        return new PrintWriter(new BufferedWriter(new FileWriter(root + &quot;/&quot; + reportFilePath + &quot;/&quot; + reportFileName, false)));</span>
+    }
+
+    private void buildDirectories(String reportFilePath) {
+<span class="nc" id="L67">        File reportDirectory = new File(root + reportFilePath);</span>
+<span class="nc" id="L68">        reportDirectory.mkdirs();</span>
+<span class="nc" id="L69">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

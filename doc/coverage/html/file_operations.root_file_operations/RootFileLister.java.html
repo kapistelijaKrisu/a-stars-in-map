@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RootFileLister.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.root_file_operations</a> &gt; <span class="el_source">RootFileLister.java</span></div><h1>RootFileLister.java</h1><pre class="source lang-java linenums">package file_operations.root_file_operations;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Loads list of files from given folder recursively.
+ */
+<span class="fc" id="L11">public class RootFileLister {</span>
+    /**
+     * Lists all files under at the app level. To narrow down search use params.
+     * @param directory
+     * @param fileSuffix
+     * @return List of files inside directory folder that are of fileSuffix type
+     * @throws IOException if difrectory folder is not found in the same lever as program (root)
+     */
+    public List&lt;File&gt; listFiles(String directory, String fileSuffix) throws IOException {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (directory == null) directory = &quot;&quot;;</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (fileSuffix == null) fileSuffix = &quot;&quot;;</span>
+
+<span class="fc" id="L23">        File mainMapFolder = new File(RootFolderFinder.getRootFolder() + &quot;/&quot; + directory);</span>
+<span class="pc bpc" id="L24" title="2 of 4 branches missed.">        if (!mainMapFolder.exists() || !mainMapFolder.isDirectory())</span>
+<span class="nc" id="L25">            throw new IOException(&quot;Error. &quot; + directory + &quot; folder not found at root of the project!&quot;);</span>
+
+<span class="fc" id="L27">        List&lt;File&gt; locatedFiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">        recursiveFileListing(mainMapFolder, locatedFiles, fileSuffix);</span>
+<span class="fc" id="L29">        return locatedFiles;</span>
+    }
+
+    private void recursiveFileListing(File root, List&lt;File&gt; foundFiles, String fileType) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (root.isDirectory()) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for (File child : root.listFiles()) {</span>
+<span class="fc" id="L35">                recursiveFileListing(child, foundFiles, fileType);</span>
+            }
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        } else if (root.getName().endsWith(fileType)) {</span>
+<span class="fc" id="L38">            foundFiles.add(root);</span>
+        }
+<span class="fc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

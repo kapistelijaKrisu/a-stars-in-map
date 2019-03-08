@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FIFOQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure</a> &gt; <span class="el_source">FIFOQueue.java</span></div><h1>FIFOQueue.java</h1><pre class="source lang-java linenums">package model.structure;
+
+/**
+ * First-in-forst-out queue
+ * Classis queue implementation. Only head and tail is known and nodes are connected by reference.
+ * @param &lt;T&gt; Type of object to contain
+ */
+public class FIFOQueue&lt;T&gt; {
+
+    private Node&lt;T&gt; first;
+    private Node&lt;T&gt; last;
+
+    //container for held value
+    private static class Node&lt;T&gt; {
+        private final T value;
+        private Node&lt;T&gt; before;
+        private Node&lt;T&gt; after;
+
+
+<span class="fc" id="L20">        private Node(T value) {</span>
+<span class="fc" id="L21">            this.value = value;</span>
+<span class="fc" id="L22">            this.before = null;</span>
+<span class="fc" id="L23">            this.after = null;</span>
+
+<span class="fc" id="L25">        }</span>
+
+        private T getValue() {
+<span class="fc" id="L28">            return value;</span>
+        }
+
+        private void setAfter(Node&lt;T&gt; next) {
+<span class="fc" id="L32">            this.before = next;</span>
+<span class="fc" id="L33">        }</span>
+
+        private Node&lt;T&gt; getAfter() {
+<span class="fc" id="L36">            return before;</span>
+        }
+    }
+
+    /**
+     * Creates an empty queue where head and tail are null.
+     */
+<span class="fc" id="L43">    public FIFOQueue() {</span>
+<span class="fc" id="L44">        first = null;</span>
+<span class="fc" id="L45">        last = null;</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     *
+     * @param value object to enqueue to the tail of the queue
+     */
+    public void enqueue(T value) {
+<span class="fc" id="L53">        Node&lt;T&gt; oldlast = last;</span>
+<span class="fc" id="L54">        last = new Node&lt;&gt;(value);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (isEmpty()) first = last;</span>
+<span class="fc" id="L56">        else oldlast.setAfter(last);</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Deletes head (oldest) object
+     * @return deleted head (oldest object in list)
+     */
+    public T dequeue() {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (isEmpty()) return null;</span>
+<span class="fc" id="L65">        T next = first.getValue();</span>
+
+<span class="fc" id="L67">        first = first.getAfter();</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (isEmpty()) last = null;</span>
+<span class="fc" id="L70">        return next;</span>
+    }
+
+    public boolean isEmpty() {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        return first == null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

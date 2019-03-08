@@ -1,69 +1,67 @@
 package mock;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import file_operations.analysis_writer.ReportValidator;
-
-import java.io.IOException;
-import java.util.Map;
+import model.report.Report;
+import model.report.ReportCodeKey;
+import model.report.ReportMeta;
 
 
 public class MockAnalysisWriter extends AnalysisWriter {
 
     private boolean validatingReturnedTrue;
-    private Map<String, String> receivedReplacingValues;
+    private Report receivedReport;
+    private ReportMeta receivedReportMeta;
     private String receivedPath;
-    private static final ReportValidator reportValidator = new ReportValidator();
 
     @Override
-    public void writeReport(Map<String, String> replacingValues, String path) throws IOException, IllegalArgumentException {
-        this.validatingReturnedTrue = MockAnalysisWriter.reportValidator.validateMapper(replacingValues);
+    public void writeReport(Report report, ReportMeta reportMeta, String path) throws IllegalArgumentException {
         this.receivedPath = path;
-        this.receivedReplacingValues = replacingValues;
+        this.receivedReport = report;
+        this.receivedReportMeta = reportMeta;
+        this.validatingReturnedTrue = receivedReport.isValid();
     }
 
     public String receivedAlgorithm() {
-        return receivedReplacingValues.get("{algorithm}");
+        return receivedReport.getValueOf(ReportCodeKey.ALGORITHM_NAME);
     }
 
     public String receivedMapInfo() {
-        return receivedReplacingValues.get("{map_info}");
+        return receivedReport.getValueOf(ReportCodeKey.MAP_INFO);
     }
 
     public String receivedAlDoc() {
-        return receivedReplacingValues.get("{al_doc}");
+        return receivedReport.getValueOf(ReportCodeKey.IMPLEMENTATION_INFO);
     }
 
     public String receivedAlSpace() {
-        return receivedReplacingValues.get("{al_space}");
+        return receivedReport.getValueOf(ReportCodeKey.THEORY_SPACE_COMPLEXITY);
     }
 
     public String receivedAlTime() {
-        return receivedReplacingValues.get("{al_time}");
+        return receivedReport.getValueOf(ReportCodeKey.THEORY_TIME_COMPLEXITY);
     }
 
     public String receivedTestUsedSteps() {
-        return receivedReplacingValues.get("{test_used_steps}");
+        return receivedReport.getValueOf(ReportCodeKey.STEPS_USED);
     }
 
     public String receivedTestMaxSteps() {
-        return receivedReplacingValues.get("{test_max_steps}");
+        return receivedReport.getValueOf(ReportCodeKey.MAX_STEPS);
     }
 
     public String receivedTestPathWeight() {
-        return receivedReplacingValues.get("{test_path_weight}");
+        return receivedReport.getValueOf(ReportCodeKey.PATH_WEIGHT);
     }
 
     public String receivedProcessedMap() {
-        return receivedReplacingValues.get("{test_processed_map}");
+        return receivedReport.getValueOf(ReportCodeKey.PROCESSED_MAP);
     }
 
     public boolean isValidatingReturnedTrue() {
         return validatingReturnedTrue;
     }
 
-    public Map<String, String> getReceivedReplacingValues() {
-        return receivedReplacingValues;
-    }
+    public ReportMeta getReceivedReportMeta() { return receivedReportMeta; }
 
     public String getReceivedPath() {
         return receivedPath;

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalysisCollector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.analysis_overview</a> &gt; <span class="el_source">AnalysisCollector.java</span></div><h1>AnalysisCollector.java</h1><pre class="source lang-java linenums">package file_operations.analysis_overview;
+
+import file_operations.common.DocumentPath;
+import file_operations.common.FileClassification;
+import file_operations.root_file_operations.RootDirectoryLister;
+import file_operations.root_file_operations.RootFileLister;
+import model.report.ReportMeta;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class AnalysisCollector {
+
+    private RootDirectoryLister rootDirectoryLister;
+    private RootFileLister rootFileLister;
+    private AnalysisReader analysisReader;
+
+<span class="fc" id="L20">    public AnalysisCollector() {</span>
+<span class="fc" id="L21">        rootDirectoryLister = new RootDirectoryLister();</span>
+<span class="fc" id="L22">        rootFileLister = new RootFileLister();</span>
+<span class="fc" id="L23">        analysisReader = new AnalysisReader();</span>
+<span class="fc" id="L24">    }</span>
+
+    public Map&lt;File, Set&lt;ReportMeta&gt;&gt; collectFlattenedReports() {
+<span class="fc" id="L27">        List&lt;File&gt; mapReportFolders = Arrays.stream(rootDirectoryLister.listFiles(DocumentPath.REPORTS.getFilePath()))</span>
+<span class="fc" id="L28">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L30">        Map&lt;File, Set&lt;ReportMeta&gt;&gt; flattenedReportsPerMap = new TreeMap&lt;&gt;();</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (File mapDirectory : mapReportFolders) {</span>
+            //make average of all algorithm implementation types
+            try {
+<span class="fc" id="L34">                List&lt;File&gt; allAnalysisReports = rootFileLister.listFiles(</span>
+<span class="fc" id="L35">                        DocumentPath.REPORTS.getFilePath() + mapDirectory.getName(), FileClassification.REPORT.getFileType());</span>
+<span class="fc" id="L36">                Map&lt;String, List&lt;ReportMeta&gt;&gt; categorizedReports = divideByNameAndImplementationType(allAnalysisReports);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                if (!categorizedReports.isEmpty())</span>
+<span class="fc" id="L38">                    flattenedReportsPerMap.put(mapDirectory, flattenReports(categorizedReports));</span>
+<span class="nc" id="L39">            } catch (IOException e) {</span>
+<span class="nc" id="L40">                System.out.println(&quot;Failed to load reports of map folder: &quot; + mapDirectory.getName());</span>
+<span class="fc" id="L41">            }</span>
+<span class="fc" id="L42">        }</span>
+<span class="fc" id="L43">        return flattenedReportsPerMap;</span>
+    }
+
+    private Set&lt;ReportMeta&gt; flattenReports(Map&lt;String, List&lt;ReportMeta&gt;&gt; reportsByImplementationType) {
+<span class="fc" id="L47">        Comparator&lt;ReportMeta&gt; comp = Comparator.comparing((ReportMeta o) -&gt; (o.getAlgorithmName() + o.getAlgorithmImplementationType()));</span>
+<span class="fc" id="L48">        Set&lt;ReportMeta&gt; writeReports = new TreeSet&lt;&gt;(comp);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (List&lt;ReportMeta&gt; writeReportByImpl : reportsByImplementationType.values()) {</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">            if (writeReportByImpl.isEmpty()) continue;</span>
+<span class="fc" id="L51">            ReportMeta avg = new ReportMeta();</span>
+
+<span class="fc" id="L53">            avg.setTestUsedSteps(writeReportByImpl.stream().mapToDouble(ReportMeta::getTestUsedSteps).average().orElseThrow());</span>
+<span class="fc" id="L54">            avg.setTestPathWeight(writeReportByImpl.stream().mapToDouble(ReportMeta::getTestPathWeight).average().orElseThrow());</span>
+<span class="fc" id="L55">            avg.setTestSpace(writeReportByImpl.stream().mapToDouble(ReportMeta::getTestSpace).average().orElseThrow());</span>
+<span class="fc" id="L56">            avg.setTestTime(writeReportByImpl.stream().mapToDouble(ReportMeta::getTestTime).average().orElseThrow());</span>
+<span class="fc" id="L57">            avg.setAlgorithmName(writeReportByImpl.get(0).getAlgorithmName());</span>
+<span class="fc" id="L58">            avg.setAlgorithmImplementationType(writeReportByImpl.get(0).getAlgorithmImplementationType());</span>
+<span class="fc" id="L59">            avg.setTestMaxSteps(writeReportByImpl.get(0).getTestMaxSteps());</span>
+
+<span class="fc" id="L61">            writeReports.add(avg);</span>
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">        return writeReports;</span>
+    }
+
+    private Map&lt;String, List&lt;ReportMeta&gt;&gt; divideByNameAndImplementationType(List&lt;File&gt; analysisReports) {
+<span class="fc" id="L67">        Map&lt;String, List&lt;ReportMeta&gt;&gt; reportsByAlgorithmType = new TreeMap&lt;&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (File analysis : analysisReports) {</span>
+            try {
+<span class="fc" id="L70">                ReportMeta writeReport = analysisReader.loadAnalysisFromFile(analysis);</span>
+<span class="fc" id="L71">                var implementationType = writeReport.getAlgorithmName() + writeReport.getAlgorithmImplementationType();</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                if (reportsByAlgorithmType.get(implementationType) == null) {</span>
+<span class="fc" id="L74">                    ArrayList&lt;ReportMeta&gt; writeReportList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L75">                    reportsByAlgorithmType.put(implementationType, writeReportList);</span>
+                }
+<span class="fc" id="L77">                reportsByAlgorithmType.get(implementationType).add(writeReport);</span>
+<span class="nc" id="L78">            } catch (IOException e) {</span>
+<span class="nc" id="L79">                System.out.println(e.getMessage());</span>
+<span class="fc" id="L80">            }</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">        return reportsByAlgorithmType;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,8 +1,11 @@
 package search_algorithm;
 
-import mock.SystemLine;
 import mock.MockAnalysisWriter;
+import mock.SystemLine;
 import mock.WebMapMock;
+import model.report.ReportMeta;
+import model.structure.structure_type_enum.QueueType;
+import model.structure.structure_type_enum.UniqueSetType;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -10,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import search_algorithm.structure_type.QueueType;
-import search_algorithm.structure_type.UniqueSetType;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -82,7 +83,7 @@ public class BreathSearchTest {
         breathSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Breath first", mockWriter.getReceivedPath());
-        assertEquals("Breath first with " + breathSearch.getUniqueSetType() + " to keep track of visited edges and " + breathSearch.getQueueType() + " as an implementation of queue.", mockWriter.receivedAlDoc());
+        assertEquals("Breath first with " + breathSearch.getUniqueSetType().getTextValue() + " as visited nodes tracker and " + breathSearch.getQueueType().getTextValue() + " as queue.", mockWriter.receivedAlDoc());
         assertEquals("Breath first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
@@ -102,7 +103,7 @@ public class BreathSearchTest {
         breathSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Breath first", mockWriter.getReceivedPath());
-        assertEquals("Breath first with " + breathSearch.getUniqueSetType() + " to keep track of visited edges and " + breathSearch.getQueueType() + " as an implementation of queue.", mockWriter.receivedAlDoc());
+        assertEquals("Breath first with " + breathSearch.getUniqueSetType().getTextValue() + " as visited nodes tracker and " + breathSearch.getQueueType().getTextValue() + " as queue.", mockWriter.receivedAlDoc());
         assertEquals("Breath first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
@@ -119,5 +120,43 @@ public class BreathSearchTest {
                         "! ! ! @ ! . . \r\n" +
                         "! ! ! ! ! ! .");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
+    }
+    @ParameterizedTest
+    @ArgumentsSource(BreathSearchArgumentsProvider.class)
+    public void metaValuesSetCorrectlyWhereStartIsTargetTest(BreathSearch breathSearch) throws IOException {
+        WebMap map = WebMapMock.getMinimumValidMap();
+        map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
+        breathSearch.setMapClean(map);
+        breathSearch.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Breath first", producedMeta.getAlgorithmName());
+        assertEquals("Queue: " + breathSearch.getQueueType().getTextValue() + ", Visited tracker: " + breathSearch.getUniqueSetType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(0, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(1, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(0, producedMeta.getTestUsedSteps().doubleValue());
+
+
+
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(BreathSearchArgumentsProvider.class)
+    public void metaSetCorrectlyWhereStartIsNotTargetTest(BreathSearch breathSearch) throws IOException {
+        breathSearch.setMapClean(WebMapMock.getValid6x7Map());
+        breathSearch.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Breath first", producedMeta.getAlgorithmName());
+        assertEquals("Queue: " + breathSearch.getQueueType().getTextValue() + ", Visited tracker: " + breathSearch.getUniqueSetType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(16, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(34, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(27, producedMeta.getTestUsedSteps().doubleValue());
     }
 }

@@ -1,6 +1,6 @@
 package model.structure.pre_made_structure;
 
-import model.structure.Stack;
+import model.structure.structure_interface.Stack;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

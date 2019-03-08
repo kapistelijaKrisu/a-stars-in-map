@@ -1,35 +1,49 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
+import file_operations.common.DocumentPath;
+import model.report.Report;
+import model.report.ReportCodeKey;
+import model.report.ReportMeta;
 import model.web.WebMap;
 import model.web.WeightedPoint;
+import system_tools.LegalFileName;
 import system_tools.SystemSpecReader;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
 
 /**
  * Base class for an algorithm that does all the ground work for preparing and writing analysis file.
  */
 public abstract class AnalysableAlgorithm {
     protected WebMap map;
-    private Map<String, String> templateValueMap;
+    private Report report;
+    private ReportMeta reportMeta;
     private String reportFilePath;
     private final AnalysisWriter analysisWriter;
-    private final SystemSpecReader systemSpecReader; //singleton?
+    private final SystemSpecReader systemSpecReader;
+    private final String name;
 
     /**
      * sets given analysis writer instantiates itself
      *
      * @param analysisWriter writer to write analyses on a file
+     * @param name           name of the algorithm
      */
-    public AnalysableAlgorithm(AnalysisWriter analysisWriter) {
-        this.analysisWriter = analysisWriter;
+    public AnalysableAlgorithm(AnalysisWriter analysisWriter, String name) {
         if (analysisWriter == null) throw new IllegalArgumentException("analysis writer cannot be null");
-        templateValueMap = new TreeMap<>();
+        if (!LegalFileName.isValidFileName(name))
+            throw new IllegalArgumentException("name needs to be a valid filename");
+        this.analysisWriter = analysisWriter;
+        report = new Report();
+        reportMeta = new ReportMeta();
         systemSpecReader = new SystemSpecReader();
+        this.name = name;
     }
 
     /**
@@ -44,7 +58,6 @@ public abstract class AnalysableAlgorithm {
 
     /**
      * Runs implemented algorithm and writes report based on it
-     * todo announce completion details...where results written etc
      *
      * @throws IllegalStateException when algorithm or map does not have name
      * @throws IOException           failing to write on designated report file
@@ -53,49 +66,64 @@ public abstract class AnalysableAlgorithm {
         if (reportFilePath == null) {
             if (map == null || !map.isValid())
                 throw new IllegalStateException("Requires valid map, and name for algorithm");
-            reportFilePath = "/doc/reports/" + map.getName() + "/" + toString();
+            reportFilePath = DocumentPath.REPORTS.getFilePath() + map.getName() + "/" + name;
         }
-        templateValueMap = new HashMap<>();
+        report = new Report();
         Map<WeightedPoint, WeightedPoint> path = new HashMap<>();
-        System.out.println("Starting search...");
+        System.out.println("Starting search of " + name + " - " + getShortImpl() + "...");
         searchAlgorithm(System.nanoTime(), systemSpecReader.getAvailableHeapSize(), path);
-        fillDefaultTemplateValues(templateValueMap);
+        fillDefaultTemplateValues(report);
         System.out.println("Analyze completed! Beginning to write report...");
-        analysisWriter.writeReport(templateValueMap, reportFilePath);
+        analysisWriter.writeReport(report, reportMeta, reportFilePath);
+        System.out.println("Finished!");
+        printConclusion(report);
 
     }
 
-    private void fillDefaultTemplateValues(Map<String, String> templateFillingMap) {
-        templateFillingMap.put("{algorithm}", toString());
-        templateFillingMap.put("{env_cpu}", systemSpecReader.getCpu());
-        templateFillingMap.put("{env_os}", systemSpecReader.getOperatingSystem());
-        templateFillingMap.put("{env_compiler}", systemSpecReader.getCompiler());
-        templateFillingMap.put("{env_runtime}", systemSpecReader.getRuntime());
-        templateFillingMap.put("{env_vm_name}", systemSpecReader.getVirtualMachineName());
-        templateFillingMap.put("{env_vm_version}", systemSpecReader.getVirtualMachineVersion());
-        templateFillingMap.put("{env_heap}", systemSpecReader.getAvailableHeapSizeReadable());
-        templateFillingMap.put("{map_info}", map.getTextualView());
+    private void printConclusion(Report report) {
+        System.out.println("Space used: " + report.getValueOf(ReportCodeKey.SPACE_USED));
+        System.out.println("Steps taken: " + report.getValueOf(ReportCodeKey.STEPS_USED) + "/" + report.getValueOf(ReportCodeKey.MAX_STEPS));
+        System.out.println("Time: " + report.getValueOf(ReportCodeKey.TIME_USED));
+        System.out.println("Path weight: " + report.getValueOf(ReportCodeKey.PATH_WEIGHT));
+        System.out.println();
+    }
 
-        templateFillingMap.put("{al_time}", getTheoreticalTime());
-        templateFillingMap.put("{al_space}", getTheoreticalSpace());
-        templateFillingMap.put("{al_doc}", getDescription());
+    private void fillDefaultTemplateValues(Report report) {
+        report.setValueOf(ReportCodeKey.ALGORITHM_NAME, name);
+        report.setValueOf(ReportCodeKey.CPU, systemSpecReader.getCpu());
+        report.setValueOf(ReportCodeKey.OS, systemSpecReader.getOperatingSystem());
+        report.setValueOf(ReportCodeKey.COMPILER, systemSpecReader.getCompiler());
+        report.setValueOf(ReportCodeKey.RUNTIME, systemSpecReader.getRuntime());
+        report.setValueOf(ReportCodeKey.VM_NAME, systemSpecReader.getVirtualMachineName());
+        report.setValueOf(ReportCodeKey.VM_VERSION, systemSpecReader.getVirtualMachineVersion());
+        report.setValueOf(ReportCodeKey.ENV_HEAP, systemSpecReader.getAvailableHeapSizeReadable());
+        report.setValueOf(ReportCodeKey.MAP_INFO, map.getTextualView());
+
+        report.setValueOf(ReportCodeKey.THEORY_TIME_COMPLEXITY, getTheoreticalTime());
+        report.setValueOf(ReportCodeKey.THEORY_SPACE_COMPLEXITY, getTheoreticalSpace());
+        report.setValueOf(ReportCodeKey.IMPLEMENTATION_INFO, getDescription());
+
+        reportMeta.setAlgorithmName(name);
+        reportMeta.setAlgorithmImplementationType(getShortImpl());
 
     }
 
     /**
      * When search is completed insert the resulting path and passed parameters in searchAlgorithm to fill the rest of analyze values
-     * TODO a bit more description how process works
+     * Calculates time and space used. Calculates path weight and writes a visual representation of algorithms flow.
      *
-     * @param path all steps from point a to point b that accumulated during searchAlgorithm call
-     * @param startTime time that was given when calling searchAlgorithm
+     * @param path             all steps from point a to point b that accumulated during searchAlgorithm call
+     * @param startTime        time that was given when calling searchAlgorithm
      * @param spaceLeftAtStart space left in jvm that was given when calling searchAlgorithm
      */
     protected void handleReportWriting(Map<WeightedPoint, WeightedPoint> path, long startTime, long spaceLeftAtStart) {
         setTimeElapsed(startTime); //important to do instantly
         long spaceDifference = systemSpecReader.getAvailableHeapSize() - spaceLeftAtStart; // important to do before app's memory changes
+        String prettySpaceDifference = (spaceDifference / 1024) + "kb " + spaceDifference % 1024 + "b";
+
         System.out.println("Search completed! Beginning to analyze search results...");
-        templateValueMap.put("{test_space}", "" + spaceDifference);
-        templateValueMap.put("{test_used_steps}", "" + (path.size() - 1));
+        report.setValueOf(ReportCodeKey.SPACE_USED, prettySpaceDifference);
+        reportMeta.setTestSpace((double) spaceDifference);
         analyzeSearch(path);
 
     }
@@ -108,9 +136,11 @@ public abstract class AnalysableAlgorithm {
             goalPath.add(locationAt);
             locationAt = path.getOrDefault(locationAt, null);
         }
-        int totalPathWeight = 0;
-        int max_steps = 0;
-        StringBuilder sb = new StringBuilder((map.width() * map.height() * 2) + (map.height() * 2));
+        double totalPathWeight = 0;
+        long max_steps = 0;
+        // include space between tiles and line separator
+        int bufferAmountNeeded = map.width() * map.height() * 2 + map.height() * (System.lineSeparator().length());
+        StringBuilder sb = new StringBuilder(bufferAmountNeeded);
 
         // going through each coordinate we compare it to given path and mark how coordinates were processed
         for (int y = 0; y < map.height(); y++) {
@@ -126,7 +156,7 @@ public abstract class AnalysableAlgorithm {
                     max_steps--;
 
                 } else if (map.getTileTarget().x == x && map.getTileTarget().y == y) {
-                    if (path.containsKey(coordinate)) {//replan
+                    if (path.containsKey(coordinate)) {
                         sb.append(NodeHandlingType.TARGET_LOCATION_AND_FOUND.getCharValue());
                         totalPathWeight += map.getLocationWeight(coordinate.x, coordinate.y);
                     } else {
@@ -152,29 +182,35 @@ public abstract class AnalysableAlgorithm {
             }
             sb.append(System.lineSeparator());
         }
-        // take off leading whitespace
+
         sb.setLength(Math.max(sb.length() - (1 + System.lineSeparator().length()), 0));
         String platformDependantResultMap = sb.toString();
         platformDependantResultMap = platformDependantResultMap.replaceAll("\\n|\\r\\n", System.lineSeparator());
         //fill analysis values
 
-        String pathWeight = path.get(map.getTileTarget()) == null ? "Target was not found" : "" + totalPathWeight;
-        templateValueMap.put("{test_processed_map}", platformDependantResultMap);
-        templateValueMap.put("{test_path_weight}", "" + pathWeight);
-        templateValueMap.put("{test_max_steps}", "" + max_steps);
+        String pathWeight = path.get(map.getTileTarget()) == null ? "Target was not found" : "" + (int) totalPathWeight;
+        report.setValueOf(ReportCodeKey.PROCESSED_MAP, platformDependantResultMap);
+        report.setValueOf(ReportCodeKey.PATH_WEIGHT, "" + pathWeight);
+        report.setValueOf(ReportCodeKey.MAX_STEPS, "" + max_steps);
+        report.setValueOf(ReportCodeKey.STEPS_USED, "" + (path.size() - 1)); //start node doesn't count
+
+        reportMeta.setTestMaxSteps(max_steps);
+        reportMeta.setTestPathWeight(totalPathWeight);
+        reportMeta.setTestUsedSteps((double) path.size() - 1);
     }
 
 
     private void setTimeElapsed(long startTime) {
         long elapsedTime = System.nanoTime() - startTime;
-        long nanos = elapsedTime % 1000;
-        long milliseconds = (elapsedTime / 1000) % 1000;
-        long seconds = (milliseconds / 1000) % 60;
+        long nanos = elapsedTime % 1000000;
+        long milliseconds = (elapsedTime / 1000000) % 1000000;
+        long seconds = (elapsedTime / 1000000000);
         String timeReport = "";
-        if (seconds > 0) timeReport += " seconds " + seconds;
-        if (milliseconds > 0) timeReport += " millis " + milliseconds + " ";
-        timeReport += "nanos " + nanos;
-        templateValueMap.put("{test_time}", timeReport);
+        if (seconds > 0) timeReport += seconds + "sec ";
+        if (milliseconds > 0) timeReport += milliseconds + "ms ";
+        timeReport += nanos + "ns";
+        report.setValueOf(ReportCodeKey.TIME_USED, timeReport);
+        reportMeta.setTestTime((double) elapsedTime);
     }
 
     /**
@@ -194,9 +230,23 @@ public abstract class AnalysableAlgorithm {
     /**
      * Used to fill {al_doc} of analysis report
      *
-     * @return additional documentation of implementation
+     * @return additional documentation of implementation visible in report
      */
     public abstract String getDescription();
+
+    /**
+     * Used to fill metaData column for description. Basically description but shorter.
+     *
+     * @return additional documentation of implementation as metadata for sorting reports by category of implementation
+     */
+    public abstract String getShortImpl();
+
+    /**
+     * @return Name of algorithm
+     */
+    public String getName() {
+        return name;
+    }
 
     /**
      * Directory is based on map name as well and gets cleaned when a map is set
@@ -211,14 +261,30 @@ public abstract class AnalysableAlgorithm {
     }
 
     // for testing
+
+    /**
+     * for testing
+     *
+     * @return set map for testing
+     */
     public WebMap getMap() {
         return map;
     }
 
+    /**
+     * for testing
+     *
+     * @return path for testing
+     */
     public String getReportFilePath() {
         return reportFilePath;
     }
 
+    /**
+     * for testing
+     *
+     * @param reportFilePath setter
+     */
     public void setReportFilePath(String reportFilePath) {
         this.reportFilePath = reportFilePath;
     }

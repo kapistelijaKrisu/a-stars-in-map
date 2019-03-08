@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FIFOQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure.custom_structure</a> &gt; <span class="el_source">FIFOQueue.java</span></div><h1>FIFOQueue.java</h1><pre class="source lang-java linenums">package model.structure.custom_structure;
+
+import model.structure.structure_interface.Queue;
+
+/**
+ * First-in-first-out queue
+ * Classic queue implementation. Only head and tail is known and nodes are connected by reference.
+ *
+ * @param &lt;T&gt; Type of object to contain
+ */
+<span class="fc" id="L11">public class FIFOQueue&lt;T&gt; implements Queue&lt;T&gt; {</span>
+
+    private Node&lt;T&gt; head;
+    private Node&lt;T&gt; tail;
+
+    //container for held value
+    private static class Node&lt;T&gt; {
+        private final T value;
+        private Node&lt;T&gt; before;
+        private Node&lt;T&gt; after;
+
+
+<span class="fc" id="L23">        private Node(T value) {</span>
+<span class="fc" id="L24">            this.value = value;</span>
+<span class="fc" id="L25">            this.before = null;</span>
+<span class="fc" id="L26">            this.after = null;</span>
+
+<span class="fc" id="L28">        }</span>
+
+        private T getValue() {
+<span class="fc" id="L31">            return value;</span>
+        }
+
+        private void setAfter(Node&lt;T&gt; next) {
+<span class="fc" id="L35">            this.after = next;</span>
+<span class="fc" id="L36">        }</span>
+
+        private Node&lt;T&gt; getAfter() {
+<span class="fc" id="L39">            return after;</span>
+        }
+    }
+
+    /**
+     * @param value object to enqueue to the tail of the queue
+     */
+    @Override
+    public void enqueue(T value) {
+<span class="fc" id="L48">        Node&lt;T&gt; oldLast = tail;</span>
+<span class="fc" id="L49">        tail = new Node&lt;&gt;(value);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (isEmpty()) head = tail;</span>
+<span class="fc" id="L51">        else oldLast.setAfter(tail);</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Deletes head (oldest) object
+     *
+     * @return deleted head (oldest object in list)
+     */
+    @Override
+    public T dequeue() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (isEmpty()) return null;</span>
+<span class="fc" id="L62">        T next = head.getValue();</span>
+
+<span class="fc" id="L64">        head = head.getAfter();</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (isEmpty()) tail = null;</span>
+<span class="fc" id="L67">        return next;</span>
+    }
+
+    @Override
+    public boolean isEmpty() {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        return head == null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

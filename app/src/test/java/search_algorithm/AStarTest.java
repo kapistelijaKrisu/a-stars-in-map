@@ -1,8 +1,11 @@
 package search_algorithm;
 
-import mock.SystemLine;
 import mock.MockAnalysisWriter;
+import mock.SystemLine;
 import mock.WebMapMock;
+import model.report.ReportMeta;
+import model.structure.structure_type_enum.DistanceMapType;
+import model.structure.structure_type_enum.HeapType;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -10,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import search_algorithm.structure_type.DistanceMapType;
-import search_algorithm.structure_type.HeapType;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -66,21 +67,16 @@ public class AStarTest {
         assertEquals("Requires valid map, and name for algorithm", exception.getMessage());
     }
 
-    /**
-     * tests all but hardware and jvm dependant values
-     *
-     * @throws IOException shouldn't happen because writer is mocked
-     */
     @ParameterizedTest
     @ArgumentsSource(AStarArgumentsProvider.class)
-    public void valuesSetCorectlyWhereStartIsTargetTest(AStar aStar) throws IOException {
+    public void reportValuesSetCorrectlyWhereStartIsTargetTest(AStar aStar) throws IOException {
         WebMap map = WebMapMock.getMinimumValidMap();
         map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
         aStar.setMapClean(map);
         aStar.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/A Star", mockWriter.getReceivedPath());
-        assertEquals("A Star with " + aStar.getDistanceMapType() + " to keep track of known distances and " + aStar.getHeapType() + " as an implementation of min heap.", mockWriter.receivedAlDoc());
+        assertEquals("A Star with " + aStar.getDistanceMapType().getTextValue() + " as distance tracker and " + aStar.getHeapType().getTextValue() + " as min heap.", mockWriter.receivedAlDoc());
         assertEquals("A Star", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
@@ -95,12 +91,12 @@ public class AStarTest {
 
     @ParameterizedTest
     @ArgumentsSource(AStarArgumentsProvider.class)
-    public void valuesSetCorectlyWhereStartIsNotTargetTest(AStar aStar) throws IOException {
+    public void reportSetCorrectlyWhereStartIsNotTargetTest(AStar aStar) throws IOException {
         aStar.setMapClean(WebMapMock.getValid6x7Map());
         aStar.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/A Star", mockWriter.getReceivedPath());
-        assertEquals("A Star with " + aStar.getDistanceMapType() + " to keep track of known distances and " + aStar.getHeapType() + " as an implementation of min heap.", mockWriter.receivedAlDoc());
+        assertEquals("A Star with " + aStar.getDistanceMapType().getTextValue() + " as distance tracker and " + aStar.getHeapType().getTextValue() + " as min heap.", mockWriter.receivedAlDoc());
         assertEquals("A Star", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
@@ -117,6 +113,45 @@ public class AStarTest {
                         ". . . @ . . . \r\n" +
                         ". . . . . . .");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(AStarArgumentsProvider.class)
+    public void metaValuesSetCorrectlyWhereStartIsTargetTest(AStar aStar) throws IOException {
+        WebMap map = WebMapMock.getMinimumValidMap();
+        map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
+        aStar.setMapClean(map);
+        aStar.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("A Star", producedMeta.getAlgorithmName());
+        assertEquals("Distances: " + aStar.getDistanceMapType().getTextValue() + ", Min heap: " + aStar.getHeapType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(0, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(1, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(0, producedMeta.getTestUsedSteps().doubleValue());
+
+
+
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(AStarArgumentsProvider.class)
+    public void metaSetCorrectlyWhereStartIsNotTargetTest(AStar aStar) throws IOException {
+        aStar.setMapClean(WebMapMock.getValid6x7Map());
+        aStar.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("A Star", producedMeta.getAlgorithmName());
+        assertEquals("Distances: " + aStar.getDistanceMapType().getTextValue() + ", Min heap: " + aStar.getHeapType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(16, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(34, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(13, producedMeta.getTestUsedSteps().doubleValue());
     }
 }
 

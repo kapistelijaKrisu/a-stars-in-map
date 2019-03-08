@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Report.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.report</a> &gt; <span class="el_source">Report.java</span></div><h1>Report.java</h1><pre class="source lang-java linenums">package model.report;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Report {
+
+    private Map&lt;ReportCodeKey, String&gt; valueMap;
+
+<span class="fc" id="L11">    public Report() {</span>
+<span class="fc" id="L12">        valueMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        for (ReportCodeKey key : ReportCodeKey.values()) {</span>
+<span class="fc" id="L14">            valueMap.put(key, null);</span>
+        }
+<span class="fc" id="L16">    }</span>
+
+    public Map&lt;String, String&gt; valuesToMap() {
+<span class="fc" id="L19">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
+<span class="fc" id="L21">            map.put(entry.getKey().getStringValue(), entry.getValue());</span>
+<span class="fc" id="L22">        }</span>
+<span class="fc" id="L23">        return map;</span>
+    }
+
+
+    public String getValueOf(ReportCodeKey reportCodeKey) {
+<span class="fc" id="L28">        return valueMap.get(reportCodeKey);</span>
+    }
+
+    public void setValueOf(ReportCodeKey reportCodeKey, String value) {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (valueMap.containsKey(reportCodeKey)) {</span>
+<span class="fc" id="L33">            valueMap.put(reportCodeKey, value);</span>
+        } else {
+<span class="fc" id="L35">            throw new IllegalArgumentException(&quot;No such value in report!&quot;);</span>
+        }
+<span class="fc" id="L37">    }</span>
+
+
+    public boolean isValid() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Map.Entry&lt;ReportCodeKey, String&gt; entry : valueMap.entrySet()) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (entry.getValue() == null) {</span>
+<span class="fc" id="L43">                System.out.println(&quot;Missing writing key: &quot; + entry.getKey().getStringValue());</span>
+<span class="fc" id="L44">                return false;</span>
+            }
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">        return true;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

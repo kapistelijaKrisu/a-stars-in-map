@@ -1,8 +1,8 @@
 package map_generator;
 
-import file_operations.RootFolderFinder;
 import file_operations.map_reader.MapLoader;
-import file_operations.map_reader.MapLocator;
+import file_operations.root_file_operations.RootFileLister;
+import file_operations.root_file_operations.RootFolderFinder;
 import model.web.WebMap;
 
 import java.io.File;
@@ -12,22 +12,22 @@ import java.util.Scanner;
 
 /**
  * Generates an in app memory of a WebMap that is read from map directory.
- * User is asked which map from the directory is loaded. Uses MapLocator to find maploaderdirectory.
+ * User is asked which map from the directory is loaded. Uses RootFileLister to find map files under /maps directory.
  */
 public class MapGeneratorFromFiles implements MapGenerator {
     private Scanner scanner;
     private static final String USER_WANTS_TO_EXIT = "q";
-    private MapLocator mapLocator;
     private MapLoader mapLoader;
+    private RootFileLister mapLocator;
 
     public MapGeneratorFromFiles(Scanner scanner) {
         this.scanner = scanner;
-        mapLocator = new MapLocator();
+        mapLocator = new RootFileLister();
         mapLoader = new MapLoader();
     }
 
     /**
-     * if mapl folder exists and has files then asks user which map to load
+     * if map folder exists and has files then asks user which map to load
      *
      * @return WebMap from file, if file has mistakes or map is not valid returns null. If map folder at app level directory is empty returns null. refer to app_definition.md for a valid map file.
      */
@@ -60,7 +60,7 @@ public class MapGeneratorFromFiles implements MapGenerator {
     }
 
     private List<File> listMaps() throws IOException {
-        List<File> foundMaps = mapLocator.findMaps();
+        List<File> foundMaps = mapLocator.listFiles("/maps", ".map");
         if (foundMaps.size() == 0) {
             throw new IOException("No maps found in" + RootFolderFinder.getRootFolder() + "maps/. Or folder does not exist!");
         } else {
@@ -68,13 +68,20 @@ public class MapGeneratorFromFiles implements MapGenerator {
         }
     }
 
+    /**
+     *
+     * @return description of this generator
+     */
     @Override
     public String toString() {
         return "map loader from ../maps directory";
     }
 
-    //for testing
-    public void setMapLocator(MapLocator mapLocator) {
+    /**
+     * testing setter
+     * @param mapLocator testing setter
+     */
+    public void setMapLocator(RootFileLister mapLocator) {
         this.mapLocator = mapLocator;
     }
 }

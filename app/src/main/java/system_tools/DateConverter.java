@@ -8,21 +8,14 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateConverter {
 
-    private final DateTimeFormatter dateTimeFormatter;
-
-    /**
-     * creates internal formatter of pattern dd-MM-yyyy HH-mm-ss
-     */
-    public DateConverter() {
-        dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-    }
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy-HH.mm.ss.SSS");
 
     /**
      * @param localDateTime object to be formatted
      * @return String representation of @param
      * @throws NullPointerException if param is null
      */
-    public String getDateAsString(LocalDateTime localDateTime) throws IllegalArgumentException {
+    public static String getDateAsString(LocalDateTime localDateTime) throws IllegalArgumentException {
         if (localDateTime == null) throw new IllegalArgumentException("Given null as LocalDateTime");
         return dateTimeFormatter.format(localDateTime);
     }

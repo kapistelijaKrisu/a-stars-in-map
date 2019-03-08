@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomHashSetDynamicSize.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure.custom_structure</a> &gt; <span class="el_source">CustomHashSetDynamicSize.java</span></div><h1>CustomHashSetDynamicSize.java</h1><pre class="source lang-java linenums">package model.structure.custom_structure;
+
+import model.structure.structure_interface.UniqueSet;
+
+/**
+ * Set implementation. Only methods needed by search algorithms are implemented.
+ * Classic set implementation. Holds an array of lists that holds objects.
+ * Size of array will adjust with amount of objects it holds
+ *
+ * @param &lt;T&gt; Type of object to contain
+ */
+public class CustomHashSetDynamicSize&lt;T&gt; implements UniqueSet&lt;T&gt; {
+
+<span class="fc" id="L14">    private static final Integer INITIAL_CAPACITY = 16;</span>
+<span class="fc" id="L15">    private static final Double INITIAL_USED_CELL_PERCENTAGE_MAX_LIMIT = 0.7;</span>
+
+    private Node&lt;T&gt;[] hashCodeQueues;
+
+    private int cellsInUse;
+    private final double maxFillPercentage;
+
+    private static class Node&lt;T&gt; {
+        private final T value;
+        private Node&lt;T&gt; after;
+
+<span class="fc" id="L26">        private Node(T value) {</span>
+<span class="fc" id="L27">            this.value = value;</span>
+<span class="fc" id="L28">            this.after = null;</span>
+
+<span class="fc" id="L30">        }</span>
+    }
+
+    /**
+     *
+     * @param capacity percentage between to aim the array size at to handle how big collision chains can get
+     */
+<span class="fc" id="L37">    public CustomHashSetDynamicSize(final int capacity) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (capacity &lt;= 0) {</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;capacity should be over 0&quot;);</span>
+        }
+<span class="fc" id="L41">        this.hashCodeQueues = new Node[capacity];</span>
+<span class="fc" id="L42">        this.cellsInUse = 0;</span>
+<span class="fc" id="L43">        this.maxFillPercentage = INITIAL_USED_CELL_PERCENTAGE_MAX_LIMIT;</span>
+<span class="fc" id="L44">    }</span>
+
+    public CustomHashSetDynamicSize() {
+<span class="fc" id="L47">        this(INITIAL_CAPACITY);</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Adds param to set if doesn't exist.
+     * If threshold of lists having a non-null object in array hits value that was given in constructor then it will double the array size.
+     * @param t to add to heap
+     */
+    public void add(T t) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if ((double) cellsInUse / hashCodeQueues.length &gt; maxFillPercentage) {</span>
+<span class="fc" id="L57">            expandSetArray();</span>
+        }
+<span class="fc" id="L59">        int index = t.hashCode() % hashCodeQueues.length;</span>
+
+<span class="fc" id="L61">        Node hashCodeCell = hashCodeQueues[index];</span>
+
+<span class="fc" id="L63">        Node&lt;T&gt; newNode = new Node&lt;&gt;(t);</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (hashCodeCell == null) {</span>
+<span class="fc" id="L66">            hashCodeQueues[index] = newNode;</span>
+<span class="fc" id="L67">            cellsInUse++;</span>
+<span class="fc" id="L68">            return;</span>
+        }
+
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        while (hashCodeCell != null) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if (hashCodeCell.value.equals(t)) {</span>
+<span class="fc" id="L73">                return;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            } else if (hashCodeCell.after == null) {</span>
+<span class="fc" id="L75">                hashCodeCell.after = newNode;</span>
+            }
+<span class="fc" id="L77">            hashCodeCell = hashCodeCell.after;</span>
+        }
+<span class="nc" id="L79">    }</span>
+
+    private void expandSetArray() {
+<span class="fc" id="L82">        CustomHashSetDynamicSize&lt;T&gt; newHashSet = new CustomHashSetDynamicSize&lt;T&gt;(hashCodeQueues.length * 2);</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (Node&lt;T&gt; listEntry : hashCodeQueues) {</span>
+<span class="fc" id="L85">            Node&lt;T&gt; listHead = listEntry;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            while (listHead != null) {</span>
+<span class="fc" id="L87">                newHashSet.add(listHead.value);</span>
+<span class="fc" id="L88">                listHead = listHead.after;</span>
+            }
+        }
+
+<span class="fc" id="L92">        this.hashCodeQueues = newHashSet.hashCodeQueues;</span>
+<span class="fc" id="L93">        this.cellsInUse = newHashSet.cellsInUse;</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     *
+     * @param t to check if exists in set or not
+     * @return true if t exists in set
+     */
+    public boolean contains(T t) {
+<span class="fc" id="L102">        int index = t.hashCode() % hashCodeQueues.length;</span>
+<span class="fc" id="L103">        Node hashCodeCell = hashCodeQueues[index];</span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (hashCodeCell == null) {</span>
+<span class="fc" id="L106">            return false;</span>
+        }
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        while (hashCodeCell != null) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            if (hashCodeCell.value.equals(t)) {</span>
+<span class="fc" id="L111">                return true;</span>
+            }
+<span class="fc" id="L113">            hashCodeCell = hashCodeCell.after;</span>
+        }
+<span class="fc" id="L115">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

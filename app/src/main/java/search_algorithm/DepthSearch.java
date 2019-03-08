@@ -1,16 +1,16 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.structure.Stack;
-import model.structure.UniqueSet;
 import model.structure.custom_structure.CustomHashSet;
 import model.structure.custom_structure.CustomHashSetDynamicSize;
 import model.structure.custom_structure.LIFOStack;
 import model.structure.pre_made_structure.PreMadeStack;
 import model.structure.pre_made_structure.PreMadeUniqueSet;
+import model.structure.structure_interface.Stack;
+import model.structure.structure_interface.UniqueSet;
+import model.structure.structure_type_enum.StackType;
+import model.structure.structure_type_enum.UniqueSetType;
 import model.web.WeightedPoint;
-import search_algorithm.structure_type.StackType;
-import search_algorithm.structure_type.UniqueSetType;
 
 import java.util.Map;
 
@@ -24,12 +24,13 @@ public class DepthSearch extends AnalysableAlgorithm {
 
     /**
      * classic depth-first-search that extends AnalysableAlgorithm so it handles report writing.
+     *
      * @param analysisWriter writer that writes the analysis report files.
-     * @param stackType type of stack to construct during searchAlgorithm method
-     * @param uniqueSetType type of set to construct during searchAlgorithm method
+     * @param stackType      type of stack to construct during searchAlgorithm method
+     * @param uniqueSetType  type of set to construct during searchAlgorithm method
      */
     public DepthSearch(AnalysisWriter analysisWriter, StackType stackType, UniqueSetType uniqueSetType) {
-        super(analysisWriter);
+        super(analysisWriter, "Depth first");
         if (stackType == null || uniqueSetType == null) throw new IllegalArgumentException("Arguments cannot be null");
         this.stackType = stackType;
         this.uniqueSetType = uniqueSetType;
@@ -113,20 +114,31 @@ public class DepthSearch extends AnalysableAlgorithm {
 
     @Override
     public String getDescription() {
-        return toString() + " with " + uniqueSetType + " to keep track of visited edges and " + stackType + " as an implementation of stack.";
+        return getName() + " with " + uniqueSetType.getTextValue() + " as visited nodes tracker and " + stackType.getTextValue() + " as stack.";
     }
 
+    /**
+     * @return additional documentation of implementation as metadata for sorting reports by category of implementation
+     */
     @Override
-    public String toString() {
-        return "Depth first";
+    public String getShortImpl() {
+        return "Stack: " + stackType.getTextValue() + ", Visited tracker: " + uniqueSetType.getTextValue();
     }
 
     //testing getters
 
+    /**
+     * for testing
+     *
+     * @return what type of stack is used
+     */
     public StackType getStackType() {
         return stackType;
     }
 
+    /**
+     * @return what type of visited node tracker is used
+     */
     public UniqueSetType getUniqueSetType() {
         return uniqueSetType;
     }

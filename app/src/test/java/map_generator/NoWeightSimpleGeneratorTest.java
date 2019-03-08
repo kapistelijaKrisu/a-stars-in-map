@@ -14,6 +14,7 @@ public class NoWeightSimpleGeneratorTest {
 
     private NoWeightSimpleGenerator generator;
     private Scanner scanner;
+    //order of params in input = width, height, start x, start y, target x, target y, if invalid choose q for quit anything else to re-run this chain.
 
     @Test
     public void generateMapTest() {

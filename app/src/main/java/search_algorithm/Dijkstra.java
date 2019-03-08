@@ -1,12 +1,15 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.structure.Heap;
+import model.structure.custom_structure.DistanceMapAsA2DTable;
+import model.structure.custom_structure.DistanceMapAsASingleTable;
 import model.structure.custom_structure.MinHeap;
 import model.structure.pre_made_structure.PreMadeHeap;
+import model.structure.structure_interface.DistanceMap;
+import model.structure.structure_interface.Heap;
+import model.structure.structure_type_enum.DistanceMapType;
+import model.structure.structure_type_enum.HeapType;
 import model.web.WeightedPoint;
-import search_algorithm.structure_type.DistanceMapType;
-import search_algorithm.structure_type.HeapType;
 
 import java.util.Map;
 
@@ -24,7 +27,7 @@ public class Dijkstra extends AnalysableAlgorithm {
      * @param distanceMapType type of distance map to construct during searchAlgorithm method
      */
     public Dijkstra(AnalysisWriter analysisWriter, HeapType heapType, DistanceMapType distanceMapType) {
-        super(analysisWriter);
+        super(analysisWriter, "Dijkstra");
         if (heapType == null || distanceMapType == null) throw new IllegalArgumentException("Arguments cannot be null");
         this.heapType = heapType;
         this.distanceMapType = distanceMapType;
@@ -49,7 +52,7 @@ public class Dijkstra extends AnalysableAlgorithm {
         while (!heap.isEmpty()) {
             WeightedPoint polled = heap.next();
             for (WeightedPoint neighbour : map.getNeighbours(polled)) {
-                int totalWeight = getNewWeight(neighbour.weight, distanceMap.getDistance(polled));
+                double totalWeight = neighbour.weight + distanceMap.getDistance(polled);
                 int currentKnownWeight = (int) distanceMap.getDistance(neighbour);
                 if (currentKnownWeight > totalWeight) {
                     heap.insert(new WeightedPoint(neighbour.x, neighbour.y, totalWeight));
@@ -63,11 +66,6 @@ public class Dijkstra extends AnalysableAlgorithm {
             }
         }
         super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
-    }
-
-    private int getNewWeight(double dist, double weight) {
-        Double safe = Math.min(dist + weight, Integer.MAX_VALUE);
-        return safe.intValue();
     }
 
     private Heap<WeightedPoint> initHeap() {
@@ -110,20 +108,31 @@ public class Dijkstra extends AnalysableAlgorithm {
 
     @Override
     public String getDescription() {
-        return toString() + " with " + distanceMapType + " to keep track of known distances and " + heapType + " as an implementation of min heap.";
+        return getName() + " with " + distanceMapType.getTextValue() + " as distance tracker and " + heapType.getTextValue() + " as min heap.";
     }
 
+    /**
+     *
+     * @return additional documentation of implementation as metadata for sorting reports by category of implementation
+     */
     @Override
-    public String toString() {
-        return "Dijkstra";
+    public String getShortImpl() {
+        return "Distances: " + distanceMapType.getTextValue() + ", Min heap: " + heapType.getTextValue();
     }
 
     //testing getters
-
+    /**
+     * testing only
+     * @return what type of distance tracker is used
+     */
     public DistanceMapType getDistanceMapType() {
         return distanceMapType;
     }
 
+    /**
+     * testing only
+     * @return what type of heap is used
+     */
     public HeapType getHeapType() {
         return heapType;
     }

@@ -12,9 +12,9 @@ public class DateConverterTest {
     @Test
     public void basicTest() {
         DateConverter dateConverter = new DateConverter();
-        LocalDateTime testTime = LocalDateTime.of(2003, 12, 1, 16, 20, 10, 5);
+        LocalDateTime testTime = LocalDateTime.of(2003, 12, 1, 16, 20, 10, 2000000);
         var conversion = dateConverter.getDateAsString(testTime);
-        assertEquals("01-12-2003 16-20-10", conversion);
+        assertEquals("01.12.2003-16.20.10.002", conversion);
     }
 
     @Test

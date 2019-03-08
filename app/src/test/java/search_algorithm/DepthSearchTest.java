@@ -1,8 +1,11 @@
 package search_algorithm;
 
-import mock.SystemLine;
 import mock.MockAnalysisWriter;
+import mock.SystemLine;
 import mock.WebMapMock;
+import model.report.ReportMeta;
+import model.structure.structure_type_enum.StackType;
+import model.structure.structure_type_enum.UniqueSetType;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -10,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import search_algorithm.structure_type.StackType;
-import search_algorithm.structure_type.UniqueSetType;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -81,7 +82,7 @@ public class DepthSearchTest {
         depthSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Depth first", mockWriter.getReceivedPath());
-        assertEquals("Depth first with " + depthSearch.getUniqueSetType() + " to keep track of visited edges and " + depthSearch.getStackType() + " as an implementation of stack.", mockWriter.receivedAlDoc());
+        assertEquals("Depth first with " + depthSearch.getUniqueSetType().getTextValue() + " as visited nodes tracker and " + depthSearch.getStackType().getTextValue() + " as stack.", mockWriter.receivedAlDoc());
         assertEquals("Depth first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
@@ -101,7 +102,7 @@ public class DepthSearchTest {
         depthSearch.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Depth first", mockWriter.getReceivedPath());
-        assertEquals("Depth first with " + depthSearch.getUniqueSetType() + " to keep track of visited edges and " + depthSearch.getStackType() + " as an implementation of stack.", mockWriter.receivedAlDoc());
+        assertEquals("Depth first with " + depthSearch.getUniqueSetType().getTextValue() + " as visited nodes tracker and " + depthSearch.getStackType().getTextValue() + " as stack.", mockWriter.receivedAlDoc());
         assertEquals("Depth first", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | )", mockWriter.receivedAlTime());
@@ -118,6 +119,45 @@ public class DepthSearchTest {
                         ". . . @ . ! ! \r\n" +
                         ". . . . . . .");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DepthSearchArgumentsProvider.class)
+    public void metaValuesSetCorrectlyWhereStartIsTargetTest(DepthSearch depthSearch) throws IOException {
+        WebMap map = WebMapMock.getMinimumValidMap();
+        map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
+        depthSearch.setMapClean(map);
+        depthSearch.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Depth first", producedMeta.getAlgorithmName());
+        assertEquals("Stack: " + depthSearch.getStackType().getTextValue() + ", Visited tracker: " + depthSearch.getUniqueSetType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(0, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(1, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(0, producedMeta.getTestUsedSteps().doubleValue());
+
+
+
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DepthSearchArgumentsProvider.class)
+    public void metaSetCorrectlyWhereStartIsNotTargetTest(DepthSearch depthSearch) throws IOException {
+        depthSearch.setMapClean(WebMapMock.getValid6x7Map());
+        depthSearch.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Depth first", producedMeta.getAlgorithmName());
+        assertEquals("Stack: " + depthSearch.getStackType().getTextValue() + ", Visited tracker: " + depthSearch.getUniqueSetType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(28, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(34, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(21, producedMeta.getTestUsedSteps().doubleValue());
     }
 }
 

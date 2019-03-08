@@ -10,11 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  Creates a WebMap instance by reading a file
+ * Creates a WebMap instance by reading a file
  */
 public class MapLoader {
-    private static final int BASIC = 0, DECODING = 1, READING_MAP = 2;
-    private int state = BASIC;
+    private enum PROCESS_STATE {BASIC, DECODING, READING_MAP}
+
+    private PROCESS_STATE state = PROCESS_STATE.BASIC;
     private int[][] mapArea;
     private int mapHeight;
     private int mapWidth;
@@ -25,9 +26,10 @@ public class MapLoader {
 
     /**
      * Creates a WebMap instance by reading a file. It allows invalid webMaps as long as it can read it from file.
+     *
      * @param mapFile filepath to the file
      * @return loaded WebMap instance representing file contents or map. It allows invalid webMaps as long as it can read it from file.
-     * @throws IOException if fails to open or read values from file to create webMap instance
+     * @throws IOException          if fails to open or read values from file to create webMap instance
      * @throws NullPointerException if if to open or is missing values from file to create webMap instance
      */
     public WebMap loadMapFromFile(File mapFile) throws IOException, NullPointerException {
@@ -52,9 +54,10 @@ public class MapLoader {
         return map;
     }
 
-    private void process(String input) throws IOException, NullPointerException {
+    private void process(String input) throws IOException, NullPointerException, IllegalStateException {
         String[] tokens = input.split(" ");
         if (tokens[0].equals("#") || tokens[0].equals("")) return;
+        if (state == null) throw new IllegalStateException("State cannot be null");
         switch (state) {
             case BASIC:
                 processInBasicState(tokens);
@@ -65,19 +68,16 @@ public class MapLoader {
             case READING_MAP:
                 processInMapReadingState(tokens[0]);
                 break;
-            default:
-                throw new IllegalStateException("Should not enter any not known state!");
-
         }
     }
 
     private void processInBasicState(String[] tokens) throws IOException {
         switch (tokens[0]) {
             case "decode-begin":
-                state = DECODING;
+                state = PROCESS_STATE.DECODING;
                 break;
             case "decode-end":
-                state = BASIC;
+                state = PROCESS_STATE.BASIC;
                 break;
             case "start":
                 mapStartLocationX = Integer.parseInt(tokens[1]);
@@ -95,7 +95,7 @@ public class MapLoader {
                 break;
             case "map":
                 mapArea = new int[mapHeight][mapWidth];
-                state = READING_MAP;
+                state = PROCESS_STATE.READING_MAP;
                 break;
             default:
                 throw new IOException("invalid format");
@@ -104,7 +104,7 @@ public class MapLoader {
 
     private void processInDecodingState(String[] tokens) {
         if (tokens[0].equals("decode-end")) {
-            state = BASIC;
+            state = PROCESS_STATE.BASIC;
         } else {
             decodeValues.put(tokens[0].charAt(0), Integer.parseInt(tokens[1]));
         }
@@ -121,7 +121,7 @@ public class MapLoader {
     }
 
     private void clean() {
-        state = BASIC;
+        state = PROCESS_STATE.BASIC;
         decodeValues = new HashMap<>();
         mapStartLocationX = -1;
         mapTargetLocationX = -1;

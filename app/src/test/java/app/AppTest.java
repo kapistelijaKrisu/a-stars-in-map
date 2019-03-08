@@ -1,10 +1,12 @@
 package app;
 
-import file_operations.analysis_writer.AnalysisWriter;
+import file_operations.analysis_overview.AnalysisInspector;
 import map_generator.MapGenerator;
+import mock.MockAnalysisWriter;
 import mock.WebMapMock;
 import model.web.WebMap;
 import org.junit.Rule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.Timeout;
 import search_algorithm.AlgorithmCodeKey;
@@ -23,28 +25,44 @@ public class AppTest {
 
     @Rule // in case app does not exit run method
     public Timeout globalTimeout = Timeout.seconds(1);
-
     private Scanner scanner;
-
     private App app;
+    private MapGenerator mockGenerator;
+    private HashMap<String,MapGenerator> mapGenerators;
+    private AnalysableAlgorithm mockSearch;
+    private AnalysisInspector mockAnalysisInspector;
+    private WebMap validMap;
 
-    @Test
-    public void loopsTest() throws IOException {
-        var mapGenerators = new HashMap<String, MapGenerator>();
-        var mockGenerator = mock(MapGenerator.class);
+    @BeforeEach
+    public void setUo() {
+        mapGenerators = new HashMap<>();
+        mockGenerator = mock(MapGenerator.class);
         mapGenerators.put("ssd", mockGenerator);
-        var mockSearch = mock(AnalysableAlgorithm.class);
+
+        mockSearch = mock(AnalysableAlgorithm.class);
+        when(mockSearch.getName()).thenReturn("mock search");
+
+        validMap = WebMapMock.getMinimumValidMap();
+
         var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
         algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockSearch);
 
+        mockAnalysisInspector = mock(AnalysisInspector.class);
+
+        app = new App(null, new MockAnalysisWriter());
+        app.setAlgorithmMap(algorithmMap);
+        app.setCurrentMap(validMap);
+        app.setMapGenerators(mapGenerators);
+        app.setAnalysisInspector(mockAnalysisInspector);
+    }
+
+    @Test
+    public void loopsTest() throws IOException {
         String input = "1\nb\n1\n1\n1\n1\n1\n1\nexit\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setAlgorithmMap(algorithmMap);
-        app.setMapGenerators(mapGenerators);
+        app.setScanner(scanner);
         app.run();
 
         verify(mockGenerator, never()).createMap();
@@ -53,118 +71,111 @@ public class AppTest {
 
     @Test
     public void mapGeneratorSetsValidMapTest() {
-        var mapGenerator = new HashMap<String, MapGenerator>();
-        var mockGenerator = mock(MapGenerator.class);
-        var generatedMockMap = WebMapMock.getMinimumValidMap();
-        when(mockGenerator.createMap()).thenReturn(generatedMockMap);
-        mapGenerator.put("test", mockGenerator);
+        when(mockGenerator.createMap()).thenReturn(validMap);
+        mapGenerators.put("test", mockGenerator);
+
         String input = "1\ntest\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setMapGenerators(mapGenerator);
+        app.setScanner(scanner);
+        app.setCurrentMap(null);
         app.run();
 
         verify(mockGenerator, times(1)).createMap();
-        assertEquals(generatedMockMap, app.getCurrentMap());
+        assertEquals(validMap, app.getCurrentMap());
     }
 
     @Test
     public void algorithmIsCalledWhenValidMapSetTest() throws IOException {
-        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
-        var mockAlgorithm = mock(AnalysableAlgorithm.class);
-        var mockMap = WebMapMock.getMinimumValidMap();
-        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockAlgorithm);
-        String input = "2\nssd\nexit";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
+        String runAllSearchAndExit = "2\na\nexit";
+        InputStream in = new ByteArrayInputStream(runAllSearchAndExit.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setAlgorithmMap(algorithmMap);
-        app.setCurrentMap(mockMap);
+        app.setScanner(scanner);
         app.run();
 
-        verify(mockAlgorithm, times(1)).runSearch();
+        verify(mockSearch, times(1)).runSearch();
     }
 
     @Test
     public void algorithmIsNotCalledWhenInvalidMapSetTest() throws IOException {
-        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
-        var mockAlgorithm = mock(AnalysableAlgorithm.class);
-        var mockMap = new WebMap();
-        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockAlgorithm);
-        String input = "2\nssd\nexit";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
+        validMap.setTileStart(-1, -1);
+        String runAllSearchAndExit = "2\na\nexit";
+        InputStream in = new ByteArrayInputStream(runAllSearchAndExit.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setAlgorithmMap(algorithmMap);
-        app.setCurrentMap(mockMap);
+        app.setScanner(scanner);
+        app.setCurrentMap(validMap);
         app.run();
 
-        verify(mockAlgorithm, never()).runSearch();
+        verify(mockSearch, never()).runSearch();
     }
 
     @Test
     public void algorithmNotCalledWhenMapNotSetTest() throws IOException {
-        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
-        var mockAlgorithm = mock(AnalysableAlgorithm.class);
-        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockAlgorithm);
-        String input = "2\nssd\nexit";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
+        String runAllSearchAndExit = "2\na\nexit";
+        InputStream in = new ByteArrayInputStream(runAllSearchAndExit.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setAlgorithmMap(algorithmMap);
+        app.setScanner(scanner);
+        app.setCurrentMap(null);
         app.run();
 
-        verify(mockAlgorithm, never()).runSearch();
+        verify(mockSearch, never()).runSearch();
     }
 
     @Test
     public void algorithmExceptionCalledWhenDoesNotExistTest() throws IOException {
-        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
-        var mockAlgorithm = mock(AnalysableAlgorithm.class);
-        var mockMap = WebMapMock.getMinimumValidMap();
-        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockAlgorithm);
         String input = "2\nnot here\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
-        app.setAlgorithmMap(algorithmMap);
-        app.setCurrentMap(mockMap);
+        app.setScanner(scanner);
         app.run();
 
-        verify(mockAlgorithm, never()).runSearch();
+        verify(mockSearch, never()).runSearch();
     }
 
     @Test
     public void algorithmIsCalledAndIOExceptionCaughtTest() throws IOException {
-        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
-        var mockAlgorithm = mock(AnalysableAlgorithm.class);
+        mockSearch = mock(AnalysableAlgorithm.class);
         doThrow(IOException.class)
-                .when(mockAlgorithm)
+                .when(mockSearch)
                 .runSearch();
         var mockMap = WebMapMock.getMinimumValidMap();
-        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockAlgorithm);
-        String input = "2\nssd\nexit";
+        String input = "2\na\nexit";
+        var algorithmMap = new HashMap<AlgorithmCodeKey, AnalysableAlgorithm>();
+        algorithmMap.put(AlgorithmCodeKey.get("ssd"), mockSearch);
+
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         scanner = new Scanner(System.in);
-        app = new App(scanner, new AnalysisWriter());
+        app.setScanner(scanner);
         app.setAlgorithmMap(algorithmMap);
         app.setCurrentMap(mockMap);
         app.run();
 
-        verify(mockAlgorithm, times(1)).runSearch();
+        verify(mockSearch, times(1)).runSearch();
+    }
+
+    @Test
+    public void statisticsIsCalledTest() throws IOException {
+        String input = "3\nexit";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        scanner = new Scanner(System.in);
+        app.setScanner(scanner);
+        app.run();
+
+        verify(mockAnalysisInspector, times(1)).createAnalysisStatisticByMap(anyMap());
     }
 
 

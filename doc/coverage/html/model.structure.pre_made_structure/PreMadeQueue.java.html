@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PreMadeQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure.pre_made_structure</a> &gt; <span class="el_source">PreMadeQueue.java</span></div><h1>PreMadeQueue.java</h1><pre class="source lang-java linenums">package model.structure.pre_made_structure;
+
+import model.structure.structure_interface.Queue;
+
+import java.util.ArrayDeque;
+
+/**
+ * Encapsulates ArrayDeque of java exposing only queue methods needed by search algorithms
+ * @param &lt;T&gt; Type of element to hold
+ */
+
+public class PreMadeQueue&lt;T&gt; implements Queue&lt;T&gt; {
+    private ArrayDeque&lt;T&gt; queue;
+
+<span class="fc" id="L15">    public PreMadeQueue() {</span>
+<span class="fc" id="L16">        queue = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public void enqueue(T element) {
+<span class="fc" id="L21">        queue.add(element);</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * ArrayDeque.pollFirst or null if empty
+     * @return polled element
+     */
+    @Override
+    public T dequeue() {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        return queue.isEmpty() ? null : queue.pollFirst();</span>
+    }
+
+    /**
+     *
+     * @return ArrayDeque.isEmpty
+     */
+    @Override
+    public boolean isEmpty() {
+<span class="fc" id="L39">        return queue.isEmpty();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

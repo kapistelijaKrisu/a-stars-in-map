@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * Map between easily readable algorithm implementation types and their codes.
+ * Used to make cmd usage a bit more user friendly
  */
 
 public enum AlgorithmCodeKey {
@@ -37,10 +38,13 @@ public enum AlgorithmCodeKey {
 
     private final String stringValue;
 
-    AlgorithmCodeKey(String nodeType) {
-        this.stringValue = nodeType;
+    AlgorithmCodeKey(String stringValue) {
+        this.stringValue = stringValue;
     }
 
+    /**
+     * @return abbreviation of AlgorithmCodeKey
+     */
     public String getStringValue() {
         return stringValue;
     }
@@ -54,6 +58,7 @@ public enum AlgorithmCodeKey {
 
     /**
      * inside-out enum getter, gets the AlgorithmCodeKey of corresponding abbreviation.
+     *
      * @param abbreviation search up parameter
      * @return AlgorithmCodeKey of the parameter or null if doesn't exist
      */

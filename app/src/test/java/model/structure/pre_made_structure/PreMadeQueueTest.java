@@ -1,7 +1,7 @@
 package model.structure.pre_made_structure;
 
 
-import model.structure.Queue;
+import model.structure.structure_interface.Queue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

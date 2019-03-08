@@ -9,10 +9,9 @@ import java.util.Scanner;
  * Simple weightless map generator that asks user for parameters for generating a map.
  */
 public class NoWeightSimpleGenerator implements MapGenerator {
-    protected final Scanner scanner;
+    private final Scanner scanner;
     private int mapWidth, mapHeight;
     private int startX, startY, targetX, targetY;
-    private String mapName = "nameless";
     private static final String USER_WANTS_TO_EXIT = "q";
 
     /**
@@ -40,6 +39,7 @@ public class NoWeightSimpleGenerator implements MapGenerator {
     public WebMap createMap() {
         if (setConfigValues()) {
             WebMap map = new WebMap();
+            String mapName = "nameless";
             map.setName(mapName);
             map.setMap(generateTiles());
             map.setTileTarget(targetX, targetY);
@@ -56,7 +56,6 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         return map;
     }
 
-    //todo hit error message n print it instead
     private boolean setConfigValues() {
         while (true) {
             try {
@@ -76,7 +75,8 @@ public class NoWeightSimpleGenerator implements MapGenerator {
                 if (startY < 0 || startX < 0 || targetX < 0 || targetY < 0) throw new ArrayIndexOutOfBoundsException();
                 if (startY >= mapHeight || startX >= mapWidth || targetX >= mapWidth || targetY >= mapHeight)
                     throw new ArrayIndexOutOfBoundsException();
-                if (mapHeight <= 0 || mapWidth <= 0 || mapHeight > WebMap.MAX_HEIGHT || mapWidth > WebMap.MAX_WIDTH) throw new IllegalArgumentException();
+                if (mapHeight <= 0 || mapWidth <= 0 || mapHeight > WebMap.MAX_HEIGHT || mapWidth > WebMap.MAX_WIDTH)
+                    throw new IllegalArgumentException();
                 return true;
             } catch (Exception e) {
                 System.out.println("Height should be between 1-" + WebMap.MAX_HEIGHT);
@@ -88,9 +88,13 @@ public class NoWeightSimpleGenerator implements MapGenerator {
         }
     }
 
+    /**
+     *
+     * @return description of this generator
+     */
     @Override
     public String toString() {
-        return "simple weightless and walless map generator";
+        return "simple weightless and open map generator";
     }
 
 }

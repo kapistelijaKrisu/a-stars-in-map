@@ -1,6 +1,6 @@
 package model.structure.custom_structure;
 
-import model.structure.UniqueSet;
+import model.structure.structure_interface.UniqueSet;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

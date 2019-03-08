@@ -1,70 +1,81 @@
 package file_operations.analysis_writer;
 
-import file_operations.RootFolderFinder;
-import system_tools.DateConverter;
+import file_operations.common.FileClassification;
+import file_operations.common.ReportMetaFileKey;
+import file_operations.common.ResourceFileReader;
+import file_operations.common.Template;
+import file_operations.root_file_operations.RootDirectoryBuilder;
+import file_operations.root_file_operations.RootFileWriter;
+import model.report.Report;
+import model.report.ReportMeta;
+import system_tools.LegalFileName;
 
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
- * A file writer that uses ReportTemplate.md to write an analysis at root level.
+ * A file writer that uses report-template.md to write an analysis at root level.
  */
 public class AnalysisWriter {
 
-    private static final DateConverter dateConverter = new DateConverter();
-    private static final ReportValidator reportValidator = new ReportValidator();
-    private String root;
-
     /**
-     * A file writer that uses ReportTemplate.md to write an analysis of search algorithm at root level.
-     */
-    public AnalysisWriter() {
-        root = RootFolderFinder.getRootFolder();
-    }
-
-    /**
-     * Reads ReportTemplate.md and replaces keys according to replacingValues. Then writes it to a timestamp by DateConverter .md file at given path directory.
+     * Reads report-template.md and replaces keys according to replacingValues. Then writes it to a timestamp by DateConverter .md file at given path directory.
      *
-     * @param replacingValues Template keys to be replaced with these values
-     * @param path            in what directory structure will the report be having app level as root. Will create folders if  missing.
+     * @param report     Template keys to be replaced with these values
+     * @param reportMeta Metadata that is stored in specific format so it can be read by the app again and be analyzed.
+     * @param path       in what directory structure will the report be having app level as root. Will create folders if  missing.
      * @throws IOException              when writing doesn't succeed
-     * @throws IllegalArgumentException if path is null or replacingValues is not valid according to ReportValidator class.
+     * @throws IllegalArgumentException if path is null or replacingValues is not valid according to Report itself.
      */
-    public void writeReport(Map<String, String> replacingValues, String path) throws IOException, IllegalArgumentException {
-        if (!AnalysisWriter.reportValidator.validateMapper((replacingValues)) || path == null)
-            throw new IllegalArgumentException(AnalysisWriter.reportValidator.getValidatorCondition());
-        System.out.println("Phase 1/3. Creating directories..");
-        buildDirectories(path);
-        String template = readRawReportTemplate();
-        System.out.println("Phase 2/3. Beginning to parse template..");
+    public void writeReport(Report report, ReportMeta reportMeta, String path) throws IOException, IllegalArgumentException {
+        if (!report.isValid() || !reportMeta.isValid() || LegalFileName.areValidFileNames(path.split("/")))
+            throw new IllegalArgumentException("report, reportMeta and path need to be valid");
+
+        var replacingValues = report.valuesToMap();
+        String template = ResourceFileReader.readResourceFile(Template.ANALYSIS.getFileName());
+
+        StringBuilder metaDataText = new StringBuilder();
+        metaDataText.append("<!--This is metadata touching this might affect reading the file by this app. ");
+        appendMeta(metaDataText, reportMeta);
+        metaDataText.append("-->").append(System.lineSeparator());
+
         for (Map.Entry<String, String> pair : replacingValues.entrySet()) {
             template = template.replace(pair.getKey(), pair.getValue());
         }
-        System.out.println("Phase 3/3. Parsing done. Proceeding to write into a file..");
-
-        PrintWriter writer = getAnalysisWriter(path);
-        writer.write(template);
-        writer.close();
-        System.out.println("Successfully wrote report");
+        RootDirectoryBuilder.buildDirectories(path);
+        RootFileWriter.writeMdFileWithTime(metaDataText.toString() + template, path, reportMeta.getAlgorithmName(), FileClassification.REPORT.getFileType());
 
     }
 
-    private String readRawReportTemplate() {
-        InputStream in = getClass().getResourceAsStream("/ReportTemplate.md");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-    }
 
-    private PrintWriter getAnalysisWriter(String reportFilePath) throws IOException {
-        if (reportFilePath == null) throw new IOException("No file path given");
-        var reportFileName = AnalysisWriter.dateConverter.getDateAsString(LocalDateTime.now()) + ".md";
-        return new PrintWriter(new BufferedWriter(new FileWriter(root + "/" + reportFilePath + "/" + reportFileName, false)));
-    }
+    private void appendMeta(StringBuilder sb, ReportMeta reportMeta) {
+        sb.append(ReportMetaFileKey.ALGORITHM_NAME.getStringValue())
+                .append(reportMeta.getAlgorithmName())
+                .append(ReportMetaFileKey.ALGORITHM_NAME.getStringValue());
 
-    private void buildDirectories(String reportFilePath) {
-        File reportDirectory = new File(root + reportFilePath);
-        reportDirectory.mkdirs();
+        sb.append(ReportMetaFileKey.ALGORITHM_IMPL.getStringValue())
+                .append(reportMeta.getAlgorithmImplementationType())
+                .append(ReportMetaFileKey.ALGORITHM_IMPL.getStringValue());
+
+        sb.append(ReportMetaFileKey.MAP_MAX_STEPS.getStringValue())
+                .append(reportMeta.getTestMaxSteps())
+                .append(ReportMetaFileKey.MAP_MAX_STEPS.getStringValue());
+
+        sb.append(ReportMetaFileKey.TEST_PATH_WEIGHT.getStringValue())
+                .append(reportMeta.getTestPathWeight())
+                .append(ReportMetaFileKey.TEST_PATH_WEIGHT.getStringValue());
+
+        sb.append(ReportMetaFileKey.TEST_SPACE_USED.getStringValue())
+                .append(reportMeta.getTestSpace())
+                .append(ReportMetaFileKey.TEST_SPACE_USED.getStringValue());
+
+        sb.append(ReportMetaFileKey.TEST_STEPS_USED.getStringValue())
+                .append(reportMeta.getTestUsedSteps())
+                .append(ReportMetaFileKey.TEST_STEPS_USED.getStringValue());
+
+        sb.append(ReportMetaFileKey.TEST_TIME_USED.getStringValue())
+                .append(reportMeta.getTestTime())
+                .append(ReportMetaFileKey.TEST_TIME_USED.getStringValue());
+
     }
 }

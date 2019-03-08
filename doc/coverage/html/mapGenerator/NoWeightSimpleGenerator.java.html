@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoWeightSimpleGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">mapGenerator</a> &gt; <span class="el_source">NoWeightSimpleGenerator.java</span></div><h1>NoWeightSimpleGenerator.java</h1><pre class="source lang-java linenums">package mapGenerator;
+
+import model.web.WebMap;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+/**
+ * Simple weightless map generator that asks user for parameters for generating a map.
+ */
+public class NoWeightSimpleGenerator implements MapGenerator {
+    protected final Scanner scanner;
+    private int mapWidth, mapHeight;
+    private int startX, startY, targetX, targetY;
+<span class="fc" id="L15">    private String mapName = &quot;nameless&quot;;</span>
+
+    /**
+     *
+     * @param scanner used to interact with user for configuring values.
+     */
+<span class="fc" id="L21">    public NoWeightSimpleGenerator(Scanner scanner) {</span>
+<span class="fc" id="L22">        this.scanner = scanner;</span>
+<span class="fc" id="L23">    }</span>
+
+
+    /**
+     * Asks user input values to create a map. And will loop forever until valid values are given.
+     * Values required by user:
+     * width over 0
+     * height over 0
+     * tile start x coordinate within 0 and width - 1
+     * tile start y coordinate within 0 and height - 1
+     * tile target x coordinate within 0 and width - 1
+     * tile target y coordinate within 0 and height - 1
+     * @return a valid map
+     *
+     */
+    @Override
+    public WebMap createMap() {
+<span class="fc" id="L40">        setConfigValues();</span>
+<span class="fc" id="L41">        WebMap map = new WebMap();</span>
+<span class="fc" id="L42">        map.setName(mapName);</span>
+<span class="fc" id="L43">        map.setMap(generateTiles());</span>
+<span class="fc" id="L44">        map.setTileTarget(targetX, targetY);</span>
+<span class="fc" id="L45">        map.setTileStart(startX, startY);</span>
+<span class="fc" id="L46">        return  map;</span>
+    }
+
+    private int[][] generateTiles() {
+<span class="fc" id="L50">        int[][] map = new int[mapHeight][mapWidth];</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for (int[] row : map) {</span>
+<span class="fc" id="L52">            Arrays.fill(row, 1);</span>
+        }
+<span class="fc" id="L54">        return map;</span>
+    }
+
+    private void setConfigValues() {
+        while (true) {
+            try {
+<span class="fc" id="L60">                System.out.println(&quot;set width: &quot;);</span>
+<span class="fc" id="L61">                mapWidth =Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L62">                System.out.println(&quot;set height: &quot;);</span>
+<span class="fc" id="L63">                mapHeight = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L64">                System.out.println(&quot;set starting location x&quot;);</span>
+<span class="fc" id="L65">                startX = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L66">                System.out.println(&quot;set starting location y&quot;);</span>
+<span class="fc" id="L67">                startY = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L68">                System.out.println(&quot;set target location x&quot;);</span>
+<span class="fc" id="L69">                targetX = Integer.parseInt(scanner.nextLine());</span>
+<span class="fc" id="L70">                System.out.println(&quot;set target location y&quot;);</span>
+<span class="fc" id="L71">                targetY = Integer.parseInt(scanner.nextLine());</span>
+
+<span class="pc bpc" id="L73" title="3 of 8 branches missed.">                if (startY &lt; 0 || startX &lt; 0 || targetX &lt; 0 || targetY &lt; 0) throw new ArrayIndexOutOfBoundsException();</span>
+<span class="fc bfc" id="L74" title="All 8 branches covered.">                if (startY &gt;= mapHeight || startX &gt;= mapWidth || targetX &gt;= mapWidth || targetY &gt;= mapHeight) throw new ArrayIndexOutOfBoundsException();</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">                if (mapHeight &lt;= 0 || mapWidth &lt;= 0) throw new IllegalArgumentException();</span>
+<span class="fc" id="L76">                return;</span>
+<span class="fc" id="L77">            } catch (Exception e) {</span>
+<span class="fc" id="L78">                System.out.println(&quot;width and height should be between 1-&quot; + Integer.MAX_VALUE + &quot;. x,y values should be between 0-&quot; + (Integer.MAX_VALUE - 1));</span>
+<span class="fc" id="L79">            }</span>
+        }
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L85">        return &quot;simple weightless and walless map generator&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

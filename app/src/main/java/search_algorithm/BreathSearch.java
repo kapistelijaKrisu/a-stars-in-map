@@ -1,16 +1,16 @@
 package search_algorithm;
 
 import file_operations.analysis_writer.AnalysisWriter;
-import model.structure.Queue;
-import model.structure.UniqueSet;
 import model.structure.custom_structure.CustomHashSet;
 import model.structure.custom_structure.CustomHashSetDynamicSize;
 import model.structure.custom_structure.FIFOQueue;
 import model.structure.pre_made_structure.PreMadeQueue;
 import model.structure.pre_made_structure.PreMadeUniqueSet;
+import model.structure.structure_interface.Queue;
+import model.structure.structure_interface.UniqueSet;
+import model.structure.structure_type_enum.QueueType;
+import model.structure.structure_type_enum.UniqueSetType;
 import model.web.WeightedPoint;
-import search_algorithm.structure_type.QueueType;
-import search_algorithm.structure_type.UniqueSetType;
 
 import java.util.Map;
 
@@ -23,12 +23,13 @@ public class BreathSearch extends AnalysableAlgorithm {
 
     /**
      * classic breath-first-search that extends AnalysableAlgorithm so it handles report writing.
+     *
      * @param analysisWriter writer that writes the analysis report files.
-     * @param queueType type of queue to construct during searchAlgorithm method
-     * @param uniqueSetType type of set to construct during searchAlgorithm method
+     * @param queueType      type of queue to construct during searchAlgorithm method
+     * @param uniqueSetType  type of set to construct during searchAlgorithm method
      */
     public BreathSearch(AnalysisWriter analysisWriter, QueueType queueType, UniqueSetType uniqueSetType) {
-        super(analysisWriter);
+        super(analysisWriter, "Breath first");
         if (queueType == null || uniqueSetType == null) throw new IllegalArgumentException("Arguments cannot be null");
         this.queueType = queueType;
         this.uniqueSetType = uniqueSetType;
@@ -112,20 +113,31 @@ public class BreathSearch extends AnalysableAlgorithm {
 
     @Override
     public String getDescription() {
-        return toString() + " with " + uniqueSetType + " to keep track of visited edges and " + queueType + " as an implementation of queue.";
+        return getName() + " with " + uniqueSetType.getTextValue() + " as visited nodes tracker and " + queueType.getTextValue() + " as queue.";
     }
 
+    /**
+     * @return additional documentation of implementation as metadata for sorting reports by category of implementation
+     */
     @Override
-    public String toString() {
-        return "Breath first";
+    public String getShortImpl() {
+        return "Queue: " + queueType.getTextValue() + ", Visited tracker: " + uniqueSetType.getTextValue();
     }
 
     //testing getters
 
+    /**
+     * for testing
+     *
+     * @return what type of queue is used
+     */
     public QueueType getQueueType() {
         return queueType;
     }
 
+    /**
+     * @return what type of visited node tracker is used
+     */
     public UniqueSetType getUniqueSetType() {
         return uniqueSetType;
     }

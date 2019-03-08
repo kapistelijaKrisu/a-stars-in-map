@@ -1,6 +1,6 @@
 package map_generator;
 
-import file_operations.map_reader.MapLocator;
+import file_operations.root_file_operations.RootFileLister;
 import model.web.WebMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,25 +22,27 @@ import static org.mockito.Mockito.when;
 public class MapGeneratorFromFilesTest {
 
     private MapGeneratorFromFiles mapGeneratorFromFiles;
-    private MapLocator mockLocator;
+    private RootFileLister mockLocator;
     private List<File> mockFiles;
 
     @BeforeEach
     public void setUp() throws IOException {
-        String fileName = "testMapSuccess.map";
-        ClassLoader classLoader = new MapGeneratorFromFilesTest().getClass().getClassLoader();
-        File mockMap = new File(classLoader.getResource(fileName).getFile());
+        String fileName = "maps/map_inner_folder/testMapSuccess.map";
+        ClassLoader classLoader = MapGeneratorFromFilesTest.class.getClassLoader();
+        File mockMap = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
 
         mockFiles = new ArrayList<>();
         mockFiles.add(mockMap);
 
-        mockLocator = mock(MapLocator.class);
-        when(mockLocator.findMaps()).thenReturn(mockFiles);
+        mockLocator = mock(RootFileLister.class);
+        when(mockLocator.listFiles("/maps", ".map")).thenReturn(mockFiles);
     }
 
     @Test
     public void testSuccessPathTest() {
-        String input = "0\n";
+        String chooseFirstMapListedCommand = "0";
+        String input = chooseFirstMapListedCommand + "\n";
+
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
@@ -73,9 +75,10 @@ public class MapGeneratorFromFilesTest {
     }
 
     @Test
-    public void errorInNoMapsFoundTest() throws IOException {
-        when(mockLocator.findMaps()).thenReturn(new ArrayList<>());
-        String input = "1\nq\n";
+    public void errorInNoMapsFoundTest() {
+        String chooseNonExistentMapCommand = "1", quitCommand = "q";
+        String input = chooseNonExistentMapCommand + "\n" + quitCommand + "\n";
+
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
@@ -86,11 +89,13 @@ public class MapGeneratorFromFilesTest {
 
     @Test
     public void errorInCreationReturnsNullMapTest() {
-        String input = "1\nq\n";
+        String chooseFaultyMapCommand = "1", quitCommand = "q";
+        String input = chooseFaultyMapCommand + "\n" + quitCommand + "\n";
+
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         mapGeneratorFromFiles = new MapGeneratorFromFiles(new Scanner(System.in));
-        String fileName = "testMapFail.map";
+        String fileName = "maps/testMapFail.map";
         ClassLoader classLoader = this.getClass().getClassLoader();
         File mockMap = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
         mockFiles.add(mockMap);

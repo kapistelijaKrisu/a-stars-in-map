@@ -14,7 +14,7 @@ public class MapLoaderTest {
 
     @Test
     public void testSuccessPathTest() throws IOException {
-        String fileName = "testMapSuccess.map";
+        String fileName = "maps/map_inner_folder/testMapSuccess.map";
         ClassLoader classLoader = new MapGeneratorFromFilesTest().getClass().getClassLoader();
         File mockMap = new File(classLoader.getResource(fileName).getFile());
         MapLoader mapLoader = new MapLoader();
@@ -48,7 +48,7 @@ public class MapLoaderTest {
     @Test
     public void errorInCreationReturnsNullMapTest() throws IOException {
 
-        String fileName = "testMapFail.map";
+        String fileName = "maps/testMapFail.map";
         ClassLoader classLoader = new MapGeneratorFromFilesTest().getClass().getClassLoader();
         File mockMap = new File(classLoader.getResource(fileName).getFile());
         MapLoader mapLoader = new MapLoader();

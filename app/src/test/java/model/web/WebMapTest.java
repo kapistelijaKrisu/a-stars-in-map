@@ -75,10 +75,9 @@ public class WebMapTest {
 
     }
 
-    @Test //todo next last character
+    @Test
     public void isValidTest() {
         map.setMap(null);
-
         assertFalse(map.isValid());
         map.setTileTarget(2, 1);
         assertFalse(map.isValid());
@@ -89,7 +88,20 @@ public class WebMapTest {
         assertFalse(map.isValid());
         map.setTileStart(2, 2);
         assertTrue(map.isValid());
+    }
 
+    @Test
+    public void emptyMapNotValidTest() {
+        map.setMap(new int[0][0]);
+        assertFalse(map.isValid());
+        map.setTileTarget(2, 1);
+        assertFalse(map.isValid());
+        map.setTileStart(1, 2);
+        assertFalse(map.isValid());
+        map.setTileStart(-1, -1);
+        assertFalse(map.isValid());
+        map.setTileStart(2, 2);
+        assertFalse(map.isValid());
     }
 
     @Test

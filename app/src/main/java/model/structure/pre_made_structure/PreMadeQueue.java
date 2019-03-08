@@ -1,11 +1,12 @@
 package model.structure.pre_made_structure;
 
-import model.structure.Queue;
+import model.structure.structure_interface.Queue;
 
 import java.util.ArrayDeque;
 
 /**
  * Encapsulates ArrayDeque of java exposing only queue methods needed by search algorithms
+ *
  * @param <T> Type of element to hold
  */
 
@@ -23,6 +24,7 @@ public class PreMadeQueue<T> implements Queue<T> {
 
     /**
      * ArrayDeque.pollFirst or null if empty
+     *
      * @return polled element
      */
     @Override
@@ -31,7 +33,6 @@ public class PreMadeQueue<T> implements Queue<T> {
     }
 
     /**
-     *
      * @return ArrayDeque.isEmpty
      */
     @Override

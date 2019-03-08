@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeightedPoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.web</a> &gt; <span class="el_source">WeightedPoint.java</span></div><h1>WeightedPoint.java</h1><pre class="source lang-java linenums">package model.web;
+
+import java.awt.*;
+import java.util.Objects;
+
+/**
+ * Extension of java.awt.Point that has an additional value weight of double type
+ */
+public class WeightedPoint extends Point implements Comparable&lt;WeightedPoint&gt; {
+    public double weight;
+    private static final double DIVIDER_TO_KEEP_DISTANCE_LESS_THAN_ACTUALLY_IS = 1.42;
+
+    /**
+     * @param x      x of Point
+     * @param y      y of Point
+     * @param weight weight of WeightedPoint
+     */
+<span class="fc" id="L18">    public WeightedPoint(int x, int y, double weight) {</span>
+<span class="fc" id="L19">        this.x = x;</span>
+<span class="fc" id="L20">        this.y = y;</span>
+<span class="fc" id="L21">        this.weight = weight;</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * Creates a Weighted point with a weight of 1
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     */
+<span class="nc" id="L30">    public WeightedPoint(int x, int y) {</span>
+        //used in testing
+<span class="nc" id="L32">        this.x = x;</span>
+<span class="nc" id="L33">        this.y = y;</span>
+<span class="nc" id="L34">        this.weight = 1;</span>
+<span class="nc" id="L35">    }</span>
+
+    /**
+     * Calculates a rough estimation of distance by |this.x - other.x| + |this.y - other.y| / 1.42
+     * side can be at most 1.414x bigger at sides being 45 degrees so we use 1.42 to keep estimated distance less or equal to actual distance.
+     *
+     * @param distanceTo where to distance is calculated
+     * @return a rough estimate of distance to distanceTo point
+     */
+    public double calculateRoughDistance(WeightedPoint distanceTo) {
+<span class="fc" id="L45">        return (Math.abs(x - distanceTo.x) + Math.abs(y - distanceTo.y)) / DIVIDER_TO_KEEP_DISTANCE_LESS_THAN_ACTUALLY_IS;</span>
+        //return this.distance(distanceTo);// too heavy
+
+        //double px = distanceTo.getX() - this.getX();
+        //double py = distanceTo.getY() - this.getY();
+        //return Math.sqrt(px * px + py * py);
+    }
+
+    /**
+     * compares weights
+     *
+     * @param o to compare with
+     * @return result of weight - o.weight
+     */
+    @Override
+    public int compareTo(WeightedPoint o) {
+<span class="fc" id="L61">        return (int) (weight - o.weight);</span>
+    }
+
+    /**
+     * Checks if coordinates are same then considers to be equal object
+     *
+     * @param o to compare with
+     * @return true if their x and y coordinate is same. Ignores weight
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L74">        WeightedPoint that = (WeightedPoint) o;</span>
+<span class="fc bfc" id="L75" title="All 4 branches covered.">        return y == that.y &amp;&amp;</span>
+                x == that.x;
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L81">        return Objects.hash(y, x);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L86">        return &quot;x: &quot; + x + &quot; y: &quot; + y + &quot; w: &quot; + weight;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

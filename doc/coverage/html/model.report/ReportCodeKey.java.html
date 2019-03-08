@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportCodeKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.report</a> &gt; <span class="el_source">ReportCodeKey.java</span></div><h1>ReportCodeKey.java</h1><pre class="source lang-java linenums">package model.report;
+
+<span class="fc" id="L3">public enum ReportCodeKey {</span>
+<span class="fc" id="L4">    ALGORITHM_NAME(&quot;{algorithm}&quot;),</span>
+<span class="fc" id="L5">    CPU(&quot;{env_cpu}&quot;),</span>
+<span class="fc" id="L6">    OS(&quot;{env_os}&quot;),</span>
+<span class="fc" id="L7">    COMPILER(&quot;{env_compiler}&quot;),</span>
+<span class="fc" id="L8">    RUNTIME(&quot;{env_runtime}&quot;),</span>
+<span class="fc" id="L9">    VM_NAME(&quot;{env_vm_name}&quot;),</span>
+<span class="fc" id="L10">    VM_VERSION(&quot;{env_vm_version}&quot;),</span>
+<span class="fc" id="L11">    ENV_HEAP(&quot;{env_heap}&quot;),</span>
+<span class="fc" id="L12">    MAP_INFO(&quot;{map_info}&quot;),</span>
+<span class="fc" id="L13">    THEORY_TIME_COMPLEXITY(&quot;{al_time}&quot;),</span>
+<span class="fc" id="L14">    THEORY_SPACE_COMPLEXITY(&quot;{al_space}&quot;),</span>
+<span class="fc" id="L15">    IMPLEMENTATION_INFO(&quot;{al_doc}&quot;),</span>
+<span class="fc" id="L16">    SPACE_USED(&quot;{test_space}&quot;),</span>
+<span class="fc" id="L17">    STEPS_USED(&quot;{test_used_steps}&quot;),</span>
+<span class="fc" id="L18">    PROCESSED_MAP(&quot;{test_processed_map}&quot;),</span>
+<span class="fc" id="L19">    PATH_WEIGHT(&quot;{test_path_weight}&quot;),</span>
+<span class="fc" id="L20">    MAX_STEPS(&quot;{test_max_steps}&quot;),</span>
+<span class="fc" id="L21">    TIME_USED(&quot;{test_time}&quot;);</span>
+
+    private final String stringValue;
+
+<span class="fc" id="L25">    ReportCodeKey(String stringValue) {</span>
+<span class="fc" id="L26">        this.stringValue = stringValue;</span>
+<span class="fc" id="L27">    }</span>
+
+    public String getStringValue() {
+<span class="fc" id="L30">        return stringValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

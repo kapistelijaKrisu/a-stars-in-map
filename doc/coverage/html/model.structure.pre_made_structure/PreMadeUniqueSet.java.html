@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PreMadeUniqueSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure.pre_made_structure</a> &gt; <span class="el_source">PreMadeUniqueSet.java</span></div><h1>PreMadeUniqueSet.java</h1><pre class="source lang-java linenums">package model.structure.pre_made_structure;
+
+import model.structure.structure_interface.UniqueSet;
+
+import java.util.HashSet;
+
+/**
+ * Encapsulates HashSet of java exposing only methods needed by search algorithms
+ * @param &lt;T&gt; Type of element to hold
+ */
+
+public class PreMadeUniqueSet&lt;T&gt; implements UniqueSet&lt;T&gt; {
+    private HashSet&lt;T&gt; hashSet;
+
+    /**
+     * creates new HashSet
+     */
+<span class="fc" id="L18">    public PreMadeUniqueSet() {</span>
+<span class="fc" id="L19">        hashSet = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L20">    }</span>
+
+    /**
+     * Same as HashSet add
+     * @param t to add
+     */
+    @Override
+    public void add(T t) {
+<span class="fc" id="L28">        hashSet.add(t);</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     *
+     * @param t to check if exists in set or not
+     * @return true if hashSet contains returns true
+     */
+    @Override
+    public boolean contains(T t) {
+<span class="fc" id="L38">        return hashSet.contains(t);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

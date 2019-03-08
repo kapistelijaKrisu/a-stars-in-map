@@ -43,5 +43,5 @@ Tests are written in unit tests, each root folder with own goal in mind. Tests e
 
 ## Not testing
 * Output - Reason UI is not a priority.
-* Classes requiring runtime, hardware, directory structure information or writing into a file. These are listed in build.gradle under jacocoTestReport task. - Reason they might pass even though under different environment conditions they would fail.
+* Classes requiring runtime, hardware, directory structure information or writing into a file. These are listed in build.gradle under jacocoTestReport task. - Reason they might pass test but under different environment conditions they would not work.
 

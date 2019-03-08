@@ -1,6 +1,6 @@
 package model.structure.custom_structure;
 
-import model.structure.Stack;
+import model.structure.structure_interface.Stack;
 
 /**
  * Last-in-first-out classic Stack implementation.

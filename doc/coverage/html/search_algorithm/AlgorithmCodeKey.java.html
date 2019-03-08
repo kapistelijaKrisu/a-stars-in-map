@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AlgorithmCodeKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">search_algorithm</a> &gt; <span class="el_source">AlgorithmCodeKey.java</span></div><h1>AlgorithmCodeKey.java</h1><pre class="source lang-java linenums">package search_algorithm;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Map between easily readable algorithm implementation types and their codes.
+ */
+
+<span class="fc" id="L10">public enum AlgorithmCodeKey {</span>
+<span class="fc" id="L11">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;bcp&quot;),</span>
+<span class="fc" id="L12">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bcs&quot;),</span>
+<span class="fc" id="L13">    WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bcd&quot;),</span>
+<span class="fc" id="L14">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;bsp&quot;),</span>
+<span class="fc" id="L15">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;bss&quot;),</span>
+<span class="fc" id="L16">    WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;bsd&quot;),</span>
+
+<span class="fc" id="L18">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET(&quot;scp&quot;),</span>
+<span class="fc" id="L19">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;scs&quot;),</span>
+<span class="fc" id="L20">    DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;scd&quot;),</span>
+<span class="fc" id="L21">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET(&quot;ssp&quot;),</span>
+<span class="fc" id="L22">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET(&quot;sss&quot;),</span>
+<span class="fc" id="L23">    DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET(&quot;ssd&quot;),</span>
+
+<span class="fc" id="L25">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dh2&quot;),</span>
+<span class="fc" id="L26">    DIJKSTRA_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dh1&quot;),</span>
+<span class="fc" id="L27">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;dc2&quot;),</span>
+<span class="fc" id="L28">    DIJKSTRA_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;dc1&quot;),</span>
+
+<span class="fc" id="L30">    A_STAR_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ah2&quot;),</span>
+<span class="fc" id="L31">    A_STAR_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ah1&quot;),</span>
+<span class="fc" id="L32">    A_STAR_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY(&quot;ac2&quot;),</span>
+<span class="fc" id="L33">    A_STAR_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY(&quot;ac1&quot;);</span>
+
+    // Reverse-lookup map for getting a code key from an abbreviation
+<span class="fc" id="L36">    private static final Map&lt;String, AlgorithmCodeKey&gt; lookup = new HashMap&lt;&gt;();</span>
+
+    private final String stringValue;
+
+<span class="fc" id="L40">    AlgorithmCodeKey(String stringValue) {</span>
+<span class="fc" id="L41">        this.stringValue = stringValue;</span>
+<span class="fc" id="L42">    }</span>
+
+    public String getStringValue() {
+<span class="fc" id="L45">        return stringValue;</span>
+    }
+
+
+    static {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (AlgorithmCodeKey d : AlgorithmCodeKey.values()) {</span>
+<span class="fc" id="L51">            lookup.put(d.getStringValue(), d);</span>
+        }
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * inside-out enum getter, gets the AlgorithmCodeKey of corresponding abbreviation.
+     * @param abbreviation search up parameter
+     * @return AlgorithmCodeKey of the parameter or null if doesn't exist
+     */
+    public static AlgorithmCodeKey get(String abbreviation) {
+<span class="fc" id="L61">        return lookup.get(abbreviation);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

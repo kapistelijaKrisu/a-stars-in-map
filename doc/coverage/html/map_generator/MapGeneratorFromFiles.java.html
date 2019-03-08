@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapGeneratorFromFiles.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">map_generator</a> &gt; <span class="el_source">MapGeneratorFromFiles.java</span></div><h1>MapGeneratorFromFiles.java</h1><pre class="source lang-java linenums">package map_generator;
+
+import file_operations.root_file_operations.RootFileLister;
+import file_operations.root_file_operations.RootFolderFinder;
+import file_operations.map_reader.MapLoader;
+import model.web.WebMap;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Generates an in app memory of a WebMap that is read from map directory.
+ * User is asked which map from the directory is loaded. Uses RootFileLister to find map files under /maps directory.
+ */
+public class MapGeneratorFromFiles implements MapGenerator {
+    private Scanner scanner;
+    private static final String USER_WANTS_TO_EXIT = &quot;q&quot;;
+    private MapLoader mapLoader;
+    private RootFileLister mapLocator;
+
+<span class="fc" id="L23">    public MapGeneratorFromFiles(Scanner scanner) {</span>
+<span class="fc" id="L24">        this.scanner = scanner;</span>
+<span class="fc" id="L25">        mapLocator = new RootFileLister();</span>
+<span class="fc" id="L26">        mapLoader = new MapLoader();</span>
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * if mapl folder exists and has files then asks user which map to load
+     *
+     * @return WebMap from file, if file has mistakes or map is not valid returns null. If map folder at app level directory is empty returns null. refer to app_definition.md for a valid map file.
+     */
+    @Override
+    public WebMap createMap() {
+        while (true) {
+            try {
+<span class="fc" id="L38">                var foundMaps = listMaps();</span>
+<span class="fc" id="L39">                System.out.println(&quot;Choose map by typing its number&quot;);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                for (int i = 0; i &lt; foundMaps.size(); i++) {</span>
+<span class="fc" id="L41">                    System.out.println(i + &quot;: &quot; + foundMaps.get(i).getName());</span>
+                }
+<span class="fc" id="L43">                System.out.println(&quot;Press &quot; + USER_WANTS_TO_EXIT + &quot; to exit&quot;);</span>
+<span class="fc" id="L44">                var userChoice = scanner.nextLine();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                if (userChoice.equals(USER_WANTS_TO_EXIT)) {</span>
+<span class="fc" id="L46">                    return null;</span>
+                } else {
+<span class="fc" id="L48">                    WebMap map = mapLoader.loadMapFromFile(foundMaps.get(Integer.parseInt(userChoice)));</span>
+<span class="pc bpc" id="L49" title="2 of 4 branches missed.">                    if (map != null &amp;&amp; map.isValid()) return map;</span>
+<span class="nc" id="L50">                    System.out.println(&quot;Map is not valid. Please check the map file&quot;);</span>
+<span class="nc" id="L51">                    return null;</span>
+                }
+<span class="fc" id="L53">            } catch (IndexOutOfBoundsException | NullPointerException | NumberFormatException e) {</span>
+<span class="fc" id="L54">                System.out.println(&quot;Illegal input!&quot;);</span>
+<span class="nc" id="L55">            } catch (IOException e) {</span>
+<span class="nc" id="L56">                System.out.println(e.getMessage());</span>
+<span class="nc" id="L57">                return null;</span>
+<span class="fc" id="L58">            }</span>
+        }
+    }
+
+    private List&lt;File&gt; listMaps() throws IOException {
+<span class="fc" id="L63">        List&lt;File&gt; foundMaps = mapLocator.listFiles(&quot;/maps&quot;, &quot;.map&quot;);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (foundMaps.size() == 0) {</span>
+<span class="nc" id="L65">            throw new IOException(&quot;No maps found in&quot; + RootFolderFinder.getRootFolder() + &quot;maps/. Or folder does not exist!&quot;);</span>
+        } else {
+<span class="fc" id="L67">            return foundMaps;</span>
+        }
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L73">        return &quot;map loader from ../maps directory&quot;;</span>
+    }
+
+    // for testing
+
+
+    public void setMapLocator(RootFileLister mapLocator) {
+<span class="fc" id="L80">        this.mapLocator = mapLocator;</span>
+<span class="fc" id="L81">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,11 +1,12 @@
 package model.structure.pre_made_structure;
 
-import model.structure.Heap;
+import model.structure.structure_interface.Heap;
 
 import java.util.PriorityQueue;
 
 /**
  * Encapsulates PriorityQueue of java exposing only heap methods needed by search algorithms
+ *
  * @param <T> Type of element to hold
  */
 
@@ -20,7 +21,6 @@ public class PreMadeHeap<T> implements Heap<T> {
     }
 
     /**
-     *
      * @return PriorityQueue.poll result
      */
     @Override
@@ -30,6 +30,7 @@ public class PreMadeHeap<T> implements Heap<T> {
 
     /**
      * Calls PriorityQueue.add
+     *
      * @param element to add
      */
     @Override
@@ -38,7 +39,6 @@ public class PreMadeHeap<T> implements Heap<T> {
     }
 
     /**
-     *
      * @return PriorityQueue.isEmpty result
      */
     @Override
@@ -47,7 +47,6 @@ public class PreMadeHeap<T> implements Heap<T> {
     }
 
     /**
-     *
      * @param element that is checked with equals if exists in heap
      * @return PriorityQueue.contains result with param
      */

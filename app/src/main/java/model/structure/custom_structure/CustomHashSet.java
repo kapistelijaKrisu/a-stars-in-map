@@ -1,10 +1,10 @@
 package model.structure.custom_structure;
 
-import model.structure.UniqueSet;
+import model.structure.structure_interface.UniqueSet;
 
 /**
  * Set implementation. Only methods needed by search algorithms are implemented.
- * Classic set implementation. Holds an array of lists that holds objects.
+ * Classic set implementation. Holds an array of lists that holds objects. array is set size.
  *
  * @param <T> Type of object to contain
  */
@@ -16,16 +16,17 @@ public class CustomHashSet<T> implements UniqueSet<T> {
         private final T value;
         private Node<T> after;
 
-
         private Node(T value) {
             this.value = value;
             this.after = null;
-
         }
-
     }
 
-    public CustomHashSet(final int capacity) {
+    /**
+     * @param capacity size of the table where objects will be stored
+     * @throws IllegalArgumentException if capacity is 0 or below
+     */
+    public CustomHashSet(final int capacity) throws IllegalArgumentException {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity should be over 0");
         }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RootFileWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.root_file_operations</a> &gt; <span class="el_source">RootFileWriter.java</span></div><h1>RootFileWriter.java</h1><pre class="source lang-java linenums">package file_operations.root_file_operations;
+
+import system_tools.DateConverter;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+
+<span class="nc" id="L11">public class RootFileWriter {</span>
+
+    public static void writeMdFileWithTime(String content, String reportFilePath, String fileName, String fileType) throws IOException {
+<span class="nc bnc" id="L14" title="All 2 branches missed.">        if (fileName == null) throw new IOException(&quot;No file path given&quot;);</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (fileType == null) throw new IOException(&quot;No file type given&quot;);</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        if (content == null) throw new IOException(&quot;No content given to write&quot;);</span>
+
+<span class="nc" id="L18">        var resultingFileName = fileName + &quot; &quot; + DateConverter.getDateAsString(LocalDateTime.now()) + fileType;</span>
+<span class="nc" id="L19">        var root = RootFolderFinder.getRootFolder();</span>
+<span class="nc" id="L20">        PrintWriter writer = new PrintWriter(</span>
+                new BufferedWriter(
+                        new FileWriter(
+<span class="nc bnc" id="L23" title="All 2 branches missed.">                                root + (reportFilePath == null ? &quot;/&quot; : ( &quot;/&quot; + reportFilePath + &quot;/&quot;) ) + resultingFileName, false)));</span>
+<span class="nc" id="L24">        writer.write(content);</span>
+<span class="nc" id="L25">        writer.close();</span>
+<span class="nc" id="L26">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

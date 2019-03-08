@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalysisReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">file_operations.analysis_overview</a> &gt; <span class="el_source">AnalysisReader.java</span></div><h1>AnalysisReader.java</h1><pre class="source lang-java linenums">package file_operations.analysis_overview;
+
+import file_operations.common.ReportMetaFileKey;
+import model.report.ReportMeta;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+<span class="fc" id="L10">public class AnalysisReader {</span>
+    private static final int META_DATA_AT_LINE = 0;
+
+    public ReportMeta loadAnalysisFromFile(File analysisFile) throws IOException {
+<span class="fc" id="L14">        String fullReport = Files.readAllLines(Paths.get(analysisFile.getPath())).get(META_DATA_AT_LINE);</span>
+<span class="fc" id="L15">        var report = new ReportMeta();</span>
+
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        for (ReportMetaFileKey reportMetaFileKey : ReportMetaFileKey.values()) {</span>
+<span class="fc" id="L18">            String metadataWrapper = reportMetaFileKey.getStringValue();</span>
+<span class="fc" id="L19">            int first = fullReport.indexOf(metadataWrapper) + metadataWrapper.length();</span>
+            //offset beginning so it will catch the 2nd aka ending tag
+<span class="fc" id="L21">            int second = fullReport.indexOf(metadataWrapper, first + 1);</span>
+
+            //indexOf return -1 if didn't find
+<span class="pc bpc" id="L24" title="2 of 4 branches missed.">            if (first == -1 || second == -1) continue;</span>
+<span class="fc" id="L25">            String reportValue = fullReport.substring(first, second);</span>
+<span class="fc" id="L26">            setMetaValue(report, reportMetaFileKey, reportValue);</span>
+        }
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (!report.isValid()) throw new IOException(&quot;ReportMeta was not loaded correctly&quot;);</span>
+<span class="fc" id="L29">        return report;</span>
+    }
+
+    private void setMetaValue(ReportMeta report, ReportMetaFileKey reportMetaFileKey, String reportValue) {
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (reportMetaFileKey == null) return;</span>
+<span class="pc bpc" id="L34" title="1 of 8 branches missed.">        switch (reportMetaFileKey) {</span>
+            case ALGORITHM_NAME:
+<span class="fc" id="L36">                report.setAlgorithmName(reportValue);</span>
+<span class="fc" id="L37">                break;</span>
+            case ALGORITHM_IMPL:
+<span class="fc" id="L39">                report.setAlgorithmImplementationType(reportValue);</span>
+<span class="fc" id="L40">                break;</span>
+            case TEST_PATH_WEIGHT:
+<span class="fc" id="L42">                report.setTestPathWeight(Double.parseDouble(reportValue));</span>
+<span class="fc" id="L43">                break;</span>
+            case TEST_SPACE_USED:
+<span class="fc" id="L45">                report.setTestSpace(Double.parseDouble(reportValue));</span>
+<span class="fc" id="L46">                break;</span>
+            case TEST_STEPS_USED:
+<span class="fc" id="L48">                report.setTestUsedSteps(Double.parseDouble(reportValue));</span>
+<span class="fc" id="L49">                break;</span>
+            case TEST_TIME_USED:
+<span class="fc" id="L51">                report.setTestTime(Double.parseDouble(reportValue));</span>
+<span class="fc" id="L52">                break;</span>
+            case MAP_MAX_STEPS:
+<span class="fc" id="L54">                report.setTestMaxSteps(Long.parseLong(reportValue));</span>
+                break;
+        }
+<span class="fc" id="L57">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

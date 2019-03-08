@@ -1,11 +1,12 @@
 package model.structure.pre_made_structure;
 
-import model.structure.Stack;
+import model.structure.structure_interface.Stack;
 
 import java.util.ArrayDeque;
 
 /**
  * Encapsulates ArrayDeque of java exposing only stack methods needed by search algorithms
+ *
  * @param <T> Type of element to hold
  */
 
@@ -21,6 +22,7 @@ public class PreMadeStack<T> implements Stack<T> {
 
     /**
      * Calls ArrayDeque.add
+     *
      * @param element to add
      */
     @Override
@@ -30,6 +32,7 @@ public class PreMadeStack<T> implements Stack<T> {
 
     /**
      * ArrayDeque.pollLast or null if empty
+     *
      * @return polled element
      */
     @Override
@@ -38,7 +41,6 @@ public class PreMadeStack<T> implements Stack<T> {
     }
 
     /**
-     *
      * @return ArrayDeque.isEmpty
      */
     @Override

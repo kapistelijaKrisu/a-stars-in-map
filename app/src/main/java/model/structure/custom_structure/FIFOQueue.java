@@ -1,6 +1,6 @@
 package model.structure.custom_structure;
 
-import model.structure.Queue;
+import model.structure.structure_interface.Queue;
 
 /**
  * First-in-first-out queue
@@ -67,6 +67,11 @@ public class FIFOQueue<T> implements Queue<T> {
         return next;
     }
 
+    /**
+     * tells if this queue is empty.
+     *
+     * @return if head is null
+     */
     @Override
     public boolean isEmpty() {
         return head == null;

@@ -1,6 +1,6 @@
 package model.structure.custom_structure;
 
-import model.structure.UniqueSet;
+import model.structure.structure_interface.UniqueSet;
 
 /**
  * Set implementation. Only methods needed by search algorithms are implemented.
@@ -23,7 +23,6 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
         private final T value;
         private Node<T> after;
 
-
         private Node(T value) {
             this.value = value;
             this.after = null;
@@ -32,7 +31,6 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
     }
 
     /**
-     *
      * @param capacity percentage between to aim the array size at to handle how big collision chains can get
      */
     public CustomHashSetDynamicSize(final int capacity) {
@@ -51,6 +49,7 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
     /**
      * Adds param to set if doesn't exist.
      * If threshold of lists having a non-null object in array hits value that was given in constructor then it will double the array size.
+     *
      * @param t to add to heap
      */
     public void add(T t) {
@@ -95,7 +94,6 @@ public class CustomHashSetDynamicSize<T> implements UniqueSet<T> {
     }
 
     /**
-     *
      * @param t to check if exists in set or not
      * @return true if t exists in set
      */

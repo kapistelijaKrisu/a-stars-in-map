@@ -1,6 +1,6 @@
 package model.structure.custom_structure;
 
-import model.structure.Heap;
+import model.structure.structure_interface.Heap;
 
 import java.util.Arrays;
 

@@ -1,5 +1,7 @@
 package model.web;
 
+import system_tools.LegalFileName;
+
 import java.util.ArrayDeque;
 import java.util.Collection;
 
@@ -18,7 +20,7 @@ public class WebMap {
     private int startX, startY, targetX, targetY;
     private String name;
     private static final int WALL = 0;
-    private static final char[] ILLEGAL_CHARACTERS = {'/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':'};
+
 
     public WebMap() {
         name = "nameless map";
@@ -59,29 +61,53 @@ public class WebMap {
     }
 
     /**
-     * @return true if such a map is considered valid, requirements:
+     * @return true if such a map is considered valid else prints out all errors and returns false, requirements:
      * width and height of map above 0
      * starting location tileStart exists within map
      * target location tileTarget exists within map
      * target or start point is not a wall
-     * name is not null and can be used as a file name
+     * LegalFileName.isValidFileName(name) returns true
      * width is less or equal to 10000, height is less or equal to 10000
      */
     public boolean isValid() {
-        boolean valid = !(map == null || !isAvailableLocation(startX, startY) || !isAvailableLocation(targetX, targetY) || name == null);
-        if (!valid) return false;
-        valid = map.length > 0 && map[0].length > 0;
-        if (!valid) return false;
-        valid = (map.length <= MAX_HEIGHT && map[0].length <= MAX_WIDTH);
-        if (!valid) return false;
-        valid = startX >= 0 && startX < map[0].length && startY >= 0 && startY < map.length;
-        if (!valid) return false;
-        valid = targetX >= 0 && targetX < map[0].length && targetY >= 0 && targetY < map.length;
-        if (!valid) return false;
-        for (int i = 0; i < ILLEGAL_CHARACTERS.length; i++) {
-            for (char charAt : name.toCharArray()) {
-                if (charAt == ILLEGAL_CHARACTERS[i]) return false;
+        if (map == null) {
+            System.out.println("map cannot be null");
+            return false;
+        }
+        try {
+            if (!isAvailableLocation(startX, startY)) {
+                System.out.println("Start Coordinates are invalid");
+                return false;
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Start Coordinates are invalid");
+            return false;
+        }
+        try {
+            if (!isAvailableLocation(targetX, targetY) || name == null) {
+                System.out.println("Target Coordinates are invalid");
+                return false;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Target Coordinates are invalid");
+            return false;
+        }
+        try {
+            if (map.length <= 0 && map[0].length <= 0) {
+                System.out.println("map height and width cannot be 0 or lower");
+                return false;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("map height and width cannot be 0 or lower");
+            return false;
+        }
+        if (map.length > MAX_HEIGHT && map[0].length > MAX_WIDTH) {
+            System.out.println("map height cannot exceed " + MAX_HEIGHT + " and width cannot exceed " + MAX_WIDTH);
+            return false;
+        }
+        if (!LegalFileName.isValidFileName(name)) {
+            System.out.println("Illegal name!");
+            return false;
         }
         return true;
     }
@@ -103,7 +129,6 @@ public class WebMap {
 
         return mapInString;
     }
-
 
     /**
      * @return current starting location

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">app</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package app;
+
+import file_operations.analysis_overview.AnalysisInspector;
+import file_operations.analysis_overview.AnalysisCollector;
+import file_operations.analysis_writer.AnalysisWriter;
+import map_generator.MapGenerator;
+import map_generator.MapGeneratorFromFiles;
+import map_generator.NoWeightSimpleGenerator;
+import model.web.WebMap;
+import search_algorithm.*;
+import model.structure.structure_type_enum.*;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * Main program that consists of two parts.
+ * Generating map instance of WebMap class for an algorithm.
+ * Running an algorithm of choice from list with set map and writes results on a file.
+ */
+
+public class App {
+
+    private static final String GENERATE_MAP = &quot;1&quot;, RUN_ALGORITHM_ANALYSIS = &quot;2&quot;, CREATE_STATISTICS = &quot;3&quot;;
+    private static final String SIMPLE_GENERATOR = &quot;s&quot;, LOAD_MAP_GENERATOR = &quot;d&quot;;
+    private static final boolean RUNNING = true, STOPPED = false;
+    private static final String OPTION_TO_RUN_ALL_SEARCHES = &quot;a&quot;;
+
+    private Scanner scanner;
+    private Map&lt;String, MapGenerator&gt; mapGenerators;
+    private Map&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; algorithmMap;
+    private AnalysisInspector analysisInspector;
+    private AnalysisCollector analysisCollector;
+    private boolean state;
+    private WebMap currentMap;
+
+    /**
+     * Sets up app to be ready to run.
+     *
+     * @param scanner        scanner for user input to be used and shared with rest of the app.
+     * @param analysisWriter writer to write down search analysis results.
+     */
+<span class="fc" id="L44">    public App(Scanner scanner, AnalysisWriter analysisWriter) {</span>
+<span class="fc" id="L45">        this.scanner = scanner;</span>
+<span class="fc" id="L46">        state = STOPPED;</span>
+<span class="fc" id="L47">        currentMap = new WebMap();</span>
+
+<span class="fc" id="L49">        mapGenerators = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L50">        mapGenerators.put(SIMPLE_GENERATOR, new NoWeightSimpleGenerator(scanner));</span>
+<span class="fc" id="L51">        mapGenerators.put(LOAD_MAP_GENERATOR, new MapGeneratorFromFiles(scanner));</span>
+<span class="fc" id="L52">        analysisInspector = new AnalysisInspector();</span>
+<span class="fc" id="L53">        analysisCollector = new AnalysisCollector();</span>
+<span class="fc" id="L54">        setUpAlgorithms(analysisWriter);</span>
+<span class="fc" id="L55">    }</span>
+
+    private void setUpAlgorithms(AnalysisWriter analysisWriter) {
+<span class="fc" id="L58">        algorithmMap = new TreeMap&lt;&gt;();</span>
+
+<span class="fc" id="L60">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET, new DepthSearch(analysisWriter, StackType.CUSTOM_STACK, UniqueSetType.PRE_MADE_HASH_SET));</span>
+<span class="fc" id="L61">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET, new DepthSearch(analysisWriter, StackType.CUSTOM_STACK, UniqueSetType.CUSTOM_SET_SIZE_HASH_SET));</span>
+<span class="fc" id="L62">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET, new DepthSearch(analysisWriter, StackType.CUSTOM_STACK, UniqueSetType.CUSTOM_DYNAMIC_SIZE_HASH_SET));</span>
+<span class="fc" id="L63">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET, new DepthSearch(analysisWriter, StackType.PRE_MADE_STACK, UniqueSetType.PRE_MADE_HASH_SET));</span>
+<span class="fc" id="L64">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET, new DepthSearch(analysisWriter, StackType.PRE_MADE_STACK, UniqueSetType.CUSTOM_SET_SIZE_HASH_SET));</span>
+<span class="fc" id="L65">        algorithmMap.put(AlgorithmCodeKey.DEPTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET, new DepthSearch(analysisWriter, StackType.PRE_MADE_STACK, UniqueSetType.CUSTOM_DYNAMIC_SIZE_HASH_SET));</span>
+
+<span class="fc" id="L67">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_CUSTOM_STACK_AND_PRE_MADE_HASH_SET, new BreathSearch(analysisWriter, QueueType.CUSTOM_QUEUE, UniqueSetType.PRE_MADE_HASH_SET));</span>
+<span class="fc" id="L68">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_SET_SIZE_HASH_SET, new BreathSearch(analysisWriter, QueueType.CUSTOM_QUEUE, UniqueSetType.CUSTOM_SET_SIZE_HASH_SET));</span>
+<span class="fc" id="L69">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_CUSTOM_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET, new BreathSearch(analysisWriter, QueueType.CUSTOM_QUEUE, UniqueSetType.CUSTOM_DYNAMIC_SIZE_HASH_SET));</span>
+<span class="fc" id="L70">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_PRE_MADE_HASH_SET, new BreathSearch(analysisWriter, QueueType.PRE_MADE_QUEUE, UniqueSetType.PRE_MADE_HASH_SET));</span>
+<span class="fc" id="L71">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_SET_SIZE_HASH_SET, new BreathSearch(analysisWriter, QueueType.PRE_MADE_QUEUE, UniqueSetType.CUSTOM_SET_SIZE_HASH_SET));</span>
+<span class="fc" id="L72">        algorithmMap.put(AlgorithmCodeKey.WIDTH_FIRST_WITH_PRE_MADE_STACK_AND_CUSTOM_DYNAMIC_SIZE_HASH_SET, new BreathSearch(analysisWriter, QueueType.PRE_MADE_QUEUE, UniqueSetType.CUSTOM_DYNAMIC_SIZE_HASH_SET));</span>
+
+<span class="fc" id="L74">        algorithmMap.put(AlgorithmCodeKey.DIJKSTRA_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY, new Dijkstra(analysisWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_2D));</span>
+<span class="fc" id="L75">        algorithmMap.put(AlgorithmCodeKey.DIJKSTRA_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY, new Dijkstra(analysisWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_1D));</span>
+<span class="fc" id="L76">        algorithmMap.put(AlgorithmCodeKey.DIJKSTRA_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY, new Dijkstra(analysisWriter, HeapType.PRE_MADE_MIN_HEAP, DistanceMapType.ARRAY_2D));</span>
+<span class="fc" id="L77">        algorithmMap.put(AlgorithmCodeKey.DIJKSTRA_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY, new Dijkstra(analysisWriter, HeapType.PRE_MADE_MIN_HEAP, DistanceMapType.ARRAY_1D));</span>
+
+<span class="fc" id="L79">        algorithmMap.put(AlgorithmCodeKey.A_STAR_WITH_CUSTOM_HEAP_AND_2D_DISTANCES_ARRAY, new AStar(analysisWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_2D));</span>
+<span class="fc" id="L80">        algorithmMap.put(AlgorithmCodeKey.A_STAR_WITH_CUSTOM_HEAP_AND_1D_DISTANCES_ARRAY, new AStar(analysisWriter, HeapType.CUSTOM_MIN_HEAP, DistanceMapType.ARRAY_1D));</span>
+<span class="fc" id="L81">        algorithmMap.put(AlgorithmCodeKey.A_STAR_WITH_PRE_MADE_HEAP_AND_2D_DISTANCES_ARRAY, new AStar(analysisWriter, HeapType.PRE_MADE_MIN_HEAP, DistanceMapType.ARRAY_2D));</span>
+<span class="fc" id="L82">        algorithmMap.put(AlgorithmCodeKey.A_STAR_WITH_PRE_MADE_HEAP_AND_1D_DISTANCES_ARRAY, new AStar(analysisWriter, HeapType.PRE_MADE_MIN_HEAP, DistanceMapType.ARRAY_1D));</span>
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * Launches main program if not running already.
+     * User is asked for interaction.
+     * User is guided through options.
+     * Test results will be on same level as program in a path /doc/reports/
+     */
+
+    public void run() {
+<span class="fc" id="L93">        state = RUNNING;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        while (state == RUNNING) {</span>
+
+<span class="fc" id="L96">            System.out.println(&quot;press &quot; + GENERATE_MAP + &quot; to generate map&quot;);</span>
+<span class="fc" id="L97">            System.out.println(&quot;press &quot; + RUN_ALGORITHM_ANALYSIS + &quot; to run search algorhitm on set map&quot;);</span>
+<span class="fc" id="L98">            System.out.println(&quot;press &quot; + CREATE_STATISTICS + &quot; to create statistics based on reports for each map&quot;);</span>
+<span class="fc" id="L99">            System.out.println(&quot;press anything else to quit&quot;);</span>
+<span class="fc" id="L100">            String command = scanner.nextLine();</span>
+
+<span class="fc bfc" id="L102" title="All 4 branches covered.">            switch (command) {</span>
+                case GENERATE_MAP:
+<span class="fc" id="L104">                    generateMap();</span>
+<span class="fc" id="L105">                    break;</span>
+                case RUN_ALGORITHM_ANALYSIS:
+<span class="fc" id="L107">                    runSearch();</span>
+<span class="fc" id="L108">                    break;</span>
+                case CREATE_STATISTICS:
+<span class="fc" id="L110">                    createStatistics();</span>
+<span class="fc" id="L111">                    break;</span>
+                default:
+<span class="fc" id="L113">                    state = STOPPED;</span>
+                    break;
+            }
+<span class="fc" id="L116">        }</span>
+<span class="fc" id="L117">    }</span>
+
+    private void createStatistics() {
+<span class="fc" id="L120">        var reports = analysisCollector.collectFlattenedReports();</span>
+<span class="fc" id="L121">        analysisInspector.createAnalysisStatisticByMap(reports);</span>
+
+<span class="fc" id="L123">    }</span>
+
+    private void generateMap() {
+        try {
+<span class="fc" id="L127">            System.out.println(&quot;Choose generator to set map:&quot;);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            for (Map.Entry&lt;String, MapGenerator&gt; pair : mapGenerators.entrySet()) {</span>
+<span class="fc" id="L129">                System.out.println(&quot;press &quot; + pair.getKey() + &quot; for using: &quot; + pair.getValue().toString());</span>
+<span class="fc" id="L130">            }</span>
+<span class="fc" id="L131">            System.out.println(&quot;Press anything else to return to analysis program.&quot;);</span>
+<span class="fc" id="L132">            String userChoice = scanner.nextLine();</span>
+<span class="fc" id="L133">            var generatedMap = mapGenerators.get(userChoice).createMap();</span>
+<span class="pc bpc" id="L134" title="2 of 4 branches missed.">            if (generatedMap == null || !generatedMap.isValid()) {</span>
+<span class="nc" id="L135">                System.out.println(&quot;Errors in generated map. Map was not set!&quot;);</span>
+            } else {
+<span class="fc" id="L137">                this.currentMap = generatedMap;</span>
+<span class="fc" id="L138">                System.out.println(&quot;Map has been set!&quot;);</span>
+<span class="fc" id="L139">                System.out.println(&quot;Chosen map:&quot;);</span>
+<span class="fc" id="L140">                System.out.println(currentMap.getTextualView());</span>
+<span class="fc" id="L141">                System.out.println();</span>
+            }
+<span class="fc" id="L143">        } catch (Exception e) {</span>
+<span class="fc" id="L144">            System.out.println(&quot;Errors in input try again&quot;);</span>
+<span class="fc" id="L145">        }</span>
+<span class="fc" id="L146">    }</span>
+
+    private void runSearch() {
+<span class="fc bfc" id="L149" title="All 4 branches covered.">        if (currentMap != null &amp;&amp; currentMap.isValid()) {</span>
+<span class="fc" id="L150">            System.out.println(&quot;Choose algorithm to run on map:&quot;);</span>
+            try {
+<span class="fc" id="L152">               var filteredByName = filterAlgorithmsByName(algorithmMap);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">               if (filteredByName.size() == algorithmMap.size()) {</span>
+<span class="fc" id="L154">                   runAllAlgorithmAnalysis(filteredByName.values());</span>
+               } else {
+<span class="nc" id="L156">                   var filteredByImplementationType = filterAlgorithmsByAlgorithmCodeKey(filteredByName);</span>
+<span class="nc" id="L157">                   runAllAlgorithmAnalysis(filteredByImplementationType);</span>
+               }
+<span class="fc" id="L159">            } catch (NullPointerException | IndexOutOfBoundsException | NumberFormatException e) {</span>
+<span class="fc" id="L160">                System.out.println(&quot;Error. Input invalid. Returning back to main menu.&quot;);</span>
+<span class="fc" id="L161">            } catch (IOException | IllegalArgumentException | IllegalStateException e) {</span>
+<span class="fc" id="L162">                System.out.println(e.getMessage());</span>
+<span class="fc" id="L163">                System.out.println(&quot;Errors. Returning back to main menu.&quot;);</span>
+<span class="fc" id="L164">            }</span>
+        } else {
+<span class="fc" id="L166">            System.out.println(&quot;No map set. returning to main program&quot;);</span>
+        }
+<span class="fc" id="L168">    }</span>
+
+    private Map&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; filterAlgorithmsByName(Map&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; filterFrom) {
+<span class="fc" id="L171">        List&lt;String&gt; algorithmsByCriteria = filterFrom.values().stream().map(AnalysableAlgorithm::getName).distinct().collect( Collectors.toCollection(ArrayList::new));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        for (int i = 0; i &lt; algorithmsByCriteria.size(); i++) {</span>
+<span class="fc" id="L173">            System.out.println(&quot;press &quot; + i + &quot; for choosing: &quot; + algorithmsByCriteria.get(i));</span>
+        }
+<span class="fc" id="L175">        System.out.println(&quot;press &quot; + OPTION_TO_RUN_ALL_SEARCHES + &quot; for choosing All&quot;);</span>
+<span class="fc" id="L176">        String upperOption = scanner.nextLine();</span>
+
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        if (upperOption.equals(OPTION_TO_RUN_ALL_SEARCHES)) {</span>
+<span class="fc" id="L179">            return filterFrom;</span>
+        } else {
+<span class="nc" id="L181">            var chosenAlgorithmName = algorithmsByCriteria.get(Integer.parseInt(upperOption));</span>
+<span class="nc" id="L182">            var chosenAlgorithms = filterFrom.entrySet().stream().filter(e -&gt; e.getValue().getName().equals(chosenAlgorithmName))</span>
+<span class="nc" id="L183">                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (chosenAlgorithms.isEmpty()) throw new IndexOutOfBoundsException();</span>
+<span class="nc" id="L185">            return chosenAlgorithms;</span>
+        }
+    }
+
+    private Collection&lt;AnalysableAlgorithm&gt; filterAlgorithmsByAlgorithmCodeKey(Map&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; filterFrom) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        for (Map.Entry&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; pair : filterFrom.entrySet()) {</span>
+<span class="nc" id="L191">            System.out.println(&quot;press &quot; + pair.getKey().getStringValue() + &quot; for choosing: &quot; + pair.getKey().getStringValue());</span>
+<span class="nc" id="L192">        }</span>
+<span class="nc" id="L193">        System.out.println(&quot;press &quot; + OPTION_TO_RUN_ALL_SEARCHES + &quot; for choosing All&quot;);</span>
+
+<span class="nc" id="L195">        String upperOption = scanner.nextLine();</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (upperOption.equals(OPTION_TO_RUN_ALL_SEARCHES)) {</span>
+<span class="nc" id="L198">            return filterFrom.values();</span>
+        } else {
+<span class="nc" id="L200">            return filterFrom.entrySet().stream().filter(e -&gt; upperOption.equals(e.getKey().getStringValue()))</span>
+<span class="nc" id="L201">                    .map(Map.Entry::getValue).collect(Collectors.toCollection(ArrayList::new));</span>
+        }
+    }
+
+    private void runAllAlgorithmAnalysis(Collection&lt;AnalysableAlgorithm&gt; algorithmList) throws IOException {
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        for (AnalysableAlgorithm analysableAlgorithm : algorithmList) {</span>
+<span class="fc" id="L207">                analysableAlgorithm.setMapClean(currentMap);</span>
+<span class="fc" id="L208">                analysableAlgorithm.runSearch();</span>
+<span class="fc" id="L209">        }</span>
+<span class="fc" id="L210">    }</span>
+
+    // for testing
+    public void setAlgorithmMap(Map&lt;AlgorithmCodeKey, AnalysableAlgorithm&gt; algorithmMap) {
+<span class="fc" id="L214">        this.algorithmMap = algorithmMap;</span>
+<span class="fc" id="L215">    }</span>
+    public void setMapGenerators(Map&lt;String, MapGenerator&gt; mapGenerators) {
+<span class="fc" id="L217">        this.mapGenerators = mapGenerators;</span>
+<span class="fc" id="L218">    }</span>
+
+    public void setCurrentMap(WebMap currentMap) {
+<span class="fc" id="L221">        this.currentMap = currentMap;</span>
+<span class="fc" id="L222">    }</span>
+
+    public WebMap getCurrentMap() {
+<span class="fc" id="L225">        return currentMap;</span>
+    }
+
+    public void setAnalysisInspector(AnalysisInspector analysisInspector) {
+<span class="fc" id="L229">        this.analysisInspector = analysisInspector;</span>
+<span class="fc" id="L230">    }</span>
+
+    public void setScanner(Scanner scanner) {
+<span class="fc" id="L233">        this.scanner = scanner;</span>
+<span class="fc" id="L234">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

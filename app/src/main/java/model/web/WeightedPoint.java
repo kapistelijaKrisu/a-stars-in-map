@@ -28,6 +28,7 @@ public class WeightedPoint extends Point implements Comparable<WeightedPoint> {
      * @param y y coordinate
      */
     public WeightedPoint(int x, int y) {
+        //used in testing
         this.x = x;
         this.y = y;
         this.weight = 1;

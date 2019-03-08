@@ -1,8 +1,11 @@
 package search_algorithm;
 
-import mock.SystemLine;
 import mock.MockAnalysisWriter;
+import mock.SystemLine;
 import mock.WebMapMock;
+import model.report.ReportMeta;
+import model.structure.structure_type_enum.DistanceMapType;
+import model.structure.structure_type_enum.HeapType;
 import model.web.WebMap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -10,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import search_algorithm.structure_type.DistanceMapType;
-import search_algorithm.structure_type.HeapType;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -79,7 +80,7 @@ public class DijkstraTest {
         dijkstra.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Dijkstra", mockWriter.getReceivedPath());
-        assertEquals("Dijkstra with " + dijkstra.getDistanceMapType() + " to keep track of known distances and " + dijkstra.getHeapType() + " as an implementation of min heap.", mockWriter.receivedAlDoc());
+        assertEquals("Dijkstra with " + dijkstra.getDistanceMapType().getTextValue() + " as distance tracker and " + dijkstra.getHeapType().getTextValue() + " as min heap.", mockWriter.receivedAlDoc());
         assertEquals("Dijkstra", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
@@ -99,7 +100,7 @@ public class DijkstraTest {
         dijkstra.runSearch();
         assertTrue(mockWriter.isValidatingReturnedTrue());
         assertEquals("/doc/reports/nameless map/Dijkstra", mockWriter.getReceivedPath());
-        assertEquals("Dijkstra with " + dijkstra.getDistanceMapType() + " to keep track of known distances and " + dijkstra.getHeapType() + " as an implementation of min heap.", mockWriter.receivedAlDoc());
+        assertEquals("Dijkstra with " + dijkstra.getDistanceMapType().getTextValue() + " as distance tracker and " + dijkstra.getHeapType().getTextValue() + " as min heap.", mockWriter.receivedAlDoc());
         assertEquals("Dijkstra", mockWriter.receivedAlgorithm());
         assertEquals("| V |", mockWriter.receivedAlSpace());
         assertEquals("O( | V + E | log | V |)", mockWriter.receivedAlTime());
@@ -116,6 +117,45 @@ public class DijkstraTest {
                         "! ! ! @ . . . \r\n" +
                         "! . . . . . .";
         assertEquals(SystemLine.breakLine(expectedProcessedMap), mockWriter.receivedProcessedMap());
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DijkstraArgumentsProvider.class)
+    public void metaValuesSetCorrectlyWhereStartIsTargetTest(Dijkstra dijkstra) throws IOException {
+        WebMap map = WebMapMock.getMinimumValidMap();
+        map.setTileStart(map.getTileTarget().x, map.getTileTarget().y);
+        dijkstra.setMapClean(map);
+        dijkstra.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Dijkstra", producedMeta.getAlgorithmName());
+        assertEquals("Distances: " + dijkstra.getDistanceMapType().getTextValue() + ", Min heap: " + dijkstra.getHeapType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(0, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(1, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(0, producedMeta.getTestUsedSteps().doubleValue());
+
+
+
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(DijkstraArgumentsProvider.class)
+    public void metaSetCorrectlyWhereStartIsNotTargetTest(Dijkstra dijkstra) throws IOException {
+        dijkstra.setMapClean(WebMapMock.getValid6x7Map());
+        dijkstra.runSearch();
+        assertTrue(mockWriter.isValidatingReturnedTrue());
+        ReportMeta producedMeta = mockWriter.getReceivedReportMeta();
+
+        assertEquals("Dijkstra", producedMeta.getAlgorithmName());
+        assertEquals("Distances: " + dijkstra.getDistanceMapType().getTextValue() + ", Min heap: " + dijkstra.getHeapType().getTextValue(), producedMeta.getAlgorithmImplementationType());
+        assertEquals(16, producedMeta.getTestPathWeight().doubleValue());
+        assertTrue(0 < producedMeta.getTestTime());
+        assertNotNull(producedMeta.getTestSpace());
+        assertEquals(34, producedMeta.getTestMaxSteps().longValue());
+        assertEquals(22, producedMeta.getTestUsedSteps().doubleValue());
     }
 }
 

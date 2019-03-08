@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AStar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">search_algorithm</a> &gt; <span class="el_source">AStar.java</span></div><h1>AStar.java</h1><pre class="source lang-java linenums">package search_algorithm;
+
+import file_operations.analysis_writer.AnalysisWriter;
+import model.structure.structure_interface.Heap;
+import model.structure.custom_structure.DistanceMapAsA2DTable;
+import model.structure.custom_structure.DistanceMapAsASingleTable;
+import model.structure.custom_structure.MinHeap;
+import model.structure.structure_interface.DistanceMap;
+import model.structure.pre_made_structure.PreMadeHeap;
+import model.web.WeightedPoint;
+import model.structure.structure_type_enum.DistanceMapType;
+import model.structure.structure_type_enum.HeapType;
+
+import java.util.Map;
+
+/**
+ * classic A*
+ */
+public class AStar extends AnalysableAlgorithm {
+    private final HeapType heapType;
+    private final DistanceMapType distanceMapType;
+
+    /**
+     * classic A* that extends AnalysableAlgorithm so it handles report writing.
+     * @param analysisWriter writer that writes the analysis report files.
+     * @param heapType type of heap to construct during searchAlgorithm method
+     * @param distanceMapType type of distance map to construct during searchAlgorithm method
+     */
+    public AStar(AnalysisWriter analysisWriter, HeapType heapType, DistanceMapType distanceMapType) {
+<span class="fc" id="L30">        super(analysisWriter, &quot;A Star&quot;);</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        if (heapType == null || distanceMapType == null) throw new IllegalArgumentException(&quot;Arguments cannot be null&quot;);</span>
+<span class="fc" id="L32">        this.heapType = heapType;</span>
+<span class="fc" id="L33">        this.distanceMapType = distanceMapType;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Runs A* with a heap and uses double[][] for upkeeping current know distances.
+     * Heuristic is WeightedPoint's rough estimate result from calculateRoughDistance method.
+     *
+     * @param timeOfStart    time in nanos of when method is called.
+     * @param availableSpace space left in jvm heap when method is called.
+     * @param fromToNodeSet  place to store which step is taken form where.
+     */
+    @Override
+    protected void searchAlgorithm(long timeOfStart, long availableSpace, Map&lt;WeightedPoint, WeightedPoint&gt; fromToNodeSet) {
+<span class="fc" id="L46">        var heap = initHeap();</span>
+<span class="fc" id="L47">        var distanceMap = initDistanceMap();</span>
+<span class="fc" id="L48">        distanceMap.setDistance(map.getTileStart(), 0);</span>
+
+<span class="fc" id="L50">        var startNodeWeight = new WeightedPoint(map.getTileStart().x, map.getTileStart().y, 0);</span>
+<span class="fc" id="L51">        heap.insert(startNodeWeight);</span>
+<span class="fc" id="L52">        fromToNodeSet.put(startNodeWeight, null);</span>
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        while (!heap.isEmpty()) {</span>
+<span class="fc" id="L55">            WeightedPoint polled = heap.next();</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (WeightedPoint neighbour : map.getNeighbours(polled)) {</span>
+<span class="fc" id="L58">                double predictedDistance = neighbour.calculateRoughDistance(map.getTileTarget()) + neighbour.weight;</span>
+<span class="fc" id="L59">                double newTotalDistance = distanceMap.getDistance(polled) + predictedDistance;</span>
+
+<span class="fc" id="L61">                double currentKnownWeight = distanceMap.getDistance(neighbour);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                if (currentKnownWeight &gt; newTotalDistance) {</span>
+
+<span class="fc" id="L64">                    heap.insert(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));</span>
+<span class="fc" id="L65">                    distanceMap.setDistance(neighbour, neighbour.weight + distanceMap.getDistance(polled));</span>
+<span class="fc" id="L66">                    fromToNodeSet.put(neighbour, polled);</span>
+                }
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                if (neighbour.equals(map.getTileTarget())) {</span>
+<span class="fc" id="L69">                    super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
+<span class="fc" id="L70">                    return;</span>
+                }
+<span class="fc" id="L72">            }</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">        super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);</span>
+<span class="fc" id="L75">    }</span>
+
+    private Heap&lt;WeightedPoint&gt; initHeap() {
+<span class="pc bpc" id="L78" title="1 of 3 branches missed.">        switch (heapType) {</span>
+            case CUSTOM_MIN_HEAP:
+<span class="fc" id="L80">                return new MinHeap&lt;&gt;();</span>
+            case PRE_MADE_MIN_HEAP:
+<span class="fc" id="L82">                return new PreMadeHeap&lt;&gt;();</span>
+            default:
+<span class="nc" id="L84">                return null;</span>
+        }
+    }
+
+    private DistanceMap initDistanceMap() {
+<span class="pc bpc" id="L89" title="1 of 3 branches missed.">        switch (distanceMapType) {</span>
+            case ARRAY_2D:
+<span class="fc" id="L91">                return new DistanceMapAsA2DTable(map.height(), map.width());</span>
+            case ARRAY_1D:
+<span class="fc" id="L93">                return new DistanceMapAsASingleTable(map.height(), map.width());</span>
+            default:
+<span class="nc" id="L95">                return null;</span>
+        }
+    }
+
+    /**
+     * @return known theoretical time complecity.
+     */
+    @Override
+    public String getTheoreticalTime() {
+<span class="fc" id="L104">        return &quot;O( | V + E | log | V |)&quot;;</span>
+    }
+
+    /**
+     * @return known theoretical space complecity.
+     */
+    @Override
+    public String getTheoreticalSpace() {
+<span class="fc" id="L112">        return &quot;| V |&quot;;</span>
+    }
+
+    @Override
+    public String getDescription() {
+<span class="fc" id="L117">        return getName() + &quot; with &quot; + distanceMapType.getTextValue() + &quot; as distance tracker and &quot; + heapType.getTextValue() + &quot; as min heap.&quot;;</span>
+    }
+
+    /**
+     *
+     * @return additional documentation of implementation as metadata for sorting reports by category of implementation
+     */
+    @Override
+    public String getShortImpl() {
+<span class="fc" id="L126">        return &quot;Distances: &quot; + distanceMapType.getTextValue() + &quot;, Min heap: &quot; + heapType.getTextValue();</span>
+    }
+
+    public DistanceMapType getDistanceMapType() {
+<span class="fc" id="L130">        return distanceMapType;</span>
+    }
+
+    public HeapType getHeapType() {
+<span class="fc" id="L134">        return heapType;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

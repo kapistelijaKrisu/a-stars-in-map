@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fi"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LIFOStack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">model.structure</a> &gt; <span class="el_source">LIFOStack.java</span></div><h1>LIFOStack.java</h1><pre class="source lang-java linenums">package model.structure;
+
+/**
+ * Last-in-first-out classic Stack implementation.
+ * Only head is known and nodes are connected by reference.
+ * @param &lt;T&gt; object type to hold.
+ */
+public class LIFOStack&lt;T&gt; {
+
+    private Node&lt;T&gt; head;
+
+    //container for held value
+    private static class Node&lt;T&gt; {
+        private final T value;
+        private Node&lt;T&gt; next;
+
+<span class="fc" id="L17">        private Node(T val) {</span>
+<span class="fc" id="L18">            this.value = val;</span>
+<span class="fc" id="L19">            this.next = null;</span>
+<span class="fc" id="L20">        }</span>
+
+        private T getValue() {
+<span class="fc" id="L23">            return value;</span>
+        }
+
+        private Node&lt;T&gt; getNext() {
+<span class="fc" id="L27">            return next;</span>
+        }
+
+        private void setNext(Node&lt;T&gt; nextNode) {
+<span class="fc" id="L31">            this.next = nextNode;</span>
+<span class="fc" id="L32">        }</span>
+    }
+
+    /**
+     * Creates empty stack where head is null.
+     */
+<span class="fc" id="L38">    public LIFOStack() {</span>
+<span class="fc" id="L39">        head = null;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * Adds given object as a head to stack and connects it with previous head by reference.
+     * @param value object to hold (new head of the stack)
+     */
+    public void push(T value) {
+<span class="fc" id="L47">        Node&lt;T&gt; newHead = new Node&lt;&gt;(value);</span>
+<span class="fc" id="L48">        newHead.setNext(head);</span>
+<span class="fc" id="L49">        head = newHead;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Removes current head of the stack and returns it.
+     * @return deleted head
+     */
+    public T pop() {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (isEmpty()) return null;</span>
+<span class="fc" id="L58">        T polledValue = head.getValue();</span>
+<span class="fc" id="L59">        head = head.getNext();</span>
+<span class="fc" id="L60">        return polledValue;</span>
+    }
+
+    /**
+     * Returns whether the stack contains any nodes or not
+     * @return if head is null true else false
+     */
+    public boolean isEmpty() {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        return head == null;</span>
+    }
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
