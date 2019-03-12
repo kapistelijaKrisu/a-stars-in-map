@@ -60,7 +60,7 @@ dependencies {
     //oshi dependency, fails regardless if using windows and it's not in english
     //if u do have an english windows and error logs annoy you, uncomment this
     //error is about failing to read some registrys that we are not using anyway
-    //compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
     //getting cpu and os
     implementation 'com.github.oshi:oshi-core:3.13.0'
