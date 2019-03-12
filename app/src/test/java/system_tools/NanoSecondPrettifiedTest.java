@@ -8,7 +8,7 @@ public class NanoSecondPrettifiedTest {
 
     @Test
     public void testZero(){
-        assertEquals("0", NanoSecondPrettified.prettifyNanoSeconds(0L));
+        assertEquals("0ns", NanoSecondPrettified.prettifyNanoSeconds(0L));
     }
 
     @Test
