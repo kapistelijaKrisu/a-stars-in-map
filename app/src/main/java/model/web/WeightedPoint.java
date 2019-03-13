@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class WeightedPoint extends Point implements Comparable<WeightedPoint> {
     public double weight;
-    private static final double DIVIDER_TO_KEEP_DISTANCE_LESS_THAN_ACTUALLY_IS = 1.42;
+    private static final double DIVIDER_TO_KEEP_DISTANCE_LESS_THAN_ACTUALLY_IS = 1;
 
     /**
      * @param x      x of Point

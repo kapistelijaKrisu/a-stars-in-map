@@ -112,8 +112,8 @@ public class DijkstraTest {
         String expectedProcessedMap =
                 "X X X @ ! ! ! \r\n" +
                         "S @ X X X ! ! \r\n" +
-                        "! @ ! @ X ! . \r\n" +
-                        "! @ ! @ F . . \r\n" +
+                        "! @ ! @ X ! ! \r\n" +
+                        "! @ ! @ F ! ! \r\n" +
                         "! ! ! @ . . . \r\n" +
                         "! . . . . . .";
         assertEquals(SystemLine.breakLine(expectedProcessedMap), mockWriter.receivedProcessedMap());
@@ -155,7 +155,7 @@ public class DijkstraTest {
         assertTrue(0 < producedMeta.getTestTime());
         assertNotNull(producedMeta.getTestSpace());
         assertEquals(34, producedMeta.getTestMaxSteps().longValue());
-        assertEquals(22, producedMeta.getTestUsedSteps().doubleValue());
+        assertEquals(25, producedMeta.getTestUsedSteps().doubleValue());
     }
 }
 

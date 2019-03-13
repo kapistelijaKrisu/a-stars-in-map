@@ -103,14 +103,14 @@ public class AStarTest {
         assertEquals(SystemLine.breakLine("Width: 7 Height: 6\r\nStart location: 0,1\r\nTarget location: 4,3"), mockWriter.receivedMapInfo());
         assertEquals("34", mockWriter.receivedTestMaxSteps());
         assertEquals("16", mockWriter.receivedTestPathWeight());
-        assertEquals("13", mockWriter.receivedTestUsedSteps());
+        assertEquals("20", mockWriter.receivedTestUsedSteps());
 
         String expectedProcessedMap =
-                SystemLine.breakLine("X X X @ ! . . \r\n" +
-                        "S @ X X X ! . \r\n" +
-                        "! @ ! @ X . . \r\n" +
-                        "! @ . @ F . . \r\n" +
-                        ". . . @ . . . \r\n" +
+                SystemLine.breakLine("X X X @ ! ! ! \r\n" +
+                        "S @ X X X ! ! \r\n" +
+                        "! @ ! @ X ! . \r\n" +
+                        "! @ ! @ F . . \r\n" +
+                        "! . ! @ . . . \r\n" +
                         ". . . . . . .");
         assertEquals(expectedProcessedMap, mockWriter.receivedProcessedMap());
     }
@@ -151,7 +151,7 @@ public class AStarTest {
         assertTrue(0 < producedMeta.getTestTime());
         assertNotNull(producedMeta.getTestSpace());
         assertEquals(34, producedMeta.getTestMaxSteps().longValue());
-        assertEquals(13, producedMeta.getTestUsedSteps().doubleValue());
+        assertEquals(20, producedMeta.getTestUsedSteps().doubleValue());
     }
 }
 

@@ -22,8 +22,9 @@ public class Dijkstra extends AnalysableAlgorithm {
 
     /**
      * classic CustomDijkstra that extends AnalysableAlgorithm so it handles report writing.
-     * @param analysisWriter writer that writes the analysis report files.
-     * @param heapType type of heap to construct during searchAlgorithm method
+     *
+     * @param analysisWriter  writer that writes the analysis report files.
+     * @param heapType        type of heap to construct during searchAlgorithm method
      * @param distanceMapType type of distance map to construct during searchAlgorithm method
      */
     public Dijkstra(AnalysisWriter analysisWriter, HeapType heapType, DistanceMapType distanceMapType) {
@@ -51,18 +52,19 @@ public class Dijkstra extends AnalysableAlgorithm {
 
         while (!heap.isEmpty()) {
             WeightedPoint polled = heap.next();
+            if (polled.equals(map.getTileTarget())) {
+                super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
+                return;
+            }
             for (WeightedPoint neighbour : map.getNeighbours(polled)) {
                 double totalWeight = neighbour.weight + distanceMap.getDistance(polled);
-                int currentKnownWeight = (int) distanceMap.getDistance(neighbour);
+                double currentKnownWeight = distanceMap.getDistance(neighbour);
                 if (currentKnownWeight > totalWeight) {
                     heap.insert(new WeightedPoint(neighbour.x, neighbour.y, totalWeight));
                     distanceMap.setDistance(neighbour, totalWeight);
                     fromToNodeSet.put(neighbour, polled);
                 }
-                if (neighbour.equals(map.getTileTarget())) {
-                    super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
-                    return;
-                }
+
             }
         }
         super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
@@ -112,7 +114,6 @@ public class Dijkstra extends AnalysableAlgorithm {
     }
 
     /**
-     *
      * @return additional documentation of implementation as metadata for sorting reports by category of implementation
      */
     @Override
@@ -121,8 +122,10 @@ public class Dijkstra extends AnalysableAlgorithm {
     }
 
     //testing getters
+
     /**
      * testing only
+     *
      * @return what type of distance tracker is used
      */
     public DistanceMapType getDistanceMapType() {
@@ -131,6 +134,7 @@ public class Dijkstra extends AnalysableAlgorithm {
 
     /**
      * testing only
+     *
      * @return what type of heap is used
      */
     public HeapType getHeapType() {

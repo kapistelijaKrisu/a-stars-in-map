@@ -45,6 +45,7 @@ public class AStar extends AnalysableAlgorithm {
     @Override
     protected void searchAlgorithm(long timeOfStart, long availableSpace, Map<WeightedPoint, WeightedPoint> fromToNodeSet) {
         var heap = initHeap();
+
         var distanceMap = initDistanceMap();
         distanceMap.setDistance(map.getTileStart(), 0);
 
@@ -54,25 +55,25 @@ public class AStar extends AnalysableAlgorithm {
 
         while (!heap.isEmpty()) {
             WeightedPoint polled = heap.next();
-
+            if (polled.equals(map.getTileTarget())) {
+                super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
+                return;
+            }
             for (WeightedPoint neighbour : map.getNeighbours(polled)) {
-                double predictedDistance = neighbour.calculateRoughDistance(map.getTileTarget()) + neighbour.weight;
-                double newTotalDistance = distanceMap.getDistance(polled) + predictedDistance;
+                double distanceFromStartToNeighbour = distanceMap.getDistance(polled) + map.getLocationWeight(neighbour.x, neighbour.y);
+                if (distanceFromStartToNeighbour < distanceMap.getDistance(neighbour)) {
 
-                double currentKnownWeight = distanceMap.getDistance(neighbour);
-                if (currentKnownWeight > newTotalDistance) {
+                    double predictedDistance = neighbour.calculateRoughDistance(map.getTileTarget());
 
-                    heap.insert(new WeightedPoint(neighbour.x, neighbour.y, predictedDistance));
-                    distanceMap.setDistance(neighbour, neighbour.weight + distanceMap.getDistance(polled));
+                    distanceMap.setDistance(neighbour, distanceFromStartToNeighbour);
+                    heap.insert(new WeightedPoint(neighbour.x, neighbour.y, distanceFromStartToNeighbour + predictedDistance));
                     fromToNodeSet.put(neighbour, polled);
-                }
-                if (neighbour.equals(map.getTileTarget())) {
-                    super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
-                    return;
                 }
             }
         }
+
         super.handleReportWriting(fromToNodeSet, timeOfStart, availableSpace);
+
     }
 
     private Heap<WeightedPoint> initHeap() {
@@ -127,8 +128,10 @@ public class AStar extends AnalysableAlgorithm {
     }
 
     //testing
+
     /**
      * testing only
+     *
      * @return what type of distance tracker is used
      */
     public DistanceMapType getDistanceMapType() {
@@ -137,6 +140,7 @@ public class AStar extends AnalysableAlgorithm {
 
     /**
      * testing only
+     *
      * @return what type of heap is used
      */
     public HeapType getHeapType() {
